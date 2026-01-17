@@ -1,0 +1,122 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code when working with this repository.
+
+## Project Context
+
+**Project Name:** Digital Marketing Institute Student Data App - Tirur
+**Platform Stack:** AppSheet + Google Sheets (Apps Script & Looker Studio ready)
+**Main Tables:** [To be documented]
+**User Roles:** [To be documented]
+**Primary Key Patterns:** [To be documented]
+**Google Sheet ID:** [Your spreadsheet ID]
+**AppSheet App ID:** [Your app ID]
+**Current Features:** [To be documented]
+
+## Architecture Overview
+
+[Add architecture description as system develops]
+
+## Working with This Repository
+
+### Documentation System
+
+This project uses the AppSheet Documentation System Blueprint.
+
+**Structure:** See APPSHEET_SYSTEM_BLUEPRINT.md for complete system definition.
+
+**Formula Files:**
+
+-   `docs/formulas/appsheet_formulas.md` - AppSheet configs (Experimental + Stable only)
+-   `docs/formulas/googlesheet_formulas.md` - Sheet formulas
+-   `docs/formulas/appscript_code.md` - Apps Script code
+-   `docs/formulas/lookerstudio_formulas.md` - Looker Studio queries
+
+**Version Management:**
+
+-   Active file: 2 versions (Experimental + Stable only)
+-   Archive: Previous versions in `backups/[date]-v[X]-stable/`
+-   History: See `CHANGELOG.md` for quick reference
+
+**Version Management Structure:**
+
+```
+EXPERIMENTAL V[X] (if testing new features)
+    ↓
+STABLE SYSTEM V[X-1] (current production)
+    ↓
+📚 Archived Versions (pointer to backups/)
+```
+
+**Key Principles:**
+
+1. **2-Version Discipline:** Active file contains only Experimental + Stable
+2. **Archive Process:** When promoting Experimental → Stable, previous Stable goes to `backups/`
+3. **Cumulative Documentation:** V3 = V2 + new features (additive, not replacement)
+4. **Complete Documentation:** STABLE section must include ALL tables, views, actions, security
+5. **Point-in-Time Backups:** Archives are snapshots before additions (for rollback)
+
+### Formula Documentation Format
+
+Follow templates in APPSHEET_SYSTEM_BLUEPRINT.md Section 4.
+
+**Table Documentation Must Include:**
+
+-   Complete table schemas (every column with full AppSheet configuration)
+-   All actions (name, behavior, SHOW IF conditions)
+-   All views (type, settings, filters, security)
+-   All security rules (UPDATES, ADDS, DELETES, row-level filtering)
+-   All enum values
+-   Testing results
+-   Rollback instructions
+
+### Version Promotion Workflow
+
+See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
+
+**When promoting Experimental → Stable:**
+
+1. Create point-in-time backup of current Stable to `backups/[date]-v[X-1]-stable/`
+2. Add Quick Rollback section to archived file
+3. Integrate Experimental changes into Stable (reorganize by feature/table)
+4. Add version tags ("Added: V[X]") to new features
+5. Update CHANGELOG.md and backups/README.md
+6. Remove Experimental section from active file
+
+## Reference Documentation
+
+### System Documentation
+
+-   **[APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
+-   **[docs/project/PROJECT_OVERVIEW.md](docs/project/PROJECT_OVERVIEW.md)** - System overview
+-   **[CHANGELOG.md](CHANGELOG.md)** - Version history
+-   **[backups/README.md](backups/README.md)** - Archived versions index
+
+### AppSheet Reference Materials
+
+The **[APPSHEET-DOCUMENTATION/](APPSHEET-DOCUMENTATION/)** directory contains comprehensive AppSheet reference documentation organized by category:
+
+-   **[formulas-reference/](APPSHEET-DOCUMENTATION/formulas-reference/)** - Complete formula syntax and examples
+
+    -   Conditional, Date-Time, List-and-Select, Logical, Math, Text functions
+    -   References, Syntax basics
+    -   See [FORMULAS_REFERENCE.md](APPSHEET-DOCUMENTATION/formulas-reference/FORMULAS_REFERENCE.md) for index
+
+-   **[rules-and-logic/](APPSHEET-DOCUMENTATION/rules-and-logic/)** - AppSheet business logic patterns
+
+    -   Actions, Automation, Data Validity Constraints
+    -   Security Filters, Slices
+    -   See [RULES_AND_LOGIC.md](APPSHEET-DOCUMENTATION/rules-and-logic/RULES_AND_LOGIC.md) for index
+
+-   **[views-interface/](APPSHEET-DOCUMENTATION/views-interface/)** - View configuration reference
+    -   Calendar, Chart, Dashboard, Deck, Detail, Form, Gallery, Map, Table views
+    -   Configuration patterns and best practices
+
+## Claude Skills
+
+This project includes specialized Claude skills in **[.claude/skills/](.claude/skills/)**:
+
+-   **appsheet-blueprint-skill** - Generate complete AppSheet documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for tables, views, actions, and security rules
+-   **appsheet-reference-skill** - Look up AppSheet formulas, view types, actions, security filters, slices, and automation patterns
+
+**Usage:** Invoke skills with `/skill-name` (e.g., `/appsheet-blueprint-skill`, `/appsheet-reference-skill`)
