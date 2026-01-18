@@ -2,21 +2,6 @@
 
 This file provides guidance to Claude Code when working with this repository.
 
-## Project Context
-
-**Project Name:** Digital Marketing Institute Student Data App - Tirur
-**Platform Stack:** AppSheet + Google Sheets (Apps Script & Looker Studio ready)
-**Main Tables:** [To be documented]
-**User Roles:** [To be documented]
-**Primary Key Patterns:** [To be documented]
-**Google Sheet ID:** [Your spreadsheet ID]
-**AppSheet App ID:** [Your app ID]
-**Current Features:** [To be documented]
-
-## Architecture Overview
-
-[Add architecture description as system develops]
-
 ## Working with This Repository
 
 ### Documentation System
@@ -88,7 +73,7 @@ See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 ### System Documentation
 
 -   **[APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
--   **[docs/project/PROJECT_OVERVIEW.md](docs/project/PROJECT_OVERVIEW.md)** - System overview
+-   **[docs/project/PRD.md](docs/project/PRD.md)** - Product Requirements Document (high-level project overview)
 -   **[CHANGELOG.md](CHANGELOG.md)** - Version history
 -   **[backups/README.md](backups/README.md)** - Archived versions index
 
@@ -100,13 +85,11 @@ The **[APPSHEET-DOCUMENTATION/](APPSHEET-DOCUMENTATION/)** directory contains co
 
     -   Conditional, Date-Time, List-and-Select, Logical, Math, Text functions
     -   References, Syntax basics
-    -   See [FORMULAS_REFERENCE.md](APPSHEET-DOCUMENTATION/formulas-reference/FORMULAS_REFERENCE.md) for index
 
 -   **[rules-and-logic/](APPSHEET-DOCUMENTATION/rules-and-logic/)** - AppSheet business logic patterns
 
     -   Actions, Automation, Data Validity Constraints
     -   Security Filters, Slices
-    -   See [RULES_AND_LOGIC.md](APPSHEET-DOCUMENTATION/rules-and-logic/RULES_AND_LOGIC.md) for index
 
 -   **[views-interface/](APPSHEET-DOCUMENTATION/views-interface/)** - View configuration reference
     -   Calendar, Chart, Dashboard, Deck, Detail, Form, Gallery, Map, Table views

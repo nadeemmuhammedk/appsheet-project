@@ -68,7 +68,7 @@ Current Features:
 │
 ├── docs/                              # All documentation
 │   ├── project/
-│   │   └── PROJECT_OVERVIEW.md       # Complete system overview, data schema, user roles
+│   │   └── PRD.md       # Complete system overview, data schema, user roles
 │   │
 │   ├── formulas/                     # Current state formulas (Experimental + Stable only)
 │   │   ├── appsheet_formulas.md      # AppSheet table configs, columns, formulas
@@ -1388,7 +1388,7 @@ AppSheet-based system for [purpose - ask user or leave placeholder].
 ## 📋 Quick Links
 
 ### Documentation
-- [Project Overview](docs/project/PROJECT_OVERVIEW.md)
+- [Project Overview](docs/project/PRD.md)
 - [AppSheet Formulas](docs/formulas/appsheet_formulas.md)
 - [Google Sheets Formulas](docs/formulas/googlesheet_formulas.md)
 - [Apps Script Code](docs/formulas/appscript_code.md)
@@ -1628,16 +1628,16 @@ See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 ## Reference Documentation
 
 - **[APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
-- **[docs/project/PROJECT_OVERVIEW.md](docs/project/PROJECT_OVERVIEW.md)** - System overview
+- **[docs/project/PRD.md](docs/project/PRD.md)** - System overview
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history
 - **[backups/README.md](backups/README.md)** - Archived versions index
 ```
 
 If CLAUDE.md already exists, append the documentation system section.
 
-**2.5 Create PROJECT_OVERVIEW.md placeholder:**
+**2.5 Create PRD.md placeholder:**
 
-Create `docs/project/PROJECT_OVERVIEW.md`:
+Create `docs/project/PRD.md`:
 ```markdown
 # [Project Name] - Project Overview
 
@@ -1681,7 +1681,7 @@ OUTPUT TO USER:
 "✅ AppSheet documentation system initialized!
 
 Created:
-✓ docs/project/PROJECT_OVERVIEW.md (placeholder)
+✓ docs/project/PRD.md (placeholder)
 ✓ docs/formulas/appsheet_formulas.md (with template)
 ✓ docs/formulas/googlesheet_formulas.md (with template)
 ✓ docs/formulas/appscript_code.md (with template)
@@ -1695,7 +1695,7 @@ Created:
 Next steps:
 1. Fill in Project Configuration section in APPSHEET_SYSTEM_BLUEPRINT.md
 2. Document your tables in docs/formulas/appsheet_formulas.md
-3. Add project overview to docs/project/PROJECT_OVERVIEW.md
+3. Add project overview to docs/project/PRD.md
 4. Update README.md with project-specific information
 
 Ready to start documenting your AppSheet system!"
@@ -2053,7 +2053,7 @@ CHECK file existence:
   □ backups/README.md
   □ CHANGELOG.md
   □ README.md
-  □ docs/project/PROJECT_OVERVIEW.md
+  □ docs/project/PRD.md
   □ docs/templates/STABLE_SYSTEM_TEMPLATE.md
 
 IF (any file MISSING):
@@ -2209,7 +2209,7 @@ With validation:
 1. Ask: "Should I add this table to appsheet_formulas.md?"
 2. If yes: Add table documentation using template from Section 4.1
 3. Update Project Configuration in APPSHEET_SYSTEM_BLUEPRINT.md (table list)
-4. Update PROJECT_OVERVIEW.md if it exists
+4. Update PRD.md if it exists
 
 **Scenario: User asks to promote Experimental to Stable**
 1. Confirm: "Ready to promote Experimental V[X] to Stable?"
