@@ -125,7 +125,7 @@ function initProject() {
     console.log(`${colors.bright}${colors.magenta}Next Steps:${colors.reset}`);
     console.log(`  ${colors.dim}1.${colors.reset} Review ${colors.cyan}README.md${colors.reset} for detailed documentation`);
     console.log(`  ${colors.dim}2.${colors.reset} Check ${colors.cyan}APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} for system overview`);
-    console.log(`  ${colors.dim}3.${colors.reset} Use Claude Code skills: ${colors.cyan}/appsheet-blueprint-skill${colors.reset} or ${colors.cyan}/appsheet-reference-skill${colors.reset}`);
+    console.log(`  ${colors.dim}3.${colors.reset} Use Claude Code skills: ${colors.cyan}/appsheet-blueprint-skill${colors.reset}, ${colors.cyan}/prd-skill${colors.reset}, or ${colors.cyan}/appsheet-reference-skill${colors.reset}`);
     console.log(`  ${colors.dim}4.${colors.reset} Explore ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset} for formulas and guides`);
     console.log('');
 
@@ -171,7 +171,7 @@ function showHelp() {
   console.log(`    Show this help message`);
   console.log('');
   console.log(`${colors.bright}What Gets Installed:${colors.reset}`);
-  console.log(`  ${colors.cyan}.claude/skills/${colors.reset}                - Claude Code skills`);
+  console.log(`  ${colors.cyan}.claude/skills/${colors.reset}                - Claude Code skills (appsheet-blueprint-skill, prd-skill, appsheet-reference-skill)`);
   console.log(`  ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset}      - Complete reference library`);
   console.log(`  ${colors.cyan}docs/${colors.reset}                        - Project documentation`);
   console.log(`  ${colors.cyan}README.md${colors.reset}                   - Main documentation`);

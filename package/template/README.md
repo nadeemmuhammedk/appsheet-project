@@ -1,13 +1,13 @@
-# [Your Project Name]
+# Digital Marketing Institute Student Data App - Tirur
 
-[Brief description of what this project does and who it's for]
+AppSheet-based system for managing student data at Digital Marketing Institute, Tirur branch.
 
 ---
 
 ## 📋 Quick Links
 
 ### Documentation
-- [Product Requirements Document (PRD)](docs/project/PRD.md)
+- [Product Requirements (PRD)](docs/project/PRD.md)
 - [AppSheet Formulas](docs/formulas/appsheet_formulas.md)
 - [Google Sheets Formulas](docs/formulas/googlesheet_formulas.md)
 - [Apps Script Code](docs/formulas/appscript_code.md)
@@ -21,46 +21,56 @@
 
 ## 🏗️ Architecture
 
-**Platform Stack:** [AppSheet / Web App / Mobile App] + [Google Sheets / Database] + [Apps Script / Other]
+**Platform Stack:** AppSheet + Google Sheets + Apps Script
 
 **Core Components:**
-- **[Primary Component]:** [Brief description]
-- **[Data Storage]:** [Brief description]
-- **[Automation]:** [Brief description]
-- **[Reporting]:** [Brief description]
+- **AppSheet App:** Student data management interface with 4 deck views
+- **Google Sheets:** Data storage with ARRAYFORMULA calculations
+- **Apps Script:** Daily automation (2 AM empty row cleanup)
+- **Bot Automation:** Multi-name attendance entry processing
 
 **Tables:**
-- [Table Name] ([X] columns) - [Brief description]
-- [Table Name] ([X] columns) - [Brief description]
-- [Table Name] ([X] columns) - [Brief description]
+- Student Data (32 columns + 2 virtual) - Primary student information
+- Student Attendance (7 columns + 1 virtual) - Date-based attendance tracking
+- Student Fees (7 columns) - Fee payment transactions
+- Data (lookup/enum table) - Batch list and dropdown values
+- Ongoing Not Started Students (slice) - Pending fees filtering
 
 ---
 
 ## 👥 User Roles
 
-**[Role Name]:**
-- [Permission/Access 1]
-- [Permission/Access 2]
+**Current Configuration:** Single role (institute staff - full access)
 
-**[Role Name]:**
-- [Permission/Access 1]
-- [Permission/Access 2]
+All institute staff have full permissions to:
+- View and manage student data
+- Record attendance and fees
+- Access all views and reports
+- Execute all actions (Call Phone, Send SMS, Record Fee Payment)
 
 ---
 
 ## 🚀 Current System Status
 
-**Active Version:** [Version Number]
-**Status:** [Development / Testing / Production]
-**Deployed:** [Date]
+**Active Version:** STABLE SYSTEM V1
+**Status:** ✅ PRODUCTION
+**Deployed:** June 2024 (initial), October 2025 (bot), January 2025 (Apps Script)
 
 **Recent Updates:**
-- **[Date]:** [Description of update]
-- **[Date]:** [Description of update]
+- **January 15, 2026:** Documentation migrated to Blueprint V1 format
+  - Created comprehensive table schemas (1,975 lines)
+  - Documented all Google Sheets formulas (815 lines)
+  - Documented Apps Script automation (905 lines)
+  - Point-in-time backup at `backups/2026-01-15-pre-migration-snapshot/`
 
 **Features:**
-- [Feature count/description]
-- [Feature count/description]
+- 4 tables with 78 total columns
+- 4 deck views (Student Data, Attendance, Fees, Pending Fees)
+- 6 actions (3 bot-related, 1 fee payment, 2 communication)
+- 2 automation systems (Bot + Apps Script)
+- Multi-installment fee tracking
+- Auto-generated registration numbers
+- Multi-name attendance entry support
 
 ---
 
@@ -68,20 +78,19 @@
 
 **Formula Documentation:**
 - `appsheet_formulas.md` - Complete AppSheet configuration (tables, views, actions, security)
-- `googlesheet_formulas.md` - All Google Sheets formulas and calculations
-- `appscript_code.md` - Apps Script automation functions and code
-- `lookerstudio_formulas.md` - Looker Studio queries and visualizations
+- `googlesheet_formulas.md` - All Google Sheets ARRAYFORMULA calculations
+- `appscript_code.md` - Apps Script automation functions
 
 **Version Management:**
-- Active file contains current stable version
+- Active file contains STABLE SYSTEM V1 only
 - Previous versions archived in `backups/` directory
 - See `CHANGELOG.md` for version history
 
-**Blueprint Compliance:**
+**Blueprint V1 Compliance:**
 - Complete table schemas with all column configurations
-- All actions with conditions documented
+- All actions with SHOW IF conditions
 - All views with configuration settings
-- Security rules and validation constraints
+- Security rules and VALID_IF constraints
 - Testing results and rollback instructions
 
 ---
@@ -90,45 +99,4 @@
 
 See [CLAUDE.md](CLAUDE.md) for AI assistant instructions and documentation procedures.
 
-See [APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md) for complete system template and documentation standards.
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-- [List required software, accounts, or access]
-- [e.g., Google Account, AppSheet account, etc.]
-
-### Setup
-1. [First setup step]
-2. [Second setup step]
-3. [Third setup step]
-
-### Usage
-1. [How to access the app/system]
-2. [Key workflows or features to know]
-3. [Where to find help]
-
----
-
-## 📞 Support & Contact
-
-**Project Owner:** [Name/Team]
-**Contact:** [Email/Slack/Other]
-**Documentation Issues:** [Where to report]
-
----
-
-## 📝 License
-
-[Your license information, if applicable]
-
----
-
-## Notes
-
-- This README should be updated as your project evolves
-- Keep documentation links current
-- Update version history in CHANGELOG.md
-- See APPSHEET_SYSTEM_BLUEPRINT.md for documentation standards
+See [APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md) for complete system template.

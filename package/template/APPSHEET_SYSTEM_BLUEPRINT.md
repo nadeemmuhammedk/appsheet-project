@@ -68,7 +68,7 @@ Current Features:
 │
 ├── docs/                              # All documentation
 │   ├── project/
-│   │   └── PRD.md       # Complete system overview, data schema, user roles
+│   │   └── PRD.md                    # Product requirements document
 │   │
 │   ├── formulas/                     # Current state formulas (Experimental + Stable only)
 │   │   ├── appsheet_formulas.md      # AppSheet table configs, columns, formulas
@@ -470,6 +470,161 @@ Output: [example output]
 ```
 **Use Case:** Highlight rows meeting criteria
 ```
+
+---
+
+### 4.2.5 Documentation Anti-Patterns - What NOT to Do
+
+**Purpose:** Explicit examples of common documentation mistakes that violate blueprint requirements.
+
+These anti-patterns occurred during V1→V2 promotion and must be avoided.
+
+---
+
+#### Section Header Anti-Patterns
+
+❌ **WRONG:** Version markers in section headers
+```markdown
+#### 3. Student Attendance Table (UNCHANGED IN V2)
+#### 4. Fee Details Table (MODIFIED IN V2)
+```
+
+✅ **CORRECT:** Clean headers without version markers
+```markdown
+#### 3. Student Attendance Table
+#### 4. Fee Details Table
+```
+
+**Rule:** Never add `(UNCHANGED IN VX)` or `(MODIFIED IN VX)` to section headers. Version info belongs only at document top and via subtle tags on specific items.
+
+---
+
+#### Column Documentation Anti-Patterns
+
+❌ **WRONG:** "Unchanged from V1" shortcuts
+```markdown
+**Column A: Student ID**
+Unchanged from V1 - see V1 documentation
+```
+
+✅ **CORRECT:** Full documentation every time
+```markdown
+**Column A: Student ID**
+```appsheet
+Google Sheets: Column A, Type: Text
+AppSheet Configuration:
+  Column Name: Student ID
+  Type: Text
+  Key: Yes
+  Initial Value: [formula or blank]
+  App Formula: N/A
+  VALID_IF: N/A
+  EDITABLE: TRUE
+  SHOW: TRUE
+  REQUIRE: YES
+  Description: "Unique student identifier"
+```
+```
+
+**Rule:** Every column must have complete AppSheet configuration documented, even if identical to previous version.
+
+---
+
+#### Table Documentation Anti-Patterns
+
+❌ **WRONG:** Lazy "All other columns unchanged" shortcut
+```markdown
+#### 3. Student Attendance Table
+
+**Column A: Date**
+```appsheet
+[Full configuration]
+```
+
+**Columns B through Z:** All unchanged from V1
+```
+
+✅ **CORRECT:** Document every column
+```markdown
+#### 3. Student Attendance Table
+
+**Column A: Date**
+```appsheet
+[Full configuration]
+```
+
+**Column B: Student ID**
+```appsheet
+[Full configuration]
+```
+
+**Column C: Attendance Status**
+```appsheet
+[Full configuration]
+```
+
+[... every column documented]
+```
+
+**Rule:** Never skip documenting columns. STABLE documentation must be self-contained.
+
+---
+
+#### Version Tag Anti-Patterns
+
+❌ **WRONG:** Prominent version markers throughout
+```markdown
+#### 3. Student Attendance Table (UNCHANGED IN V2)
+
+**Column C: Course Status** - ADDED IN V2
+**Column D: Attendance Status** - UNCHANGED FROM V1
+```
+
+✅ **CORRECT:** Subtle tags only on changed items
+```markdown
+#### 3. Student Attendance Table
+
+**Column C: Course Status** - Added: V2
+**Column D: Attendance Status**
+```
+
+**Rule:** Use subtle "Added: VX" or "Modified: VX" tags only on items that actually changed. Don't mark unchanged items.
+
+---
+
+#### Cross-Reference Anti-Patterns
+
+❌ **WRONG:** References to previous versions
+```markdown
+For views and actions, see V1 documentation in backups/2025-12-01-v1-stable/
+```
+
+✅ **CORRECT:** Full documentation in current file
+```markdown
+### 📱 ALL VIEWS
+
+**View: Student Dashboard**
+```appsheet
+[Complete view configuration]
+```
+
+[... every view documented]
+```
+
+**Rule:** STABLE documentation must be self-contained. Never require readers to open archived files to understand the current system.
+
+---
+
+#### Summary: The Golden Rules
+
+1. **No `(UNCHANGED IN VX)` markers** - in headers, column names, or anywhere
+2. **No "see previous version" shortcuts** - document everything fully
+3. **No "unchanged from V1" placeholders** - provide complete configuration
+4. **Version info at document top** - "VERSION: V2" in section header
+5. **Subtle tags on changed items only** - "Added: V2" or "Modified: V2"
+6. **Self-contained documentation** - one file tells you everything about current system
+
+**Test:** If a reader needs to open archived files to understand the current system, the documentation is incomplete.
 
 ---
 
@@ -984,6 +1139,16 @@ The active file maintains a **complete, cumulative view of the current applicati
    - **Organization:** Grouped by feature/table type, tagged with version added
    - **Status:** ✓ TESTED AND WORKING
 
+   ⚠️ **CRITICAL: STABLE SYSTEM documentation must be SELF-CONTAINED**
+   - NO "(UNCHANGED IN VX)" markers in headers
+   - NO "See previous version" placeholders
+   - NO "Unchanged from V1" shortcuts
+   - EVERY table, view, action, column documented in full
+   - Version info only at document top and via subtle tags on modified items
+   - Reader must understand system WITHOUT opening archived files
+
+   **See Section 4.2.5** for detailed examples of what NOT to do (anti-patterns from V1→V2 promotion).
+
 3. **📚 ARCHIVED VERSIONS** - Pointer to backups
    - **Content:** Links to `backups/` directory
    - **Purpose:** Point-in-time snapshots before major additions (for rollback)
@@ -1388,7 +1553,7 @@ AppSheet-based system for [purpose - ask user or leave placeholder].
 ## 📋 Quick Links
 
 ### Documentation
-- [Project Overview](docs/project/PRD.md)
+- [Product Requirements (PRD)](docs/project/PRD.md)
 - [AppSheet Formulas](docs/formulas/appsheet_formulas.md)
 - [Google Sheets Formulas](docs/formulas/googlesheet_formulas.md)
 - [Apps Script Code](docs/formulas/appscript_code.md)
@@ -1628,7 +1793,7 @@ See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 ## Reference Documentation
 
 - **[APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
-- **[docs/project/PRD.md](docs/project/PRD.md)** - System overview
+- **[docs/project/PRD.md](docs/project/PRD.md)** - Product requirements document
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history
 - **[backups/README.md](backups/README.md)** - Archived versions index
 ```
@@ -1639,7 +1804,7 @@ If CLAUDE.md already exists, append the documentation system section.
 
 Create `docs/project/PRD.md`:
 ```markdown
-# [Project Name] - Project Overview
+# [Project Name] - Product Requirements Document
 
 ## Project Purpose
 
@@ -1695,7 +1860,7 @@ Created:
 Next steps:
 1. Fill in Project Configuration section in APPSHEET_SYSTEM_BLUEPRINT.md
 2. Document your tables in docs/formulas/appsheet_formulas.md
-3. Add project overview to docs/project/PRD.md
+3. Add product requirements to docs/project/PRD.md
 4. Update README.md with project-specific information
 
 Ready to start documenting your AppSheet system!"
@@ -2214,9 +2379,21 @@ With validation:
 **Scenario: User asks to promote Experimental to Stable**
 1. Confirm: "Ready to promote Experimental V[X] to Stable?"
 2. If yes: Follow "Promotion Process" from Section 5
-3. Update CHANGELOG.md
-4. Update backups/README.md
-5. Notify user of completion
+3. **BEFORE promoting, verify documentation completeness:**
+   ☐ No "(UNCHANGED IN VX)" markers anywhere in the document
+   ☐ No "See previous version" text anywhere
+   ☐ No "Unchanged from V1" shortcuts or placeholders
+   ☐ Every table has complete schema documentation (all columns)
+   ☐ Every view documented in full
+   ☐ Every action documented in full
+   ☐ Reader can understand system WITHOUT opening archived files
+   ☐ Subtle version tags only on changed items ("Added: VX", "Modified: VX")
+4. If any checklist item fails: Fix documentation before promoting
+5. Update CHANGELOG.md
+6. Update backups/README.md
+7. Notify user of completion
+
+**Note:** See Section 4.2.5 for examples of documentation anti-patterns to avoid.
 
 **Scenario: User asks "What's the current production system?"**
 1. Read STABLE SYSTEM section in `docs/formulas/appsheet_formulas.md`

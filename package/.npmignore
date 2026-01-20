@@ -38,9 +38,6 @@ desktop.ini
 .gitattributes
 
 # Project-specific exclusions
-.codex/
-backups/
-utils/
 test-package.js
 scripts/
 PUBLISH.md
