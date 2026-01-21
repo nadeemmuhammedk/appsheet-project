@@ -1,52 +1,52 @@
 {
-  "name": "appsheet-project",
-  "version": "1.0.3",
-  "description": "Scaffolding tool for AppSheet projects - Initializes complete development environment with Claude Code skills, documentation, and templates",
-  "bin": {
-    "appsheet-project": "./bin/appsheet-project.js"
-  },
-  "files": [
-    "bin/",
-    "template/"
-  ],
-  "scripts": {
-    "test": "node test-package.js",
-    "validate": "node test-package.js",
-    "prepublishOnly": "npm test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nadeemmuhammedk/appsheet-project.git"
-  },
-  "keywords": [
-    "appsheet",
-    "scaffolding",
-    "init",
-    "generator",
-    "template",
-    "no-code",
-    "low-code",
-    "documentation",
-    "claude-code",
-    "ai-development",
-    "claude-skills",
-    "formulas",
-    "google-sheets",
-    "project-management",
-    "blueprints",
-    "reference",
-    "mobile-app",
-    "app-development",
-    "starter",
-    "boilerplate"
-  ],
-  "author": "Nadeem K",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nadeemmuhammedk/appsheet-project/issues"
-  },
-  "homepage": "https://github.com/nadeemmuhammedk/appsheet-project#readme",
-  "engines": {
-    "node": ">=14.0.0"
-  }
+    "name": "appsheet-project",
+    "version": "1.0.4",
+    "description": "Scaffolding tool for AppSheet projects - Initializes complete development environment with Claude Code skills, documentation, and templates",
+    "bin": {
+        "appsheet-project": "./bin/appsheet-project.js"
+    },
+    "files": [
+        "bin/",
+        "template/"
+    ],
+    "scripts": {
+        "test": "node test-package.js",
+        "validate": "node test-package.js",
+        "prepublishOnly": "npm test"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nadeemmuhammedk/appsheet-project.git"
+    },
+    "keywords": [
+        "appsheet",
+        "scaffolding",
+        "init",
+        "generator",
+        "template",
+        "no-code",
+        "low-code",
+        "documentation",
+        "claude-code",
+        "ai-development",
+        "claude-skills",
+        "formulas",
+        "google-sheets",
+        "project-management",
+        "blueprints",
+        "reference",
+        "mobile-app",
+        "app-development",
+        "starter",
+        "boilerplate"
+    ],
+    "author": "Nadeem K",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/nadeemmuhammedk/appsheet-project/issues"
+    },
+    "homepage": "https://github.com/nadeemmuhammedk/appsheet-project#readme",
+    "engines": {
+        "node": ">=14.0.0"
+    }
 }

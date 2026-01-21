@@ -1,6 +1,6 @@
 ---
 name: appsheet-reference-skill
-description: Look up AppSheet formulas (SELECT, VALID_IF, SHOW_IF), view types (deck, table, form, calendar, chart, dashboard), actions, security filters, slices, and automation patterns. Use when building AppSheet features, writing formulas, configuring views, creating actions, or when user mentions AppSheet components, tables, views, formulas, filters, or security.
+description: Look up AppSheet formulas (SELECT, VALID_IF, SHOW_IF), view types (deck, table, form, calendar, chart, dashboard), actions, security filters, slices, automation patterns, table schemas, column types, and data relationships. Use when building AppSheet features, writing formulas, configuring views/tables, creating actions, or when user mentions AppSheet components, tables, columns, views, formulas, filters, or security.
 allowed-tools:
   - Read
   - Glob
@@ -61,6 +61,15 @@ All AppSheet reference materials are in `APPSHEET-DOCUMENTATION/`:
 - [Security Filters](../../APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md) - Row-level security, USEREMAIL()
 - [Slices](../../APPSHEET-DOCUMENTATION/rules-and-logic/slices/SLICES.md) - Data subsets, filtered views
 
+**Tables & Data Schema** (`tables-data-schema/`):
+- [Tables & Data Schema Overview](../../APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md)
+- [Column Types](../../APPSHEET-DOCUMENTATION/tables-data-schema/column-types/COLUMN_TYPES_OVERVIEW.md) - Text, Number, Date, Ref, Enum
+- [Column Properties](../../APPSHEET-DOCUMENTATION/tables-data-schema/column-properties/COLUMN_PROPERTIES_OVERVIEW.md) - VALID_IF, SHOW IF, formulas
+- [Table Settings](../../APPSHEET-DOCUMENTATION/tables-data-schema/table-settings/TABLE_SETTINGS_OVERVIEW.md) - Security, operations
+- [Virtual Columns](../../APPSHEET-DOCUMENTATION/tables-data-schema/virtual-columns/VIRTUAL_COLUMNS_OVERVIEW.md) - REF_ROWS, calculations
+- [Primary Keys](../../APPSHEET-DOCUMENTATION/tables-data-schema/primary-keys/PRIMARY_KEYS_OVERVIEW.md) - UNIQUEID patterns
+- [Data Relationships](../../APPSHEET-DOCUMENTATION/tables-data-schema/data-relationships/RELATIONSHIPS_OVERVIEW.md) - 1:M, M:M
+
 For detailed component guidance, see [REFERENCE.md](REFERENCE.md).
 
 ## How to Use
@@ -70,8 +79,9 @@ For detailed component guidance, see [REFERENCE.md](REFERENCE.md).
 Determine what the user needs:
 - **Formula?** → Read formulas-reference/
 - **View?** → Read views-interface/
+- **Table/Column?** → Read tables-data-schema/
 - **Action?** → Read rules-and-logic/actions/
-- **Security?** → Read rules-and-logic/security-filters/
+- **Security?** → Read rules-and-logic/security-filters/ or tables-data-schema/table-settings/
 
 ### Step 2: Read Relevant Documentation
 

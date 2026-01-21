@@ -2,21 +2,6 @@
 
 This file provides guidance to Claude Code when working with this repository.
 
-## Project Context
-
-**Project Name:** Digital Marketing Institute Student Data App - Tirur
-**Platform Stack:** AppSheet + Google Sheets (Apps Script & Looker Studio ready)
-**Main Tables:** [To be documented]
-**User Roles:** [To be documented]
-**Primary Key Patterns:** [To be documented]
-**Google Sheet ID:** [Your spreadsheet ID]
-**AppSheet App ID:** [Your app ID]
-**Current Features:** [To be documented]
-
-## Architecture Overview
-
-[Add architecture description as system develops]
-
 ## Working with This Repository
 
 ### Documentation System
@@ -27,16 +12,16 @@ This project uses the AppSheet Documentation System Blueprint.
 
 **Formula Files:**
 
--   `docs/formulas/appsheet_formulas.md` - AppSheet configs (Experimental + Stable only)
--   `docs/formulas/googlesheet_formulas.md` - Sheet formulas
--   `docs/formulas/appscript_code.md` - Apps Script code
--   `docs/formulas/lookerstudio_formulas.md` - Looker Studio queries
+- `docs/formulas/appsheet_formulas.md` - AppSheet configs (Experimental + Stable only)
+- `docs/formulas/googlesheet_formulas.md` - Sheet formulas
+- `docs/formulas/appscript_code.md` - Apps Script code
+- `docs/formulas/lookerstudio_formulas.md` - Looker Studio queries
 
 **Version Management:**
 
--   Active file: 2 versions (Experimental + Stable only)
--   Archive: Previous versions in `backups/[date]-v[X]-stable/`
--   History: See `CHANGELOG.md` for quick reference
+- Active file: 2 versions (Experimental + Stable only)
+- Archive: Previous versions in `backups/[date]-v[X]-stable/`
+- History: See `CHANGELOG.md` for quick reference
 
 **Version Management Structure:**
 
@@ -62,13 +47,27 @@ Follow templates in APPSHEET_SYSTEM_BLUEPRINT.md Section 4.
 
 **Table Documentation Must Include:**
 
--   Complete table schemas (every column with full AppSheet configuration)
--   All actions (name, behavior, SHOW IF conditions)
--   All views (type, settings, filters, security)
--   All security rules (UPDATES, ADDS, DELETES, row-level filtering)
--   All enum values
--   Testing results
--   Rollback instructions
+- Complete table schemas (every column with full AppSheet configuration)
+- All actions (name, behavior, SHOW IF conditions)
+- All views (type, settings, filters, security)
+- All security rules (UPDATES, ADDS, DELETES, row-level filtering)
+- All enum values
+- Testing results
+- Rollback instructions
+
+**⚠️ Critical Documentation Rules:**
+
+When documenting STABLE SYSTEM versions:
+
+- **DO NOT** use "(UNCHANGED IN VX)" markers in section headers
+- **DO NOT** use "see previous version" or "unchanged from V1" shortcuts
+- **DO** document every table, view, action, and column in full
+- **DO** use subtle version tags only on changed items ("Added: VX", "Modified: VX")
+- **DO** keep STABLE documentation self-contained (reader shouldn't need archives)
+
+**For detailed examples of what NOT to do, see:**
+
+- [APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5](APPSHEET_SYSTEM_BLUEPRINT.md#425-documentation-anti-patterns---what-not-to-do) - Documentation Anti-Patterns
 
 ### Version Promotion Workflow
 
@@ -80,43 +79,50 @@ See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 2. Add Quick Rollback section to archived file
 3. Integrate Experimental changes into Stable (reorganize by feature/table)
 4. Add version tags ("Added: V[X]") to new features
-5. Update CHANGELOG.md and backups/README.md
-6. Remove Experimental section from active file
+5. **DO NOT** use "(UNCHANGED IN VX)" markers anywhere in the document
+6. **DO NOT** use "see previous version" or "unchanged from V1" shortcuts
+7. Document EVERYTHING fully - STABLE must be self-contained
+8. Update CHANGELOG.md and backups/README.md
+9. Remove Experimental section from active file
 
 ## Reference Documentation
 
 ### System Documentation
 
--   **[APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
--   **[docs/project/PRD.md](docs/project/PRD.md)** - Product requirements document
--   **[CHANGELOG.md](CHANGELOG.md)** - Version history
--   **[backups/README.md](backups/README.md)** - Archived versions index
+- **[APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
+- **[docs/project/PRD.md](docs/project/PRD.md)** - Product requirements document
+- **[CHANGELOG.md](CHANGELOG.md)** - Version history
+- **[backups/README.md](backups/README.md)** - Archived versions index
 
 ### AppSheet Reference Materials
 
 The **[APPSHEET-DOCUMENTATION/](APPSHEET-DOCUMENTATION/)** directory contains comprehensive AppSheet reference documentation organized by category:
 
--   **[formulas-reference/](APPSHEET-DOCUMENTATION/formulas-reference/)** - Complete formula syntax and examples
+- **[formulas-reference/](APPSHEET-DOCUMENTATION/formulas-reference/)** - Complete formula syntax and examples
+    - Conditional, Date-Time, List-and-Select, Logical, Math, Text functions
+    - References, Syntax basics
+    - See [FORMULAS_REFERENCE.md](APPSHEET-DOCUMENTATION/formulas-reference/FORMULAS_REFERENCE.md) for index
 
-    -   Conditional, Date-Time, List-and-Select, Logical, Math, Text functions
-    -   References, Syntax basics
-    -   See [FORMULAS_REFERENCE.md](APPSHEET-DOCUMENTATION/formulas-reference/FORMULAS_REFERENCE.md) for index
+- **[rules-and-logic/](APPSHEET-DOCUMENTATION/rules-and-logic/)** - AppSheet business logic patterns
+    - Actions, Automation, Data Validity Constraints
+    - Security Filters, Slices
+    - See [RULES_AND_LOGIC.md](APPSHEET-DOCUMENTATION/rules-and-logic/RULES_AND_LOGIC.md) for index
 
--   **[rules-and-logic/](APPSHEET-DOCUMENTATION/rules-and-logic/)** - AppSheet business logic patterns
+- **[views-interface/](APPSHEET-DOCUMENTATION/views-interface/)** - View configuration reference
+    - Calendar, Chart, Dashboard, Deck, Detail, Form, Gallery, Map, Table views
+    - Configuration patterns and best practices
 
-    -   Actions, Automation, Data Validity Constraints
-    -   Security Filters, Slices
-    -   See [RULES_AND_LOGIC.md](APPSHEET-DOCUMENTATION/rules-and-logic/RULES_AND_LOGIC.md) for index
-
--   **[views-interface/](APPSHEET-DOCUMENTATION/views-interface/)** - View configuration reference
-    -   Calendar, Chart, Dashboard, Deck, Detail, Form, Gallery, Map, Table views
-    -   Configuration patterns and best practices
+- **[tables-data-schema/](APPSHEET-DOCUMENTATION/tables-data-schema/)** - Tables and data schema reference
+    - Column types, Column properties, Table settings
+    - Virtual columns, Primary keys, Data relationships
+    - See [TABLES_DATA_SCHEMA.md](APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md) for index
 
 ## Claude Skills
 
 This project includes specialized Claude skills in **[.claude/skills/](.claude/skills/)**:
 
--   **appsheet-blueprint-skill** - Generate complete AppSheet documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for tables, views, actions, and security rules
--   **appsheet-reference-skill** - Look up AppSheet formulas, view types, actions, security filters, slices, and automation patterns
+- **appsheet-blueprint-skill** - Generate complete AppSheet documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for tables, views, actions, and security rules
+- **appsheet-reference-skill** - Look up AppSheet formulas, view types, actions, security filters, slices, and automation patterns
+- **prd-skill** - Create or update Product Requirements Documents (PRD) following the standardized PRD template. Use at project start, when planning new features, or when user explicitly requests PRD updates. Helps define product scope, user personas, success metrics, and technical requirements.
 
-**Usage:** Invoke skills with `/skill-name` (e.g., `/appsheet-blueprint-skill`, `/appsheet-reference-skill`)
+**Usage:** Invoke skills with `/skill-name` (e.g., `/appsheet-blueprint-skill`, `/appsheet-reference-skill`, `/prd-skill`)
