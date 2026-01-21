@@ -6,10 +6,11 @@ A scaffolding tool for AppSheet projects that initializes a complete development
 
 AppSheet Project sets up a structured development environment with everything you need for AppSheet development:
 
-- **Claude Code Skills** - Pre-configured skills for AI-assisted AppSheet development
+- **AI Assistant Skills** - Pre-configured skills for AI-assisted AppSheet, Google Sheets, Apps Script, and Looker Studio development
 - **Documentation** - Complete reference library for AppSheet formulas, Google Sheets, and Looker Studio
 - **System Blueprints** - Templates and architectural guides
 - **Project Structure** - Organized folders for documentation, samples, and utilities
+- **2-Version Workflow** - Experimental → Stable version management system
 
 ## Installation
 
@@ -45,13 +46,14 @@ your-project/
 ├── .claude/
 │   └── skills/
 │       ├── appsheet-blueprint-skill/
-│       ├── prd-skill/
-│       └── appsheet-reference-skill/
+│       ├── appsheet-reference-skill/
+│       ├── googlesheet-blueprint-skill/
+│       ├── lookerstudio-blueprint-skill/
+│       ├── appscript-blueprint-skill/
+│       ├── version-management-skill/
+│       └── prd-skill/
 ├── .codex/
-│   └── skills/
-│       ├── appsheet-blueprint-skill/
-│       ├── prd-skill/
-│       └── appsheet-reference-skill/
+│   └── skills/ (same as .claude/skills/)
 ├── APPSHEET-DOCUMENTATION/
 │   ├── formulas/
 │   │   ├── appsheet_formulas.md
@@ -72,15 +74,134 @@ your-project/
 └── README.md
 ```
 
-## Claude Code Skills
+---
 
-After initialization, you can use these skills in Claude Code:
+## The 2-Version Workflow System
+
+This project uses a disciplined **Experimental → Stable** version management system.
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    Active Documentation                     │
+├─────────────────────────────────────────────────────────────┤
+│  EXPERIMENTAL V[X]     ←  Work on new features here        │
+│  "Testing in progress"                                      │
+├─────────────────────────────────────────────────────────────┤
+│  STABLE SYSTEM V[X-1]   ←  Your production version         │
+│  "Production ready"                                         │
+└─────────────────────────────────────────────────────────────┘
+           │ when features are tested & working
+           │
+           ▼
+    [You say: "mark as stable"]
+           │
+           ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Archive current STABLE → backups/[date]-v[X-1]-stable/    │
+│  Merge Experimental into STABLE (cumulative)               │
+│  Remove Experimental section                                │
+│  New STABLE SYSTEM V[X] is now production-ready            │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Typical Workflow
+
+1. **Start a new feature** → `version-management-skill` creates `EXPERIMENTAL V[X]` section
+2. **Build & test** → Use blueprint skills to document your work
+3. **Iterate** → Make changes, update documentation, test
+4. **Mark as stable** → Say "mark as stable" when ready for production
+5. **Promotion** → System archives old stable, merges experimental into new stable
+
+---
+
+## Available Skills
 
 | Skill | Description |
 |-------|-------------|
-| `/appsheet-blueprint-skill` | Generate AppSheet system blueprints and architecture |
-| `/prd-skill` | Create Product Requirements Documents |
-| `/appsheet-reference-skill` | Quick reference for AppSheet formulas and features |
+| `/version-management-skill` | **Workflow Orchestrator** - Manages Experimental→Stable promotion, 2-version discipline, archives, and version lifecycle. Auto-triggers on "new feature", "mark as stable", "promote to stable" |
+| `/appsheet-blueprint-skill` | Generate complete AppSheet documentation (tables, views, actions, security) following system templates |
+| `/appsheet-reference-skill` | Quick reference for AppSheet formulas, view types, actions, security filters, slices, and automation patterns |
+| `/googlesheet-blueprint-skill` | Generate Google Sheets formula documentation (ARRAYFORMULA, VLOOKUP, QUERY, calculated formulas) |
+| `/lookerstudio-blueprint-skill` | Generate Looker Studio documentation (data sources, calculated fields, metrics, dimensions, blended data) |
+| `/appscript-blueprint-skill` | Generate Apps Script documentation (functions, triggers, installation steps, testing checklists) |
+| `/prd-skill` | Create or update Product Requirements Documents (PRD) for project planning and feature definition |
+
+---
+
+## How Skills Are Invoked
+
+### Automatic Invocation (No Command Needed)
+
+Skills trigger automatically based on keywords in your conversation:
+
+| Your Message | Skill That Activates |
+|--------------|---------------------|
+| "let's build a new feature", "I want to add a feature" | `version-management-skill` (creates Experimental section) |
+| "mark as stable", "promote to stable", "system is stable", "ready for production" | `version-management-skill` (starts promotion workflow) |
+| "document this table", "create AppSheet documentation" | `appsheet-blueprint-skill` |
+| "how do I write this formula", "what's the syntax for..." | `appsheet-reference-skill` |
+| "document this Google Sheets formula" | `googlesheet-blueprint-skill` |
+| "document this Looker Studio report" | `lookerstudio-blueprint-skill` |
+| "document this Apps Script function" | `appscript-blueprint-skill` |
+| "create a PRD", "update the PRD" | `prd-skill` |
+
+### Manual Invocation (Direct Commands)
+
+Invoke any skill directly using `/skill-name`:
+
+```
+/appsheet-blueprint-skill
+/googlesheet-blueprint-skill
+/lookerstudio-blueprint-skill
+/appscript-blueprint-skill
+/version-management-skill
+/appsheet-reference-skill
+/prd-skill
+```
+
+---
+
+## Example: Building a New Feature
+
+When you say something like:
+
+> "I want to build a new feature to create [new-feature] use /appsheet-blueprint-skill and appsheet-reference-skill and /version-management-skill"
+
+Here's exactly what happens:
+
+### Step 1: Workflow Setup (`version-management-skill`)
+- Detects "new feature" trigger
+- Creates `EXPERIMENTAL V[X]` section in the appropriate formula file
+- Sets up the 2-version structure (Experimental + Stable)
+- Sets status to "⚠ EXPERIMENTAL - TESTING IN PROGRESS"
+
+### Step 2: Documentation Generation (`appsheet-blueprint-skill`)
+- Uses templates from `APPSHEET_SYSTEM_BLUEPRINT.md`
+- Documents table schemas, views, actions, security rules
+- Writes documentation to the `EXPERIMENTAL V[X]` section
+
+### Step 3: Formula Reference (`appsheet-reference-skill`)
+- Helps with specific AppSheet formulas, view types, actions
+- References the `APPSHEET-DOCUMENTATION/` library as needed
+
+### Step 4: Iterative Development
+- You make changes, test, update documentation
+- The system updates the Experimental section as you go
+- Multiple skills may contribute to the same Experimental section
+
+### Step 5: Promotion to Stable
+When you say **"mark the system as stable"**:
+
+1. `version-management-skill` prompts for confirmation
+2. Archives current Stable to `backups/[date]-v[X-1]-stable/`
+3. Merges Experimental into Stable (cumulative: V3 = V2 + new features)
+4. Tags new items with "Added: V[X]"
+5. Removes Experimental section from active file
+6. Updates `CHANGELOG.md`
+
+---
 
 ## Next Steps
 
@@ -88,7 +209,7 @@ After running `npx appsheet-project init`:
 
 1. Review `README.md` for detailed documentation
 2. Check `APPSHEET_SYSTEM_BLUEPRINT.md` for system overview
-3. Use Claude Code skills to start building
+3. Start building - just say "let's build a new feature" to activate the workflow
 4. Explore `APPSHEET-DOCUMENTATION/` for formulas and guides
 
 ## Links

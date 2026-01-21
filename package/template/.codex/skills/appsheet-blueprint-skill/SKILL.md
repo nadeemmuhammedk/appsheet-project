@@ -153,132 +153,62 @@ See [TEMPLATES.md](TEMPLATES.md) for complete action template.
 
 ## Experimental → Stable Promotion Workflow
 
-Understanding the version lifecycle is critical for proper documentation.
+**For the complete version management workflow, use `/version-management-skill`.**
 
-### Phases
+### Quick Reference: The 2-Version System
 
-**EXPERIMENTAL VX** - Testing Phase
-- New features being developed and tested
-- Documented with: "What's New", "Changes from V[X-1]", "Execution Plan", "Testing Checklist"
-- Status: ⚠ EXPERIMENTAL - TESTING IN PROGRESS
+Documentation files follow a 2-version discipline:
 
-**STABLE SYSTEM V[X-1]** - Production Phase
-- Current working system
-- Complete cumulative documentation (ALL features from ALL versions)
-- Status: ✓ PRODUCTION - STABLE
-
-**ARCHIVED VERSIONS** - Point-in-Time Backups
-- Previous stable versions in `backups/[date]-v[X]-stable/`
-- For rollback purposes only
-
-### Key Concept: Cumulative Documentation
-
-**V3 = V2 + new features** (additive, NOT replacement)
-
-When promoting Experimental V3 → Stable V3:
-- Keep ALL V2 features (don't remove anything)
-- Add V3 new features
-- Organize by feature/table type (not chronologically)
-- Tag new items with "Added: V3"
-
-### The 2-Version Discipline
-
-Active file contains ONLY:
-1. EXPERIMENTAL V[X] (if testing)
-2. STABLE SYSTEM V[X-1] (current production)
-
-Old versions go to `backups/`
-
-### Integration Process
-
-1. **Create backup** of current Stable to `backups/[date]-v[X-1]-stable/`
-2. **Reorganize** by feature/table type (Data Tables → Views → Actions → Security)
-3. **Integrate** new features into existing sections
-4. **Add tags** "Added: VX" or "Modified: VX" only to changed items
-5. **Remove** Experimental section from active file
-6. **Update** CHANGELOG.md and backups/README.md
-
-### Common Mistakes to Avoid During Promotion
-
-❌ WRONG:
-- Using "(UNCHANGED IN VX)" markers
-- Saying "see previous version for other tables"
-- Documenting only what changed
-- Organizing chronologically by version
-
-✅ CORRECT:
-- Document EVERYTHING (tables, views, actions, columns)
-- Organize by feature/table type
-- Add subtle tags only on changed items
-- Self-contained (no archive references needed)
-
-## When Promoting Experimental → Stable
-
-Follow this step-by-step process when marking the system as stable.
-
-### Step 1: Create Point-in-Time Backup
-
-Before any integration:
-1. Create backup directory: `backups/[YYYY-MM-DD]-v[X-1]-stable/`
-2. Copy current Stable documentation to backup
-3. Add Quick Rollback section to archived file
-4. Update `backups/README.md` with new archive entry
-
-### Step 2: Read Current Documentation
-
-Read both:
-- Current Stable section (for existing structure)
-- Experimental section (for new features to integrate)
-
-### Step 3: Reorganize by Feature/Table Type
-
-**NOT chronological organization** - Don't organize by "V2 tables, V3 tables"
-
-Instead organize by type:
 ```
-1. System Overview
-2. Data Tables
-   - Core Tables (Students, Batches, Courses...)
-   - Transaction Tables (Attendance, Fees...)
-   - Reference Tables (Enums, Settings...)
-3. Views (organized by table)
-4. Actions (organized by table)
-5. Security & Automation
-6. Rollback Procedures
+[File Name]
+├── EXPERIMENTAL V[X]  (new features being tested)
+└── STABLE SYSTEM V[X-1]  (current production)
 ```
 
-### Step 4: Integrate New Features
+**Key Concepts:**
+- **V3 = V2 + new features** (cumulative, not replacement)
+- Old versions are archived to `backups/[date]-v[X]-stable/`
+- STABLE documentation must be self-contained (no archive references)
 
-For each new feature from Experimental:
-1. Place it in the appropriate section by type (not at the end)
-2. Add subtle tag: "Added: VX" or "Modified: VX"
-3. Document fully (no shortcuts)
+### Version Management Triggers
 
-### Step 5: Remove Experimental Markers
+**Starting new features:**
+- "Let's build a new feature" → Creates EXPERIMENTAL V[X] section
+- "Let's add a new feature" → Same as above
 
-Clean up the documentation:
-1. Remove any "(UNCHANGED IN VX)" markers if they exist
-2. Remove "see previous version" references
-3. Remove Experimental section header and content
-4. Update version header from V[X-1] to V[X]
+**Promoting to stable:**
+- "Mark the system as stable" → Promotes EXPERIMENTAL → STABLE
+- "Promote to stable" → Same as above
 
-### Step 6: Verify Completeness
+### For Complete Workflow
 
-Use the promotion checklist:
-- ✅ No "(UNCHANGED IN VX)" markers anywhere
-- ✅ No "see previous version" or "unchanged from V1" shortcuts
-- ✅ Every table documented in full with ALL columns
-- ✅ Every view documented in full
-- ✅ Every action documented in full
-- ✅ Every security rule documented in full
-- ✅ Reader can understand entire system without opening archives
-- ✅ New items tagged with "Added: VX" or "Modified: VX"
+**Use `/version-management-skill`** which handles:
+- Creating EXPERIMENTAL sections for new features
+- Archiving current STABLE before promotion
+- Integrating Experimental into STABLE (reorganizes by feature type)
+- Tagging new items with "Added: V[X]"
+- Updating CHANGELOG.md
+- Verifying completeness
 
-### Step 7: Update Supporting Files
+### Critical Documentation Rules (Apply to STABLE)
 
-1. Update `CHANGELOG.md` with version summary
-2. Update `backups/README.md` with new archive entry
-3. Update version history in main documentation
+❌ **NEVER use "(UNCHANGED IN VX)" markers** in headers
+❌ **NEVER say "see previous version"** - document everything fully
+❌ **NEVER skip documenting items** - complete documentation required
+
+✅ **DO:** Add subtle "Added: V[X]" tags only to changed items
+✅ **DO:** Organize STABLE by feature/table type (not chronologically)
+✅ **DO:** Make STABLE self-contained
+
+**For detailed anti-patterns with examples, see:**
+- APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5 - "Documentation Anti-Patterns"
+- version-management-skill - "Critical Documentation Rules" section
+
+### Coordination With Other Skills
+
+When promoting to stable:
+1. **version-management-skill** - Orchestrates the workflow
+2. **appsheet-blueprint-skill** (this skill) - Ensures template compliance
 
 ## Important Notes
 

@@ -116,16 +116,22 @@ function initProject() {
     console.log('');
 
     console.log(`${colors.bright}${colors.green}What's been set up:${colors.reset}`);
-    console.log(`  ${colors.green}✓${colors.reset} Claude Code Skills (${colors.cyan}.claude/skills/${colors.reset})`);
+    console.log(`  ${colors.green}✓${colors.reset} AI Assistant Skills (${colors.cyan}.claude/skills/, .codex/skills/${colors.reset})`);
     console.log(`  ${colors.green}✓${colors.reset} AppSheet Documentation (${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset})`);
     console.log(`  ${colors.green}✓${colors.reset} Project Documentation (${colors.cyan}docs/${colors.reset})`);
     console.log(`  ${colors.green}✓${colors.reset} System Blueprints & Templates`);
     console.log('');
 
+    console.log(`${colors.bright}${colors.magenta}Workflow - 2-Version System:${colors.reset}`);
+    console.log(`  ${colors.cyan}Experimental Phase${colors.reset} - Work on new features/updates in development`);
+    console.log(`  ${colors.cyan}Stable Phase${colors.reset} - Your production-ready version`);
+    console.log(`  ${colors.dim}Say "mark as stable" when your changes are production-ready${colors.reset}`);
+    console.log('');
+
     console.log(`${colors.bright}${colors.magenta}Next Steps:${colors.reset}`);
     console.log(`  ${colors.dim}1.${colors.reset} Review ${colors.cyan}README.md${colors.reset} for detailed documentation`);
     console.log(`  ${colors.dim}2.${colors.reset} Check ${colors.cyan}APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} for system overview`);
-    console.log(`  ${colors.dim}3.${colors.reset} Use Claude Code skills: ${colors.cyan}/appsheet-blueprint-skill${colors.reset}, ${colors.cyan}/prd-skill${colors.reset}, or ${colors.cyan}/appsheet-reference-skill${colors.reset}`);
+    console.log(`  ${colors.dim}3.${colors.reset} See ${colors.cyan}https://www.npmjs.com/package/appsheet-project${colors.reset} for all available skills`);
     console.log(`  ${colors.dim}4.${colors.reset} Explore ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset} for formulas and guides`);
     console.log('');
 
@@ -171,14 +177,14 @@ function showHelp() {
   console.log(`    Show this help message`);
   console.log('');
   console.log(`${colors.bright}What Gets Installed:${colors.reset}`);
-  console.log(`  ${colors.cyan}.claude/skills/${colors.reset}                - Claude Code skills (appsheet-blueprint-skill, prd-skill, appsheet-reference-skill)`);
-  console.log(`  ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset}      - Complete reference library`);
-  console.log(`  ${colors.cyan}docs/${colors.reset}                        - Project documentation`);
-  console.log(`  ${colors.cyan}README.md${colors.reset}                   - Main documentation`);
-  console.log(`  ${colors.cyan}CHANGELOG.md${colors.reset}                - Version history`);
-  console.log(`  ${colors.cyan}CLAUDE.md${colors.reset}                   - Claude Code guidance`);
-  console.log(`  ${colors.cyan}AGENTS.md${colors.reset}                   - Agent documentation`);
-  console.log(`  ${colors.cyan}APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} - System template`);
+  console.log(`  ${colors.cyan}.claude/skills/, .codex/skills/${colors.reset} - AI assistant skills`);
+  console.log(`  ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset}        - Complete reference library`);
+  console.log(`  ${colors.cyan}docs/${colors.reset}                          - Project documentation`);
+  console.log(`  ${colors.cyan}README.md${colors.reset}                     - Main documentation`);
+  console.log(`  ${colors.cyan}CHANGELOG.md${colors.reset}                  - Version history`);
+  console.log(`  ${colors.cyan}CLAUDE.md${colors.reset}                     - Claude Code guidance`);
+  console.log(`  ${colors.cyan}AGENTS.md${colors.reset}                     - Agent documentation`);
+  console.log(`  ${colors.cyan}APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset}  - System template`);
   console.log('');
   console.log(`${colors.bright}${colors.yellow}Important Notes:${colors.reset}`);
   console.log(`  ${colors.yellow}•${colors.reset} Run ${colors.cyan}init${colors.reset} in an empty directory or your project root`);
