@@ -3,8 +3,6 @@ name: prd-skill
 description: Create or update Product Requirements Documents (PRD) following the standardized PRD template. Use at project start, when planning new features, or when user explicitly requests PRD updates. Helps define product scope, user personas, success metrics, and technical requirements.
 allowed-tools:
   - Read
-  - Write
-  - Edit
 ---
 
 # PRD Skill
@@ -90,12 +88,13 @@ Ask user for key information (use AskUserQuestion if needed):
 3. Use placeholders `[...]` for sections that need user input
 4. Include helpful prompts in placeholders to guide users
 
-### Step 4: Write PRD to File
+### Step 4: Generate PRD Content
 
-1. Write to `docs/project/PRD.md`
+1. Generate complete PRD content based on template
 2. Use proper markdown formatting
 3. Include version number at top (start with 1.0.0)
 4. Set initial status as "Draft"
+5. Return the generated content for review and approval
 
 ### Step 5: Guide User on Next Steps
 

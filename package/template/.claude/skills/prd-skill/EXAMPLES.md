@@ -407,9 +407,10 @@ Description: "Student attendance status for the day"
 1. Read existing PRD first
 2. Determine which section to update (Features & Functionality)
 3. Ask: "Should this be Must-Have, Should-Have, or Could-Have?"
-4. Update PRD using Edit tool
+4. Generate updated PRD content showing the changes
 5. Increment version number (e.g., 1.0.0 → 1.1.0)
 6. Update Document History table
+7. Return the updated content for user approval
 
 ### Scenario 3: Scope Creep Management
 

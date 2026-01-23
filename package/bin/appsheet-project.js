@@ -4,15 +4,18 @@
  * AppSheet Project Scaffolding CLI
  *
  * Initializes a new AppSheet development environment by copying
- * all template files into the current directory.
+ * all template files into the current directory, and updates
+ * existing projects with the latest system files.
  *
  * Commands:
- * - init - Initialize AppSheet project in current directory
- * - help - Show usage instructions
+ * - init   - Initialize AppSheet project in current directory
+ * - update - Update system files in existing project
+ * - help   - Show usage instructions
  */
 
 const fs = require('fs');
 const path = require('path');
+const readline = require('readline');
 
 // Color codes for terminal output
 const colors = {
@@ -60,16 +63,110 @@ function copyDirectorySync(src, dest, indent = '') {
 }
 
 /**
+ * Get package version from package.json
+ */
+function getPackageVersion() {
+  try {
+    const packageJsonPath = path.join(__dirname, '..', 'package.json');
+    const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+    return packageJson.version;
+  } catch (error) {
+    return 'unknown';
+  }
+}
+
+/**
+ * Get list of system paths that should be updated
+ */
+function getSystemPaths() {
+  return [
+    '.claude',
+    '.codex',
+    'APPSHEET-DOCUMENTATION',
+    'AGENTS.md',
+    'APPSHEET_SYSTEM_BLUEPRINT.md',
+    'CLAUDE.md'
+  ];
+}
+
+/**
+ * Detect if current directory is an initialized AppSheet project
+ * Returns object with initialization status and missing files
+ */
+function detectInitializedProject() {
+  const targetDir = process.cwd();
+
+  const hasDocFolder = fs.existsSync(path.join(targetDir, 'APPSHEET-DOCUMENTATION'));
+  const hasBlueprintFile = fs.existsSync(path.join(targetDir, 'APPSHEET_SYSTEM_BLUEPRINT.md'));
+
+  return {
+    isInitialized: hasDocFolder && hasBlueprintFile,
+    missing: {
+      docFolder: !hasDocFolder,
+      blueprintFile: !hasBlueprintFile
+    }
+  };
+}
+
+/**
+ * Show preview of what will be installed
+ */
+function showInstallPreview() {
+  const version = getPackageVersion();
+  const targetDir = process.cwd();
+
+  console.log('');
+  console.log(`${colors.bright}${colors.cyan}╔═══════════════════════════════════════════════════════════════╗${colors.reset}`);
+  console.log(`${colors.bright}${colors.cyan}║   Initialize AppSheet Project                                 ║${colors.reset}`);
+  console.log(`${colors.bright}${colors.cyan}╚═══════════════════════════════════════════════════════════════╝${colors.reset}`);
+  console.log('');
+
+  console.log(`${colors.cyan}Installing to:${colors.reset} ${colors.bright}${targetDir}${colors.reset}`);
+  console.log(`${colors.cyan}Package version:${colors.reset} ${colors.bright}v${version}${colors.reset}`);
+  console.log('');
+  console.log(`${colors.bright}The following will be installed:${colors.reset}`);
+  console.log('');
+
+  console.log(`${colors.bright}📁 Directories:${colors.reset}`);
+  console.log(`  ${colors.cyan}•${colors.reset} .claude/skills/          - Claude Code AI assistant skills`);
+  console.log(`  ${colors.cyan}•${colors.reset} .codex/skills/           - Codex AI assistant skills`);
+  console.log(`  ${colors.cyan}•${colors.reset} APPSHEET-DOCUMENTATION/  - Complete AppSheet reference library`);
+  console.log(`  ${colors.cyan}•${colors.reset} docs/                    - Project documentation structure`);
+  console.log(`  ${colors.cyan}•${colors.reset} backups/                 - Version backup storage`);
+  console.log('');
+
+  console.log(`${colors.bright}📄 Files:${colors.reset}`);
+  console.log(`  ${colors.cyan}•${colors.reset} README.md                      - Main project documentation`);
+  console.log(`  ${colors.cyan}•${colors.reset} CHANGELOG.md                   - Version history tracker`);
+  console.log(`  ${colors.cyan}•${colors.reset} CLAUDE.md                      - Claude Code guidance`);
+  console.log(`  ${colors.cyan}•${colors.reset} AGENTS.md                      - Agent documentation`);
+  console.log(`  ${colors.cyan}•${colors.reset} APPSHEET_SYSTEM_BLUEPRINT.md   - System template & blueprint`);
+  console.log('');
+
+  console.log(`${colors.bright}${colors.yellow}⚠ Warning:${colors.reset} ${colors.yellow}Existing files with the same names will be overwritten.${colors.reset}`);
+  console.log('');
+}
+
+/**
  * Initialize AppSheet project in current directory
  */
-function initProject() {
+async function initProject() {
+  // Show preview of what will be installed
+  showInstallPreview();
+
+  // Get user confirmation
+  const confirmed = await promptUserConfirmation('init');
+  if (!confirmed) {
+    process.exit(0);
+  }
+
+  const targetDir = process.cwd();
+
   console.log('');
   console.log(`${colors.bright}${colors.cyan}╔═══════════════════════════════════════════════════════════════╗${colors.reset}`);
   console.log(`${colors.bright}${colors.cyan}║   Initializing AppSheet Project...                           ║${colors.reset}`);
   console.log(`${colors.bright}${colors.cyan}╚═══════════════════════════════════════════════════════════════╝${colors.reset}`);
   console.log('');
-
-  const targetDir = process.cwd();
 
   // Check if template directory exists
   if (!fs.existsSync(TEMPLATE_DIR)) {
@@ -109,10 +206,14 @@ function initProject() {
       }
     }
 
+    const version = getPackageVersion();
+
     console.log('');
     console.log(`${colors.bright}${colors.cyan}═══════════════════════════════════════════════════════════════${colors.reset}`);
     console.log(`${colors.bright}${colors.green}🎉 AppSheet Project initialized successfully!${colors.reset}`);
     console.log(`${colors.bright}${colors.cyan}═══════════════════════════════════════════════════════════════${colors.reset}`);
+    console.log('');
+    console.log(`${colors.bright}Installed version:${colors.reset} v${version}`);
     console.log('');
 
     console.log(`${colors.bright}${colors.green}What's been set up:${colors.reset}`);
@@ -140,6 +241,184 @@ function initProject() {
 
   } catch (error) {
     console.error(`${colors.red}Error initializing project:${colors.reset}`, error.message);
+    process.exit(1);
+  }
+}
+
+/**
+ * Show preview of what will be updated
+ */
+function showUpdatePreview(systemPaths) {
+  const version = getPackageVersion();
+  const targetDir = process.cwd();
+
+  console.log('');
+  console.log(`${colors.bright}${colors.cyan}╔═══════════════════════════════════════════════════════════════╗${colors.reset}`);
+  console.log(`${colors.bright}${colors.cyan}║   Update AppSheet Project                                     ║${colors.reset}`);
+  console.log(`${colors.bright}${colors.cyan}╚═══════════════════════════════════════════════════════════════╝${colors.reset}`);
+  console.log('');
+
+  console.log(`${colors.cyan}Updating to:${colors.reset} ${colors.bright}v${version}${colors.reset}`);
+  console.log(`${colors.cyan}Project directory:${colors.reset} ${targetDir}`);
+  console.log('');
+  console.log(`${colors.bright}${colors.yellow}The following system files will be updated:${colors.reset}`);
+  console.log('');
+
+  for (const itemPath of systemPaths) {
+    const templatePath = path.join(TEMPLATE_DIR, itemPath);
+    if (fs.statSync(templatePath).isDirectory()) {
+      console.log(`  ${colors.yellow}•${colors.reset} ${colors.bright}${itemPath}/${colors.reset}`);
+    } else {
+      console.log(`  ${colors.yellow}•${colors.reset} ${colors.bright}${itemPath}${colors.reset}`);
+    }
+  }
+
+  console.log('');
+  console.log(`${colors.bright}${colors.yellow}⚠ Warning:${colors.reset} ${colors.yellow}System files will be overwritten.${colors.reset}`);
+  console.log(`${colors.dim}User files (README.md, CHANGELOG.md, docs/, backups/) will NOT be touched.${colors.reset}`);
+  console.log('');
+}
+
+/**
+ * Prompt user for confirmation
+ */
+function promptUserConfirmation(action = 'update') {
+  return new Promise((resolve) => {
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout
+    });
+
+    const message = action === 'init'
+      ? `${colors.bright}Proceed with installation? (y/n): ${colors.reset}`
+      : `${colors.bright}Proceed with update? (y/n): ${colors.reset}`;
+
+    const cancelMessage = action === 'init'
+      ? `${colors.yellow}Installation cancelled.${colors.reset}`
+      : `${colors.yellow}Update cancelled.${colors.reset}`;
+
+    rl.question(message, (answer) => {
+      rl.close();
+
+      const normalized = answer.trim().toLowerCase();
+      const confirmed = normalized === 'y' || normalized === 'yes';
+
+      console.log('');
+      if (!confirmed) {
+        console.log(cancelMessage);
+        console.log('');
+      }
+
+      resolve(confirmed);
+    });
+  });
+}
+
+/**
+ * Copy system files from template to project
+ */
+function copySystemFiles(systemPaths) {
+  const targetDir = process.cwd();
+
+  console.log(`${colors.cyan}Updating system files...${colors.reset}`);
+  console.log('');
+
+  for (const itemPath of systemPaths) {
+    const srcPath = path.join(TEMPLATE_DIR, itemPath);
+    const destPath = path.join(targetDir, itemPath);
+
+    if (!fs.existsSync(srcPath)) {
+      console.log(`${colors.yellow}⚠ Warning: ${itemPath} not found in template, skipping...${colors.reset}`);
+      continue;
+    }
+
+    const stats = fs.statSync(srcPath);
+
+    if (stats.isDirectory()) {
+      console.log(`${colors.green}✓${colors.reset} ${colors.bright}${itemPath}/${colors.reset}`);
+
+      // Delete old directory if exists (ensure clean state)
+      if (fs.existsSync(destPath)) {
+        fs.rmSync(destPath, { recursive: true, force: true });
+      }
+
+      // Copy directory recursively
+      copyDirectorySync(srcPath, destPath, '  ');
+    } else {
+      console.log(`${colors.green}✓${colors.reset} ${colors.bright}${itemPath}${colors.reset}`);
+      fs.copyFileSync(srcPath, destPath);
+    }
+  }
+
+  console.log('');
+}
+
+/**
+ * Update existing AppSheet project
+ */
+async function updateProject() {
+  // Step 1: Detect initialized project
+  const detection = detectInitializedProject();
+
+  if (!detection.isInitialized) {
+    console.log('');
+    console.log(`${colors.red}Error: Not an AppSheet project directory${colors.reset}`);
+    console.log('');
+    console.log(`${colors.yellow}Required files not found:${colors.reset}`);
+
+    // Only show files that are actually missing
+    if (detection.missing.docFolder) {
+      console.log(`  ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset} (folder)`);
+    }
+    if (detection.missing.blueprintFile) {
+      console.log(`  ${colors.cyan}APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} (file)`);
+    }
+
+    console.log('');
+    console.log(`${colors.cyan}To initialize a new project, run:${colors.reset}`);
+    console.log(`  ${colors.bright}npx appsheet-project init${colors.reset}`);
+    console.log('');
+    process.exit(1);
+  }
+
+  // Step 2: Get system paths
+  const systemPaths = getSystemPaths();
+
+  // Step 3: Show preview
+  showUpdatePreview(systemPaths);
+
+  // Step 4: Get confirmation
+  const confirmed = await promptUserConfirmation();
+  if (!confirmed) {
+    process.exit(0);
+  }
+
+  // Step 5: Perform update
+  try {
+    copySystemFiles(systemPaths);
+
+    // Step 6: Show success message
+    const version = getPackageVersion();
+    console.log(`${colors.bright}${colors.cyan}═══════════════════════════════════════════════════════════════${colors.reset}`);
+    console.log(`${colors.bright}${colors.green}✓ AppSheet Project updated successfully!${colors.reset}`);
+    console.log(`${colors.bright}${colors.cyan}═══════════════════════════════════════════════════════════════${colors.reset}`);
+    console.log('');
+    console.log(`${colors.bright}Updated to:${colors.reset} v${version}`);
+    console.log(`${colors.dim}System files synchronized with latest templates${colors.reset}`);
+    console.log('');
+    console.log(`${colors.bright}${colors.magenta}What was updated:${colors.reset}`);
+    console.log(`  ${colors.green}✓${colors.reset} AI Assistant Skills (${colors.cyan}.claude/, .codex/${colors.reset})`);
+    console.log(`  ${colors.green}✓${colors.reset} AppSheet Documentation (${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset})`);
+    console.log(`  ${colors.green}✓${colors.reset} System Blueprints & Guides`);
+    console.log('');
+    console.log(`${colors.bright}${colors.yellow}Note:${colors.reset} ${colors.dim}Your custom files (README.md, docs/, backups/) were preserved.${colors.reset}`);
+    console.log('');
+
+  } catch (error) {
+    console.error(`${colors.red}Error during update:${colors.reset}`, error.message);
+    console.log('');
+    console.log(`${colors.yellow}Update was interrupted. You can try running the update command again.${colors.reset}`);
+    console.log('');
     process.exit(1);
   }
 }
@@ -173,6 +452,15 @@ function showHelp() {
   console.log(`      cd my-appsheet-project`);
   console.log(`      npx appsheet-project init`);
   console.log('');
+  console.log(`  ${colors.green}update${colors.reset}`);
+  console.log(`    Update system files in an existing AppSheet project`);
+  console.log(`    ${colors.dim}Synchronizes system files with the latest package version${colors.reset}`);
+  console.log(`    ${colors.dim}Preserves your custom files (README.md, docs/, backups/, etc.)${colors.reset}`);
+  console.log('');
+  console.log(`    ${colors.bright}Example:${colors.reset}`);
+  console.log(`      cd my-appsheet-project`);
+  console.log(`      npx appsheet-project update`);
+  console.log('');
   console.log(`  ${colors.green}help${colors.reset}`);
   console.log(`    Show this help message`);
   console.log('');
@@ -188,9 +476,9 @@ function showHelp() {
   console.log('');
   console.log(`${colors.bright}${colors.yellow}Important Notes:${colors.reset}`);
   console.log(`  ${colors.yellow}•${colors.reset} Run ${colors.cyan}init${colors.reset} in an empty directory or your project root`);
-  console.log(`  ${colors.yellow}•${colors.reset} All files will be copied to your current location`);
-  console.log(`  ${colors.yellow}•${colors.reset} You can freely modify all files after initialization`);
-  console.log(`  ${colors.yellow}•${colors.reset} For updates, create a new project with the latest version`);
+  console.log(`  ${colors.yellow}•${colors.reset} Run ${colors.cyan}update${colors.reset} to get the latest system files in existing projects`);
+  console.log(`  ${colors.yellow}•${colors.reset} Update preserves your custom files (README.md, docs/, etc.)`);
+  console.log(`  ${colors.yellow}•${colors.reset} System files (.claude/, APPSHEET-DOCUMENTATION/, etc.) are overwritten during updates`);
   console.log('');
   console.log(`${colors.bright}Links:${colors.reset}`);
   console.log(`  ${colors.cyan}npm:${colors.reset}    https://www.npmjs.com/package/appsheet-project`);
@@ -201,10 +489,14 @@ function showHelp() {
 /**
  * Main CLI handler
  */
-function main() {
+async function main() {
   switch (command) {
     case 'init':
-      initProject();
+      await initProject();
+      break;
+
+    case 'update':
+      await updateProject();
       break;
 
     case 'help':
@@ -216,12 +508,13 @@ function main() {
     case undefined:
       console.log(`${colors.yellow}No command specified.${colors.reset}\n`);
       console.log(`Run: ${colors.cyan}npx appsheet-project init${colors.reset} to initialize a new project`);
+      console.log(`Run: ${colors.cyan}npx appsheet-project update${colors.reset} to update an existing project`);
       console.log(`Run: ${colors.cyan}npx appsheet-project help${colors.reset} for usage instructions\n`);
       break;
 
     default:
       console.error(`${colors.red}Unknown command: ${command}${colors.reset}\n`);
-      console.log(`Valid commands: ${colors.cyan}init${colors.reset}, ${colors.cyan}help${colors.reset}\n`);
+      console.log(`Valid commands: ${colors.cyan}init${colors.reset}, ${colors.cyan}update${colors.reset}, ${colors.cyan}help${colors.reset}\n`);
       console.log(`Run: ${colors.cyan}npx appsheet-project help${colors.reset} for more information\n`);
       process.exit(1);
   }

@@ -33,6 +33,60 @@ cd my-appsheet-project
 npx appsheet-project init
 ```
 
+### Update an Existing Project
+
+```bash
+# Navigate to your existing AppSheet project
+cd my-appsheet-project
+
+# Update system files to the latest version
+npx appsheet-project update
+```
+
+The `update` command synchronizes your project's system files with the latest version of the AppSheet Project package. This ensures you have the newest:
+
+- AI Assistant Skills (`.claude/skills/`, `.codex/skills/`)
+- AppSheet Documentation (`APPSHEET-DOCUMENTATION/`)
+- System Blueprints (`APPSHEET_SYSTEM_BLUEPRINT.md`)
+- Agent Documentation (`AGENTS.md`, `CLAUDE.md`)
+
+**What gets updated:**
+- System files are completely overwritten with the latest templates
+- You'll see a preview of what will be updated before confirming
+
+**What is preserved:**
+- Your custom files: `README.md`, `CHANGELOG.md`, `docs/`, `backups/`, `sample_data/`, `utils/`
+- Any modifications you've made to non-system files
+
+**When to use update:**
+- After a new version of `appsheet-project` is released
+- To get the latest skill improvements and documentation
+- To fix corrupted or accidentally modified system files
+
+**Example output:**
+```
+╔═══════════════════════════════════════════════════════════════╗
+║   Update AppSheet Project                                     ║
+╚═══════════════════════════════════════════════════════════════╝
+
+Updating to: v1.0.7
+Project directory: /Users/you/my-project
+
+The following system files will be updated:
+
+  • .claude/
+  • .codex/
+  • APPSHEET-DOCUMENTATION/
+  • AGENTS.md
+  • APPSHEET_SYSTEM_BLUEPRINT.md
+  • CLAUDE.md
+
+⚠ Warning: System files will be overwritten with template versions.
+User files (README.md, CHANGELOG.md, docs/, backups/, etc.) will NOT be touched.
+
+Proceed with update? (y/n):
+```
+
 ### View Help
 
 ```bash
