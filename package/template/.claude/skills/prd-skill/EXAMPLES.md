@@ -11,7 +11,7 @@ This is a complete example of a well-written PRD for a student management applic
 ```markdown
 # Product Requirements Document (PRD)
 
-**Project Name:** Digital Marketing Institute Student Data App - Tirur
+**Project Name:** [Institution Name] Student Management System
 **Version:** 1.0.0
 **Date:** 2026-01-20
 **Owner:** Institute Administrator
@@ -22,7 +22,7 @@ This is a complete example of a well-written PRD for a student management applic
 ## 1. Purpose & Problem Statement
 
 **What problem are we solving?**
-The Tirur branch currently manages student data, attendance, and fee payments using manual spreadsheets and paper records. This leads to:
+The institution currently manages student data, attendance, and fee payments using manual spreadsheets and paper records across their main campus. This leads to:
 - Data inconsistencies and errors
 - Time-consuming manual data entry
 - Difficulty tracking student attendance patterns
@@ -38,7 +38,7 @@ Streamlining student data management will:
 - Support regulatory compliance for attendance tracking
 
 **Who is this for?**
-Primary users: Institute administrators, instructors, and front desk staff at the Tirur branch of Digital Marketing Institute.
+Primary users: Institute administrators, instructors, and front desk staff at the educational institution.
 
 ---
 
@@ -86,7 +86,7 @@ Primary users: Institute administrators, instructors, and front desk staff at th
 - Online payment gateway integration (manual payment entry only)
 - Learning management system (LMS) features
 - Video conferencing integration
-- Multi-branch support (Tirur branch only)
+- Multi-branch support (single location deployment only)
 
 ---
 
@@ -207,9 +207,9 @@ Google Sheets (cloud-based spreadsheet)
 
 | Stakeholder | Role | Approval Date | Signature/Status |
 |-------------|------|---------------|------------------|
-| Rasheed Khan | Branch Manager | 2026-01-20 | ✓ Approved |
-| Fatima Ahmed | Admin Lead | 2026-01-20 | ✓ Approved |
-| Arun Kumar | Technical Consultant | 2026-01-20 | ✓ Approved |
+| Sarah Martinez | Branch Manager | 2026-01-20 | ✓ Approved |
+| Alex Johnson | Admin Lead | 2026-01-20 | ✓ Approved |
+| Michael Chen | Technical Consultant | 2026-01-20 | ✓ Approved |
 
 ---
 
@@ -225,7 +225,7 @@ Google Sheets (cloud-based spreadsheet)
 
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
-| 1.0.0 | 2026-01-20 | Arun Kumar | Initial PRD |
+| 1.0.0 | 2026-01-20 | [Author Name] | Initial PRD |
 
 ---
 
@@ -262,7 +262,7 @@ Because it will help the institute.
 ## 1. Purpose & Problem Statement
 
 **What problem are we solving?**
-The Tirur branch currently manages 300+ students using manual spreadsheets, causing:
+The institution currently manages 300+ students using manual spreadsheets, causing:
 - 5+ hours/week spent on manual attendance compilation
 - 15% error rate in fee payment tracking
 - 2-3 day delay in generating attendance reports
@@ -301,8 +301,8 @@ Automating student data management will:
    ## Document History
    | Version | Date | Author | Changes |
    |---------|------|--------|---------|
-   | 1.0.0 | 2026-01-20 | Arun Kumar | Initial PRD |
-   | 1.1.0 | 2026-02-10 | Arun Kumar | Added parent mobile app to Could-Have (deferred to Phase 2) |
+   | 1.0.0 | 2026-01-20 | [Author Name] | Initial PRD |
+   | 1.1.0 | 2026-02-10 | [Author Name] | Added parent mobile app to Could-Have (deferred to Phase 2) |
    ```
 
 ---
@@ -372,7 +372,7 @@ Description: "Student attendance status for the day"
 2. **Advanced Analytics** - Valuable for insights, not core operations
 
 ### Won't-Have (Out of Scope)
-- Multi-branch support (Tirur only for MVP)
+- Multi-branch support (single location only for MVP)
 - Online payment gateway (manual entry sufficient)
 ```
 
