@@ -117,9 +117,9 @@ The **[APPSHEET-DOCUMENTATION/](APPSHEET-DOCUMENTATION/)** directory contains co
     - Virtual columns, Primary keys, Data relationships
     - See [TABLES_DATA_SCHEMA.md](APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md) for index
 
-## Claude Skills
+## AGENT Skills
 
-This project includes specialized Claude skills in **[.claude/skills/](.claude/skills/)**:
+This project includes specialized AGENT skills in **[.codex/skills/](.codex/skills/)**:
 
 - **appsheet-blueprint-skill** - Generate complete AppSheet documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for tables, views, actions, and security rules
 - **appsheet-reference-skill** - Look up AppSheet formulas, view types, actions, security filters, slices, and automation patterns
