@@ -145,6 +145,154 @@ DELETES: USERROLE() = "Admin"
 
 ---
 
+## 7. Expression-Based Operations Control
+
+**Location:** Data > Tables > [Table Name] > Are updates allowed?
+
+Instead of using checkboxes, you can enter an expression that returns:
+- **"ALL_CHANGES"** - Enable Updates, Adds, and Deletes
+- **"READ_ONLY"** - Disable all modifications
+
+### When to Use Expressions vs Checkboxes
+
+**Use Checkboxes When:**
+- Simple on/off for all users
+- Static operation permissions
+
+**Use Expressions When:**
+- Conditional control based on user
+- Role-based operation toggling
+- Dynamic permission logic
+
+### Basic Pattern
+
+```appsheet
+IF(
+  condition,
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+```
+
+### Examples
+
+#### Admin-Only Modifications
+```appsheet
+IF(
+  USEREMAIL() = "admin@example.com",
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+
+# Result:
+# - Admin can add, edit, delete
+# - All other users: read-only
+```
+
+#### Role-Based Control
+```appsheet
+IF(
+  IN(USEREMAIL(), SELECT(Managers[Email Address], TRUE)),
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+
+# Result:
+# - Managers can add, edit, delete
+# - Non-managers: read-only
+```
+
+#### App Owner Control
+```appsheet
+IF(
+  ISAPPOWNER(),
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+
+# Result:
+# - App creator/owner: full access
+# - All users: read-only
+```
+
+#### Multiple Role Check
+```appsheet
+IF(
+  OR(
+    USERROLE() = "Admin",
+    USERROLE() = "Manager"
+  ),
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+
+# Result:
+# - Admins and Managers: full access
+# - Other roles: read-only
+```
+
+### Combining with Security Formulas
+
+Expression-based operations work with security formulas (UPDATES/ADDS/DELETES):
+
+```appsheet
+# Are updates allowed? (Expression)
+IF(USERROLE() = "Manager", "ALL_CHANGES", "READ_ONLY")
+
+# Security formulas (if needed)
+UPDATES: [Owner] = USEREMAIL()
+ADDS: TRUE
+DELETES: [Status] = "Draft"
+
+# Result for Managers:
+# - Can add any record
+# - Can only edit records they own
+# - Can only delete Draft records
+
+# Result for non-Managers:
+# - READ_ONLY (cannot add, edit, or delete anything)
+```
+
+### Expression vs Security Formula Control
+
+| Control Method | Returns | Controls | Use Case |
+|----------------|---------|----------|----------|
+| **Expression** | "ALL_CHANGES" or "READ_ONLY" | Enable/disable all operations | User or role-based operation toggling |
+| **Security Formula** | TRUE or FALSE | Per-operation, per-record | Granular control (who can do what to which records) |
+| **Checkboxes** | Yes or No | Enable/disable operations | Simple static on/off |
+
+### Common Patterns
+
+#### Admin-Only Table
+```appsheet
+IF(USERROLE() = "Admin", "ALL_CHANGES", "READ_ONLY")
+```
+
+#### Manager Access Table
+```appsheet
+IF(
+  IN(USEREMAIL(), SELECT(Managers[Email], TRUE)),
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+```
+
+#### Multi-Role Access
+```appsheet
+IF(
+  IN(USERROLE(), LIST("Admin", "Manager", "Editor")),
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+```
+
+#### App Creator Only
+```appsheet
+IF(ISAPPOWNER(), "ALL_CHANGES", "READ_ONLY")
+```
+
+---
+
 **Related Documentation:**
 - [Table Settings Overview](TABLE_SETTINGS_OVERVIEW.md)
 - [Table Security](TABLE_SECURITY.md)

@@ -50,7 +50,7 @@ This skill provides complete documentation templates from `APPSHEET_SYSTEM_BLUEP
 - **Table Schema** - All AppSheet configuration fields (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE)
 - **Action Documentation** - Behavior, Referenced Rows, Column values, SHOW IF, icons
 - **View Configuration** - Display settings, grouping, sorting, security, SHOW IF
-- **Security Rules** - Table-level (UPDATES, ADDS, DELETES) + row-level filtering
+- **Security Rules** - Table-Level Operations (Are updates allowed?) + Row-Level Security Filter
 - **Enum Documentation** - Values and usage
 
 For complete templates with all fields, see [TEMPLATES.md](TEMPLATES.md).
@@ -100,10 +100,13 @@ Check against requirements:
 **Table-Level Settings:**
 ```appsheet
 Table: Students
-Security:
-  UPDATES: ALL_CHANGES
-  ADDS: TRUE
-  DELETES: FALSE
+  # Table-Level Operations
+  Updates Enabled: Yes
+  Adds Enabled: Yes
+  Deletes Enabled: No
+
+  # Row-Level Security Filter
+  Security Filter (row-level): [Owner] = USEREMAIL()
 ```
 
 **Columns:**

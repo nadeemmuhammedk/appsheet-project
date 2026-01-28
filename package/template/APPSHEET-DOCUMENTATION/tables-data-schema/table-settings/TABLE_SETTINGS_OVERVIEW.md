@@ -46,10 +46,11 @@ Additional table configurations.
 
 | Setting | Purpose |
 |---------|---------|
-| **Are updates** | Mark table as update-only (existing records) |
+| **Are updates allowed?** | Checkbox or Expression to control operations (returns "ALL_CHANGES" or "READ_ONLY") |
 | **Localization** | Multi-language support |
 | **Table name** | Display name for table |
 
+[See Table Operations (Expression-Based Control) →](TABLE_OPERATIONS.md#7-expression-based-operations-control)
 [See Table Localization →](TABLE_LOCALIZATION.md)
 
 ---

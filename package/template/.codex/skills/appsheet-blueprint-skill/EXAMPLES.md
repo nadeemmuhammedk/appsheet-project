@@ -69,17 +69,13 @@ Every column MUST have:
 **Table-Level Settings:**
 ```appsheet
 Table: Students
-Updates Enabled: Yes
-Adds Enabled: Yes
-Deletes Enabled: No
+  # Table-Level Operations
+  Updates Enabled: Yes
+  Adds Enabled: Yes
+  Deletes Enabled: No
 
-Security:
-  UPDATES: ALL_CHANGES
-  ADDS: TRUE
-  DELETES: FALSE
-
-Row-level filtering:
-  [BatchID] = LOOKUP(USEREMAIL(), "Users", "Email", "BatchID")
+  # Row-Level Security Filter
+  Security Filter (row-level): [BatchID] = LOOKUP(USEREMAIL(), "Users", "Email", "BatchID")
 ```
 
 **Columns:**
@@ -196,9 +192,8 @@ Before finalizing any documentation, verify:
 
 **For Tables:**
 - [ ] Table name, Google Sheets tab, primary key documented
-- [ ] Table-level settings (Updates, Adds, Deletes) documented
-- [ ] Security rules (UPDATES, ADDS, DELETES) documented
-- [ ] Row-level filtering (if applicable) documented
+- [ ] Table-Level Operations (Are updates allowed?) documented
+- [ ] Row-Level Security Filter documented
 - [ ] ALL columns documented with ALL fields
 - [ ] ALL virtual columns documented
 - [ ] ALL actions documented
@@ -222,8 +217,8 @@ Before finalizing any documentation, verify:
 - [ ] Description documented
 
 **For Security:**
-- [ ] Table-level rules (UPDATES, ADDS, DELETES) documented
-- [ ] Row-level filtering formula documented
+- [ ] Table-Level Operations (Are updates allowed?) documented
+- [ ] Row-Level Security Filter documented
 - [ ] Role-based access documented
 
 ---

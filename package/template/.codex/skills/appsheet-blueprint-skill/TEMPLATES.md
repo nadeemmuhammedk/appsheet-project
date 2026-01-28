@@ -62,21 +62,22 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 **Table-Level Settings:**
 ```appsheet
 Table: [Table Name]
-Updates Enabled: Yes/No (conditional)
-Adds Enabled: Yes/No (conditional)
-Deletes Enabled: Yes/No (conditional)
+  # Table-Level Operations
+  Updates Enabled: Yes/No
+  Adds Enabled: Yes/No
+  Deletes Enabled: Yes/No
 
-Security:
-  UPDATES: [formula or ALL_CHANGES/READ_ONLY]
-  ADDS: [formula or TRUE/FALSE]
-  DELETES: [formula or TRUE/FALSE]
+  # OR expression-based operations control
+  Are updates allowed?: IF([condition], "ALL_CHANGES", "READ_ONLY")
 
-Row-level filtering (if applicable):
-  [Formula that filters which rows user can see]
+  # Row-Level Security Filter
+  Security Filter (row-level): [Formula]
 
 Notes:
   - [Role]: [What they can do]
 ```
+
+**Note: UPDATES/ADDS/DELETES formulas (TRUE/FALSE in Security section) are only needed when different operations have different permissions. Most tables should use Table-Level Operations + Security Filter only.**
 
 **Columns:**
 
@@ -189,13 +190,27 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 **Table-Level Settings:**
 ```appsheet
 Table: [Table Name]
-Security:
-  UPDATES: [formula or ALL_CHANGES/READ_ONLY]
-  ADDS: [formula or TRUE/FALSE]
-  DELETES: [formula or TRUE/FALSE]
+  # Table-Level Operations
+  Updates Enabled: Yes/No
+  Adds Enabled: Yes/No
+  Deletes Enabled: Yes/No
 
-Row-level filtering (if applicable):
-  [Formula that filters which rows user can see]
+  # OR expression-based operations control
+  Are updates allowed?: IF([condition], "ALL_CHANGES", "READ_ONLY")
+
+  # Row-Level Security Filter
+  Security Filter (row-level): [Formula]
+
+# OR when different operations need different permissions (rare):
+  Updates Enabled: Yes
+  Adds Enabled: Yes
+  Deletes Enabled: Yes
+
+  UPDATES: [formula for who can update]
+  ADDS: [formula for who can add]
+  DELETES: [formula for who can delete]
+
+  Security Filter (row-level): [Formula]
 ```
 ```
 

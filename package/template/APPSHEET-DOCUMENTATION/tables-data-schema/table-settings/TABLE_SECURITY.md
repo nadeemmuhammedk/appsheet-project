@@ -283,13 +283,21 @@ ADDS: COUNT(
 
 ---
 
-## 9. Security vs Row Filtering
+## 9. Security vs Row Filtering vs Operations Control
+
+### Operations Control (Expression-Based)
+- **Location:** Table Settings > Are updates allowed?
+- **Returns:** "ALL_CHANGES" or "READ_ONLY"
+- **Controls:** Enable/disable all operations for specific users/roles
+- **Use Case:** User or role-based operation toggling (e.g., admin-only table)
+- **See:** [Table Operations - Expression-Based Control](TABLE_OPERATIONS.md#7-expression-based-operations-control)
 
 ### Security Formulas (UPDATES/ADDS/DELETES)
-- Control WHAT ACTIONS users can perform
-- Apply to all records or specific records
-- TRUE = action allowed, FALSE = action blocked
-- Located in: Security Filter section
+- **Location:** Security Filter section
+- **Returns:** TRUE or FALSE
+- **Controls:** Per-operation, per-record permissions
+- **Use Case:** Granular control (who can do what to which records)
+- **More granular than expression-based control**
 
 ### Row-Level Filtering
 - Control WHICH RECORDS users can see
