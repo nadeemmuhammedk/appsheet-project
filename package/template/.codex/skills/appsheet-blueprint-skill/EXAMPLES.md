@@ -23,9 +23,8 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md`:
 **When promoting Experimental → Stable:**
 1. Create point-in-time backup of current STABLE to `backups/[date]-v[X-1]-stable/`
 2. Integrate EXPERIMENTAL changes into STABLE (reorganize by feature/table, NOT chronologically)
-3. Add version tags ("Added: V[X]") to new features
-4. Update CHANGELOG.md and backups/README.md
-5. Remove EXPERIMENTAL section from active file
+3. Update CHANGELOG.md and backups/README.md
+4. Remove EXPERIMENTAL section from active file
 
 **Organization:**
 - STABLE: Organized by feature/table (logical grouping)
@@ -142,9 +141,8 @@ Security:
 3. **Include ALL columns** - No partial table documentation
 4. **Document security** for every table
 5. **Add descriptions** for all components
-6. **Use version tags** when applicable ("Added: V[X]")
-7. **Organize by feature** in STABLE section
-8. **Verify completeness** before promoting to STABLE
+6. **Organize by feature** in STABLE section
+7. **Verify completeness** before promoting to STABLE
 
 ## Automatic Invocation Triggers
 

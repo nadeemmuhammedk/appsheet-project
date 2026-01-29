@@ -141,9 +141,11 @@ Current Features:
 - [ ] Test case 1
 - [ ] Test case 2
 
+**⚠️ PLACEMENT RULE:** EXPERIMENTAL section MUST be placed at the TOP of the file (immediately after file metadata/header) for quick access during active development. STABLE section comes second.
+
 ---
 
-## STABLE SYSTEM V[X-1] - [Feature Name]
+## STABLE SYSTEM V[X-1]
 
 **VERSION:** [Month Year]
 **STATUS:** ✓ TESTED AND WORKING
@@ -505,7 +507,7 @@ These anti-patterns occurred during V1→V2 promotion and must be avoided.
 #### 4. Fee Details Table
 ```
 
-**Rule:** Never add `(UNCHANGED IN VX)` or `(MODIFIED IN VX)` to section headers. Version info belongs only at document top and via subtle tags on specific items.
+**Rule:** Never add `(UNCHANGED IN VX)` or `(MODIFIED IN VX)` to section headers. Version info belongs ONLY at document top in structured format block.
 
 ---
 
@@ -590,15 +592,15 @@ AppSheet Configuration:
 **Column D: Attendance Status** - UNCHANGED FROM V1
 ```
 
-✅ **CORRECT:** Subtle tags only on changed items
+✅ **CORRECT:** Clean item names without any version markers
 ```markdown
 #### 3. Student Attendance Table
 
-**Column C: Course Status** - Added: V2
+**Column C: Course Status**
 **Column D: Attendance Status**
 ```
 
-**Rule:** Use subtle "Added: VX" or "Modified: VX" tags only on items that actually changed. Don't mark unchanged items.
+**Rule:** Never add version tags to individual items. Version info belongs ONLY at document top in structured format block.
 
 ---
 
@@ -627,11 +629,11 @@ For views and actions, see V1 documentation in backups/2025-12-01-v1-stable/
 
 #### Summary: The Golden Rules
 
-1. **No `(UNCHANGED IN VX)` markers** - in headers, column names, or anywhere
+1. **No `(UNCHANGED IN VX)` markers** - anywhere in documentation
 2. **No "see previous version" shortcuts** - document everything fully
 3. **No "unchanged from V1" placeholders** - provide complete configuration
-4. **Version info at document top** - "VERSION: V2" in section header
-5. **Subtle tags on changed items only** - "Added: V2" or "Modified: V2"
+4. **No version tags on items** - not even "Added: VX" or "Modified: VX"
+5. **Version info at document top only** - in structured format block
 6. **Self-contained documentation** - one file tells you everything about current system
 
 **Test:** If a reader needs to open archived files to understand the current system, the documentation is incomplete.
@@ -1125,8 +1127,6 @@ The active file maintains a **complete, cumulative view of the current applicati
 
 **Organization:** By feature/table (Data Tables, Views, Actions, etc.), NOT chronologically by version
 
-**Version Tags:** Features marked with "Added: VX" to show when introduced
-
 1. **EXPERIMENTAL V[X]** (Optional - if testing new features)
    - **Includes:**
      - What's New (features being added)
@@ -1138,7 +1138,7 @@ The active file maintains a **complete, cumulative view of the current applicati
 
 2. **STABLE SYSTEM V[X-1]** - Complete current application state
    - **Includes:**
-     - 📊 COMPLETE TABLE SCHEMAS (ALL tables with version tags)
+     - 📊 COMPLETE TABLE SCHEMAS (ALL tables)
      - 🔧 ALL ACTIONS (from all versions)
      - 📱 ALL VIEWS (from all versions)
      - 🔒 ALL SECURITY RULES
@@ -1146,15 +1146,16 @@ The active file maintains a **complete, cumulative view of the current applicati
      - ✅ TESTING RESULTS
      - 📚 VERSION HISTORY (summary at bottom)
    - **Purpose:** Single source of truth showing complete cumulative state
-   - **Organization:** Grouped by feature/table type, tagged with version added
+   - **Organization:** Grouped by feature/table type
    - **Status:** ✓ TESTED AND WORKING
 
    ⚠️ **CRITICAL: STABLE SYSTEM documentation must be SELF-CONTAINED**
    - NO "(UNCHANGED IN VX)" markers in headers
    - NO "See previous version" placeholders
    - NO "Unchanged from V1" shortcuts
+   - NO version tags on individual items
    - EVERY table, view, action, column documented in full
-   - Version info only at document top and via subtle tags on modified items
+   - Version info ONLY at document top in structured format block
    - Reader must understand system WITHOUT opening archived files
 
    **See Section 4.2.5** for detailed examples of what NOT to do (anti-patterns from V1→V2 promotion).
@@ -1176,38 +1177,59 @@ The active file maintains a **complete, cumulative view of the current applicati
 **KEY CONCEPT:** Experimental changes get **integrated** into the complete cumulative documentation, while taking a point-in-time backup of the state before the addition.
 
 #### Step 1: Create Point-in-Time Backup (Before Adding New Features)
-1. Create directory: `backups/YYYY-MM-DD-v[X-1]-stable/`
-2. Extract the complete current Stable V[X-1] from active file (the state BEFORE experimental changes)
-3. Add "🔄 QUICK ROLLBACK FROM V[X] TO V[X-1]" section at top:
-   ```markdown
-   ## 🔄 QUICK ROLLBACK FROM V[X] TO V[X-1]
 
-   **Use this if V[X] additions cause issues and you need to remove them.**
+**NOTE:** Backup should already exist from when experimental work started (created using Bash).
+
+**Backup Naming Convention:**
+- Format: `backups/YYYY-MM-DD-[filename]/`
+- Example: `backups/2026-01-29-googlesheet-formulas/`
+- NO version numbers in folder name
+- NO "-stable" or "-backup" suffixes
+
+1. Verify backup directory exists: `backups/YYYY-MM-DD-[filename]/`
+2. If missing, create using Bash:
+   ```bash
+   mkdir -p backups/2026-01-29-googlesheet-formulas/
+   cp docs/formulas/googlesheet_formulas.md backups/2026-01-29-googlesheet-formulas/
+   ```
+3. Add "🔄 QUICK ROLLBACK" section at top of archived file:
+   ```markdown
+   ## 🔄 QUICK ROLLBACK
+
+   **Use this backup if new changes cause issues.**
 
    ### Rollback Steps (estimated time: [X] minutes)
    1. AppSheet changes: [list what to delete/revert]
    2. Google Sheets changes: [list what to delete/revert]
    3. Apps Script changes: [list what to delete/revert]
-   4. Verification: [test cases to confirm V[X-1] features still work]
+   4. Verification: [test cases to confirm previous features still work]
 
    ### Note on Data
    [Explain if any data needs to be migrated/removed during rollback]
    ```
-4. Save as: `backups/YYYY-MM-DD-v[X-1]-stable/appsheet_formulas.md`
+4. Backup file already saved at: `backups/YYYY-MM-DD-[filename]/[filename].md`
 5. Update `backups/README.md` index:
-   - Add row to Archived Versions table with "Extended By" column showing V[X]
-   - Explain what V[X] added (not replaced)
-6. Update `CHANGELOG.md` in root:
-   - Mark V[X-1] as ARCHIVED (point-in-time backup)
-   - Add V[X] as STABLE (current production with cumulative features)
-   - Update version comparison table showing additive features
+   ```markdown
+   | Date | File | Feature | Location |
+   |------|------|---------|----------|
+   | YYYY-MM-DD | filename.md | Feature Name | YYYY-MM-DD-filename/ |
+   ```
+6. Update `CHANGELOG.md` in root with date-based entry:
+   ```markdown
+   ## YYYY-MM-DD - [Feature Name]
+   **Files Changed:** filename.md
+   **Status:** ✅ DEPLOYED
+
+   ### What's New
+   - Feature bullet point 1
+   - Feature bullet point 2
+   ```
+   **Note:** Use date + feature name (NOT version numbers like "V3 - STABLE")
 
 #### Step 2: Integrate Experimental Changes into Stable
 1. Change header: `EXPERIMENTAL V[X]` → mark as promoted
 2. **Reorganize active file by feature/table** (NOT chronologically):
    - Integrate new tables/features into existing sections
-   - Add "Added: V[X]" tags to new features
-   - Keep existing features with their "Added: V[X-1]" tags
    - Organize by: Data Tables → Actions → Views → Security (functional grouping)
 3. Update header at top:
    - **CURRENT VERSION:** V[X]
@@ -1228,9 +1250,11 @@ The active file maintains a **complete, cumulative view of the current applicati
    - Feature 2: Description
 
    ### Previous Version: V[X-1] (Month Year)
-   **Backup Location:** `backups/YYYY-MM-DD-v[X-1]-stable/`
+   **Backup Location:** `backups/YYYY-MM-DD-[filename]/`
    **What V[X-1] Had:** [Summary of features before V[X] additions]
    ```
+
+   **Note:** Each file maintains its own version numbers (V1, V2, V3, etc.). There are NO "app versions".
 
 #### Step 3: Clean Up Active File
 1. Remove Experimental V[X] section (content now integrated)
@@ -1246,9 +1270,9 @@ The active file maintains a **complete, cumulative view of the current applicati
    **Point-in-time backups before major additions:**
 
    **See:**
-   - V[X-1] (before V[X] additions): `backups/YYYY-MM-DD-v[X-1]-stable/appsheet_formulas.md`
+   - Previous backup (YYYY-MM-DD): `backups/YYYY-MM-DD-[filename]/[filename].md`
    - Complete index: `backups/README.md`
-   - Version history: `CHANGELOG.md`
+   - Deployment history: `CHANGELOG.md`
    ```
 
 #### Step 4: Verify & Notify
@@ -1259,14 +1283,14 @@ The active file maintains a **complete, cumulative view of the current applicati
 5. Output summary:
    ```
    ✅ V[X] promoted to Stable!
-   ✅ V[X-1] archived to backups/YYYY-MM-DD-v[X-1]-stable/ (point-in-time backup)
+   ✅ Backup verified at backups/YYYY-MM-DD-[filename]/ (point-in-time backup)
    ✅ Experimental changes integrated into complete documentation
    ✅ File reorganized by feature/table (not chronologically)
-   ✅ CHANGELOG.md updated
+   ✅ CHANGELOG.md updated (date-based entry)
    ✅ backups/README.md updated
 
    Active file now contains:
-   - Complete cumulative state (V2 features + V3 features)
+   - Complete cumulative state (all features from all versions)
    - Organized by: Data Tables → Views → Actions → Security
    - Version tags showing when each feature was added
 
@@ -1667,8 +1691,8 @@ See root CHANGELOG.md for version history summary.
 ## 📖 How to Use Archived Versions
 
 ### For Rollback:
-1. Find version in table above
-2. Open `[date]-v[X]-stable/appsheet_formulas.md`
+1. Find backup in table above
+2. Open `[date]-[filename]/[filename].md`
 3. Look for "🔄 QUICK ROLLBACK" section at top
 4. Follow rollback steps
 
@@ -1686,7 +1710,7 @@ This template shows the exact structure for documenting each Stable System in `a
 
 ---
 
-## STABLE SYSTEM V[X] - [Feature Name]
+## STABLE SYSTEM V[X]
 
 **VERSION:** [Month Year]
 **STATUS:** ✓ TESTED AND WORKING
@@ -1789,8 +1813,9 @@ This project uses the AppSheet Documentation System Blueprint.
 
 **Version Management:**
 - Active file: 2 versions (Experimental + Stable)
-- Archive: Previous versions in `backups/[date]-v[X]-stable/`
-- History: See `CHANGELOG.md` for quick reference
+- Archive: Previous versions in `backups/[date]-[filename]/`
+- History: See `CHANGELOG.md` for deployment history (date-based)
+- Each file maintains its own version numbers - NO "app versions"
 
 ### Formula Documentation Format
 
@@ -1950,7 +1975,7 @@ For each existing file:
 - If versions found:
   - Extract Experimental version → place in new file Experimental section
   - Extract latest Stable version → place in new file Stable section
-  - Extract older versions → create `backups/[date]-v[X]-stable/` for each
+  - Extract older versions → create `backups/[date]-[filename]/` for each
 - If no versions:
   - Place entire content in Experimental V1 section
   - Note: "Migrated from unversioned system"
@@ -2095,8 +2120,9 @@ FIND: "Version Management Structure" section
 COMPARE to blueprint template (lines 1489-1500):
   Expected content:
   - "Active file: 2 versions (Experimental + Stable)"
-  - "Archive: Previous versions in backups/[date]-v[X]-stable/"
-  - "History: See CHANGELOG.md for quick reference"
+  - "Archive: Previous versions in backups/[date]-[filename]/"
+  - "History: See CHANGELOG.md for deployment history (date-based)"
+  - "Each file maintains its own version numbers - NO app versions"
   - Promotion workflow description
   - 2-version discipline explanation
 
@@ -2125,7 +2151,8 @@ STABLE SYSTEM V[X-1] (current production)
     ↓
 📚 Archived Versions (pointer to backups/)  ← RIGHT: references backups/
 ```
-- Archive: Previous versions in `backups/[date]-v[X]-stable/`
+- Archive: Previous versions in `backups/[date]-[filename]/`
+- Example: `backups/2026-01-29-googlesheet-formulas/`
 ```
 
 ---
@@ -2209,10 +2236,10 @@ Expected structure:
   - 📚 Archived Versions (pointer only)
 
 IF (more than 2 active versions found):
-  → Archive old versions to backups/[date]-v[X]-stable/
+  → Archive old versions to backups/[date]-[filename]/
   → Update active file to keep only 2 versions
-  → Update backups/README.md with archive entry
-  → Update CHANGELOG.md
+  → Update backups/README.md with archive entry (date-based format)
+  → Update CHANGELOG.md (date-based format)
 
 CHECK: File size
   → Target: < 2000 lines
@@ -2397,7 +2424,7 @@ With validation:
    ☐ Every view documented in full
    ☐ Every action documented in full
    ☐ Reader can understand system WITHOUT opening archived files
-   ☐ Subtle version tags only on changed items ("Added: VX", "Modified: VX")
+   ☐ No version tags on individual items (version info at document top only)
 4. If any checklist item fails: Fix documentation before promoting
 5. Update CHANGELOG.md
 6. Update backups/README.md

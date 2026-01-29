@@ -20,18 +20,25 @@ This project uses the AppSheet Documentation System Blueprint.
 **Version Management:**
 
 - Active file: 2 versions (Experimental + Stable only)
-- Archive: Previous versions in `backups/[date]-v[X]-stable/`
-- History: See `CHANGELOG.md` for quick reference
+- Archive: Previous versions in `backups/[date]-[filename]/`
+- History: See `CHANGELOG.md` for deployment history (date-based, not version-based)
+- Each file maintains its own version numbers (V1, V2, V3, etc.) - NO "app versions"
 
 **Version Management Structure:**
 
 ```
-EXPERIMENTAL V[X] (if testing new features)
+EXPERIMENTAL V[X] (if testing new features) ← TOP of file
     ↓
-STABLE SYSTEM V[X-1] (current production)
+STABLE SYSTEM V[X-1] (current production) ← Middle of file
     ↓
-📚 Archived Versions (pointer to backups/)
+📚 Archived Versions (pointer to backups/) ← Bottom of file
 ```
+
+**Placement Rule:**
+- EXPERIMENTAL section ALWAYS at TOP (after file header)
+- Reason: Quick access during active development
+- STABLE section in middle
+- Archive pointer at bottom
 
 **Key Principles:**
 
@@ -61,9 +68,10 @@ When documenting STABLE SYSTEM versions:
 
 - **DO NOT** use "(UNCHANGED IN VX)" markers in section headers
 - **DO NOT** use "see previous version" or "unchanged from V1" shortcuts
+- **DO NOT** add version tags to individual items - not even "Added: VX" or "Modified: VX"
 - **DO** document every table, view, action, and column in full
-- **DO** use subtle version tags only on changed items ("Added: VX", "Modified: VX")
 - **DO** keep STABLE documentation self-contained (reader shouldn't need archives)
+- **DO** keep version info ONLY at document top in structured format block
 
 **For detailed examples of what NOT to do, see:**
 
@@ -75,15 +83,24 @@ See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 
 **When promoting Experimental → Stable:**
 
-1. Create point-in-time backup of current Stable to `backups/[date]-v[X-1]-stable/`
-2. Add Quick Rollback section to archived file
+1. Verify backup exists at `backups/[date]-[filename]/` (created when experimental work started)
+2. Add Quick Rollback section to archived file (if not present)
 3. Integrate Experimental changes into Stable (reorganize by feature/table)
-4. Add version tags ("Added: V[X]") to new features
-5. **DO NOT** use "(UNCHANGED IN VX)" markers anywhere in the document
-6. **DO NOT** use "see previous version" or "unchanged from V1" shortcuts
+4. **DO NOT** use "(UNCHANGED IN VX)" markers anywhere in the document
+5. **DO NOT** use "see previous version" or "unchanged from V1" shortcuts
+6. **DO NOT** add version tags to individual items
 7. Document EVERYTHING fully - STABLE must be self-contained
-8. Update CHANGELOG.md and backups/README.md
+8. Update CHANGELOG.md (date-based format) and backups/README.md
 9. Remove Experimental section from active file
+
+**Backup Naming Convention:**
+- Format: `backups/YYYY-MM-DD-[filename]/`
+- Example: `backups/2026-01-29-googlesheet-formulas/`
+- NO version numbers or "-stable" suffix
+
+**CHANGELOG Format:**
+- Use date + feature name (NOT "V3 - STABLE")
+- Example: `## 2026-01-29 - Attendance Overview Reporting`
 
 ## Reference Documentation
 
@@ -91,7 +108,7 @@ See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 
 - **[APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
 - **[docs/project/PRD.md](docs/project/PRD.md)** - Product requirements document
-- **[CHANGELOG.md](CHANGELOG.md)** - Version history
+- **[CHANGELOG.md](CHANGELOG.md)** - Deployment history (date-based, not version-based)
 - **[backups/README.md](backups/README.md)** - Archived versions index
 
 ### AppSheet Reference Materials

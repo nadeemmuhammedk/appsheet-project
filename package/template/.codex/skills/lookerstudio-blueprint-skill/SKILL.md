@@ -188,7 +188,6 @@ lookerstudio_formulas.md
 - Creating EXPERIMENTAL sections for new reports
 - Archiving current STABLE before promotion
 - Integrating Experimental into STABLE
-- Tagging new items with "Added: V[X]"
 - Updating CHANGELOG.md
 - Verifying completeness
 

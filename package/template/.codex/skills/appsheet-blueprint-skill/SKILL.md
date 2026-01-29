@@ -189,7 +189,6 @@ Documentation files follow a 2-version discipline:
 - Creating EXPERIMENTAL sections for new features
 - Archiving current STABLE before promotion
 - Integrating Experimental into STABLE (reorganizes by feature type)
-- Tagging new items with "Added: V[X]"
 - Updating CHANGELOG.md
 - Verifying completeness
 
@@ -198,10 +197,11 @@ Documentation files follow a 2-version discipline:
 ❌ **NEVER use "(UNCHANGED IN VX)" markers** in headers
 ❌ **NEVER say "see previous version"** - document everything fully
 ❌ **NEVER skip documenting items** - complete documentation required
+❌ **NEVER add version tags to items** - not even "Added: VX" or "Modified: VX"
 
-✅ **DO:** Add subtle "Added: V[X]" tags only to changed items
 ✅ **DO:** Organize STABLE by feature/table type (not chronologically)
 ✅ **DO:** Make STABLE self-contained
+✅ **DO:** Keep version info ONLY at document top in structured format block
 
 **For detailed anti-patterns with examples, see:**
 - APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5 - "Documentation Anti-Patterns"

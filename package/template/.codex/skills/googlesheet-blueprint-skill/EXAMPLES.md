@@ -434,7 +434,6 @@ Generic examples following the blueprint templates. Use these as references for 
 4. **Concrete Examples:** Show Input → Output
 5. **Dependencies Listed:** Required columns/sheets
 6. **Notes Section:** Tips, warnings, edge cases
-7. **Version Tags:** Track changes (e.g., "Added: V2", "Modified: V3")
 
 ### Common Formula Types Quick Reference
 

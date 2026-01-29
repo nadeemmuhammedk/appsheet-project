@@ -362,7 +362,6 @@ When responding to a documentation request:
 ✅ Action documentation templates (behavior, conditions, icons)
 ✅ Security documentation templates (table-level + row-level)
 ✅ Enum documentation templates
-✅ Version tagging guidance
 ✅ Documentation completeness verification
 ✅ STABLE system organization (by feature, not chronologically)
 

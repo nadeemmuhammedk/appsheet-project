@@ -214,7 +214,6 @@ googlesheet_formulas.md
 - Creating EXPERIMENTAL sections for new formulas
 - Archiving current STABLE before promotion
 - Integrating Experimental into STABLE
-- Tagging new items with "Added: V[X]"
 - Updating CHANGELOG.md
 - Verifying completeness
 
@@ -232,7 +231,6 @@ When promoting to stable:
 ✅ VLOOKUP/QUERY documentation format
 ✅ Formula dependency tracking
 ✅ Cross-sheet formula documentation
-✅ Version tagging guidance for formulas
 
 ### Out of Scope
 ❌ Google Sheets formula syntax help (use built-in docs or web search)
