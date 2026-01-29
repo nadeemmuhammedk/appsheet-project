@@ -98,35 +98,16 @@ Manages the Experimental→Stable promotion workflow for all formula documentati
 
 When user says "mark as stable" or "promote to stable", follow this workflow:
 
-### Step 1: Pre-Promotion Verification
+### Step 1: Verify Backup and Create Integration Plan
 
-Before promoting, ASK user to confirm:
-
-```
-Ready to promote EXPERIMENTAL V[X] to STABLE?
-
-This will:
-1. Verify backup exists (created when experimental work started)
-2. Integrate Experimental features into STABLE V[X]
-3. Update CHANGELOG.md and backups/README.md
-4. Remove Experimental section from active file
-
-Continue? (yes/no)
-```
-
-### Step 2: Verify Backup Exists
-
-**NOTE:** Backup should already exist from when experimental work started.
-
-1. Identify which file is being promoted (e.g., `googlesheet_formulas.md`)
-2. Check backup directory exists: `backups/[YYYY-MM-DD]-googlesheet-formulas/`
-3. If missing, create it now using Bash:
-   ```bash
-   # Example for googlesheet_formulas.md
-   mkdir -p backups/2026-01-29-googlesheet-formulas/
-   cp docs/formulas/googlesheet_formulas.md backups/2026-01-29-googlesheet-formulas/
-   ```
-4. Verify backup file is present
+1. **Identify target file** (e.g., `googlesheet_formulas.md`)
+2. **Verify backup exists:** `backups/[YYYY-MM-DD]-[filename]/`
+   - Backup should already exist from when experimental work started
+   - If missing, create it now using Bash:
+     ```bash
+     mkdir -p backups/2026-01-29-googlesheet-formulas/
+     cp docs/formulas/googlesheet_formulas.md backups/2026-01-29-googlesheet-formulas/
+     ```
 
 **Backup Naming Convention:**
 - Format: `backups/YYYY-MM-DD-[filename]/`
@@ -134,11 +115,10 @@ Continue? (yes/no)
 - NO version numbers (v[X]-stable)
 - NO suffixes like "-backup" or "-stable"
 
-### Step 3: Return Integration Plan to Main Agent
-
-**IMPORTANT:** This skill does NOT have Write access and CANNOT modify files directly.
-
-Return to main agent with detailed plan for integration:
+3. **Read files and create integration plan**
+   - Analyze EXPERIMENTAL section content
+   - Analyze STABLE section structure
+   - Plan how to merge by feature/table type (NOT chronologically)
 
 **DO NOT simply append Experimental at the end.**
 
@@ -159,19 +139,51 @@ STABLE SYSTEM V[X] - [Feature Name]
 ├── (From V[X-1] + V[X] additions)
 ```
 
+### Step 2: Show Plan and Get Single Confirmation
+
+**Present the complete plan to user with confirmation:**
+
+```
+Ready to promote EXPERIMENTAL V[X] to STABLE?
+
+**What will be integrated:**
+- [Feature/table 1]
+- [Feature/table 2]
+- [Feature/table 3]
+
+**Files to be modified:**
+- docs/formulas/[filename].md
+  • Update version V[X-1] → V[X]
+  • Add [new tables/views/features]
+  • Remove EXPERIMENTAL section
+- CHANGELOG.md (add YYYY-MM-DD entry)
+- backups/README.md (add backup entry)
+
+**Backup verified:** backups/YYYY-MM-DD-[filename]/
+
+Continue? (yes/no)
+```
+
+**If user says "yes":** Return integration plan and main agent will execute immediately (no additional confirmation needed)
+
+**If user says "no":** Abort promotion
+
+### Step 3: Return Integration Plan
+
+**IMPORTANT:** This skill does NOT have Write access and CANNOT modify files directly.
+
+Return the integration plan to main agent. Main agent will immediately execute without additional confirmation.
+
 **The plan should include:**
 1. Which sections from Experimental need to be integrated where
 2. How to reorganize content by feature/table (not chronologically)
 3. What needs to be removed (the entire EXPERIMENTAL section)
 4. What supporting files need updates (CHANGELOG.md, backups/README.md)
 
-### Step 4: Main Agent Executes Integration
-
-Main agent will:
-1. Show proposed edits to user for approval
-2. Integrate Experimental content into Stable sections
-3. Remove EXPERIMENTAL section from active file
-4. Update CHANGELOG.md and backups/README.md with new format:
+**Main agent will automatically:**
+1. Integrate Experimental content into Stable sections
+2. Remove EXPERIMENTAL section from active file
+3. Update CHANGELOG.md and backups/README.md with new format:
 
 **CHANGELOG.md Format (Date-Based, NOT Version-Based):**
 ```markdown
@@ -197,9 +209,9 @@ Main agent will:
 - Use date + feature name instead
 - Clearly indicate which file(s) changed
 
-### Step 5: Verify Completeness (Skill Reviews Result)
+### Step 4: Verify Completeness (Optional)
 
-After main agent completes edits, use Read tool to verify this checklist:
+After main agent completes edits, skill can optionally verify completeness using Read tool:
 
 ```
 ☐ No "(UNCHANGED IN VX)" markers anywhere
@@ -305,15 +317,14 @@ Main agent:
 
 ```
 version-management-skill:
-  → Prompts for confirmation
   → Verifies backup exists (created at start of experimental work)
   → Reads current files to analyze integration needs
-  → Returns detailed integration plan to main agent
-  → Provides completeness checklist
+  → Shows complete plan + single confirmation prompt
+  → If user confirms: Returns integration plan
 
 Main agent:
-  → Shows user proposed integration edits
-  → Integrates Experimental into Stable (with approval)
+  → Immediately starts executing (no additional confirmation)
+  → Integrates Experimental into Stable
   → Updates CHANGELOG.md and backups/README.md
   → Removes Experimental section
 
@@ -328,15 +339,16 @@ Blueprint skills (if applicable):
 User: "Mark the system as stable"
 
 version-management-skill:
-  → Prompts for confirmation
   → Verifies backup exists
-  → Reads files and returns integration plan to main agent
+  → Reads files and creates integration plan
+  → Shows plan: "Ready to promote? This will: [changes]. Continue?"
+  → User confirms: "yes"
+  → Returns integration plan
 
 Main agent:
-  → Shows proposed edits to user
-  → Integrates Experimental into Stable (with approval)
-  → Updates CHANGELOG.md and backups/README.md
-  → Removes Experimental section
+  → Immediately starts executing integration
+  → Updates files, CHANGELOG.md, backups/README.md
+  → Reports completion
 
 appsheet-blueprint-skill (if promoting AppSheet docs):
   → Ensures all tables documented with complete schemas
@@ -481,14 +493,15 @@ When user says "let's build a new feature" or similar:
 ### Promoting to Stable
 
 ```
-1. Skill: Confirm with user
-2. Skill: Verify backup exists (backups/YYYY-MM-DD-[filename]/)
-3. Skill: Read files and return integration plan
-4. Main agent: Show edits, get user approval
-5. Main agent: Merge Experimental into STABLE (reorganize by type)
-6. Main agent: Remove Experimental section
-7. Main agent: Update CHANGELOG.md (date-based format) and backups/README.md
-8. Skill: Verify completeness
+1. Skill: Verify backup exists (backups/YYYY-MM-DD-[filename]/)
+2. Skill: Read files and create integration plan
+3. Skill: Show plan + single confirmation ("Continue? yes/no")
+4. User confirms: "yes"
+5. Skill: Return integration plan
+6. Main agent: Immediately merge Experimental into STABLE (reorganize by type)
+7. Main agent: Remove Experimental section
+8. Main agent: Update CHANGELOG.md (date-based format) and backups/README.md
+9. Main agent: Report completion
 ```
 
 ### Critical Issue Found?
@@ -533,7 +546,7 @@ When user says "let's build a new feature" or similar:
 - Use **main agent** for file edits (with user approval)
 
 **Always verify completeness before promoting.**
-- Use the checklist in Step 5
+- Use the checklist in Step 4
 - No partial documentation allowed
 - STABLE must be self-contained
 
@@ -544,8 +557,16 @@ When user says "let's build a new feature" or similar:
 
 ---
 
-**Version:** 3.0
+**Version:** 3.1
 **Last Updated:** 2026-01-29
+
+**Changes in V3.1:**
+- Single confirmation workflow (skill shows plan + confirms once, main agent executes immediately)
+- Removed separate "Pre-Promotion Verification" step
+- Removed "Handoff to Main Agent" language (internal coordination not visible to user)
+- Removed "task complete" messaging (skill returns plan, main agent continues automatically)
+- Updated Step 1-3 to reflect streamlined process
+- Updated all example workflows and quick reference sections
 
 **Changes in V3:**
 - File-level versioning instead of app-level versioning
