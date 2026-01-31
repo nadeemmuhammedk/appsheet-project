@@ -118,7 +118,6 @@ Current Features:
 **File:** `docs/formulas/appsheet_formulas.md`
 
 **Structure:**
-```markdown
 # AppSheet Formulas - [Project Name]
 
 ## EXPERIMENTAL V[X] - [Feature Name]
@@ -177,7 +176,6 @@ Current Features:
 ## 📚 Archived Versions
 
 See backups/README.md for index
-```
 
 ---
 
@@ -192,7 +190,6 @@ See backups/README.md for index
 - Reduce cognitive load when searching for specific components
 
 **Format:**
-```markdown
 ## 📋 TABLE OF CONTENTS
 
 1. [Section Name](#section-anchor)
@@ -201,10 +198,8 @@ See backups/README.md for index
 3. [Third Section](#third-section)
 
 ---
-```
 
 **Standard TOC Structure for AppSheet Formulas:**
-```markdown
 ## 📋 TABLE OF CONTENTS
 
 1. [System Overview](#-system-overview)
@@ -222,7 +217,6 @@ See backups/README.md for index
 7. [Version History](#-version-history)
 
 ---
-```
 
 **Note:** Security rules are documented within each table schema's "Table-Level Settings" section, not as a separate section.
 
@@ -248,7 +242,6 @@ See backups/README.md for index
 ---
 
 **Table Documentation Template:**
-```markdown
 #### [N]. [Table Name] Table
 
 **Google Sheets:** "[Tab Name]" tab
@@ -283,7 +276,6 @@ Notes:
   DELETES: [formula for who can delete]
 
   Security Filter (row-level): [Formula]
-```
 
 **Columns:**
 
@@ -410,7 +402,6 @@ Security:
 **File:** `docs/formulas/googlesheet_formulas.md`
 
 **Template:**
-```markdown
 # Google Sheets Formulas - [Project Name]
 
 ## Sheet: [Tab Name]
@@ -423,7 +414,6 @@ Security:
 **Formula:**
 ```sheets
 =[Complete formula here with proper indentation]
-```
 
 **Purpose:** [What this formula does]
 **Dependencies:** [Other columns/sheets it references]
@@ -496,16 +486,12 @@ These anti-patterns occurred during V1→V2 promotion and must be avoided.
 #### Section Header Anti-Patterns
 
 ❌ **WRONG:** Version markers in section headers
-```markdown
 #### 3. Student Attendance Table (UNCHANGED IN V2)
 #### 4. Fee Details Table (MODIFIED IN V2)
-```
 
 ✅ **CORRECT:** Clean headers without version markers
-```markdown
 #### 3. Student Attendance Table
 #### 4. Fee Details Table
-```
 
 **Rule:** Never add `(UNCHANGED IN VX)` or `(MODIFIED IN VX)` to section headers. Version info belongs ONLY at document top in structured format block.
 
@@ -514,13 +500,10 @@ These anti-patterns occurred during V1→V2 promotion and must be avoided.
 #### Column Documentation Anti-Patterns
 
 ❌ **WRONG:** "Unchanged from V1" shortcuts
-```markdown
 **Column A: Student ID**
 Unchanged from V1 - see V1 documentation
-```
 
 ✅ **CORRECT:** Full documentation every time
-```markdown
 **Column A: Student ID**
 ```appsheet
 Google Sheets: Column A, Type: Text
@@ -536,7 +519,6 @@ AppSheet Configuration:
   REQUIRE: YES
   Description: "Unique student identifier"
 ```
-```
 
 **Rule:** Every column must have complete AppSheet configuration documented, even if identical to previous version.
 
@@ -545,25 +527,21 @@ AppSheet Configuration:
 #### Table Documentation Anti-Patterns
 
 ❌ **WRONG:** Lazy "All other columns unchanged" shortcut
-```markdown
 #### 3. Student Attendance Table
 
 **Column A: Date**
 ```appsheet
 [Full configuration]
-```
 
 **Columns B through Z:** All unchanged from V1
 ```
 
 ✅ **CORRECT:** Document every column
-```markdown
 #### 3. Student Attendance Table
 
 **Column A: Date**
 ```appsheet
 [Full configuration]
-```
 
 **Column B: Student ID**
 ```appsheet
@@ -585,20 +563,16 @@ AppSheet Configuration:
 #### Version Tag Anti-Patterns
 
 ❌ **WRONG:** Prominent version markers throughout
-```markdown
 #### 3. Student Attendance Table (UNCHANGED IN V2)
 
 **Column C: Course Status** - ADDED IN V2
 **Column D: Attendance Status** - UNCHANGED FROM V1
-```
 
 ✅ **CORRECT:** Clean item names without any version markers
-```markdown
 #### 3. Student Attendance Table
 
 **Column C: Course Status**
 **Column D: Attendance Status**
-```
 
 **Rule:** Never add version tags to individual items. Version info belongs ONLY at document top in structured format block.
 
@@ -607,18 +581,14 @@ AppSheet Configuration:
 #### Cross-Reference Anti-Patterns
 
 ❌ **WRONG:** References to previous versions
-```markdown
 For views and actions, see V1 documentation in backups/2025-12-01-v1-stable/
-```
 
 ✅ **CORRECT:** Full documentation in current file
-```markdown
 ### 📱 ALL VIEWS
 
 **View: Student Dashboard**
 ```appsheet
 [Complete view configuration]
-```
 
 [... every view documented]
 ```
@@ -645,7 +615,6 @@ For views and actions, see V1 documentation in backups/2025-12-01-v1-stable/
 **File:** `docs/formulas/appscript_code.md`
 
 **Template:**
-```markdown
 # Google Apps Script Code - [Project Name]
 
 This file maintains versioned Google Apps Script code for the [Project Name] AppSheet application.
@@ -692,7 +661,6 @@ function functionName(paramName) {
     return false;
   }
 }
-```
 
 **Installation Steps:**
 1. Open Google Sheet → Extensions → Apps Script
@@ -804,7 +772,6 @@ function exportBackup() {
 **File:** `docs/formulas/lookerstudio_formulas.md`
 
 **Template:**
-```markdown
 # Looker Studio Formulas & Queries Documentation
 
 **Last Updated:** [Date]
@@ -824,7 +791,6 @@ function exportBackup() {
 - Refresh: Manual / Automatic (on view)
 
 **Schema:**
-```
 Field Name         | Type      | Aggregation | Description
 -------------------|-----------|-------------|---------------------------
 [Field 1]          | Text      | None        | [Description]
@@ -1193,7 +1159,6 @@ The active file maintains a **complete, cumulative view of the current applicati
    cp docs/formulas/googlesheet_formulas.md backups/2026-01-29-googlesheet-formulas/
    ```
 3. Add "🔄 QUICK ROLLBACK" section at top of archived file:
-   ```markdown
    ## 🔄 QUICK ROLLBACK
 
    **Use this backup if new changes cause issues.**
@@ -1206,16 +1171,12 @@ The active file maintains a **complete, cumulative view of the current applicati
 
    ### Note on Data
    [Explain if any data needs to be migrated/removed during rollback]
-   ```
 4. Backup file already saved at: `backups/YYYY-MM-DD-[filename]/[filename].md`
 5. Update `backups/README.md` index:
-   ```markdown
    | Date | File | Feature | Location |
    |------|------|---------|----------|
    | YYYY-MM-DD | filename.md | Feature Name | YYYY-MM-DD-filename/ |
-   ```
 6. Update `CHANGELOG.md` in root with date-based entry:
-   ```markdown
    ## YYYY-MM-DD - [Feature Name]
    **Files Changed:** filename.md
    **Status:** ✅ DEPLOYED
@@ -1223,7 +1184,6 @@ The active file maintains a **complete, cumulative view of the current applicati
    ### What's New
    - Feature bullet point 1
    - Feature bullet point 2
-   ```
    **Note:** Use date + feature name (NOT version numbers like "V3 - STABLE")
 
 #### Step 2: Integrate Experimental Changes into Stable
@@ -1241,7 +1201,6 @@ The active file maintains a **complete, cumulative view of the current applicati
    - Updated security rules
    - Updated enum values
 5. Add Version History section at bottom:
-   ```markdown
    ## 📚 VERSION HISTORY
 
    ### Current Version: V[X] (Month Year)
@@ -1252,7 +1211,6 @@ The active file maintains a **complete, cumulative view of the current applicati
    ### Previous Version: V[X-1] (Month Year)
    **Backup Location:** `backups/YYYY-MM-DD-[filename]/`
    **What V[X-1] Had:** [Summary of features before V[X] additions]
-   ```
 
    **Note:** Each file maintains its own version numbers (V1, V2, V3, etc.). There are NO "app versions".
 
@@ -1264,7 +1222,6 @@ The active file maintains a **complete, cumulative view of the current applicati
    - Version tags showing when each feature was added
    - Version history at bottom
 3. Add pointer to archived versions:
-   ```markdown
    ## 📚 Archived Versions
 
    **Point-in-time backups before major additions:**
@@ -1273,7 +1230,6 @@ The active file maintains a **complete, cumulative view of the current applicati
    - Previous backup (YYYY-MM-DD): `backups/YYYY-MM-DD-[filename]/[filename].md`
    - Complete index: `backups/README.md`
    - Deployment history: `CHANGELOG.md`
-   ```
 
 #### Step 4: Verify & Notify
 1. Check file size is reasonable (reorganization may reduce size)
@@ -1424,7 +1380,6 @@ mkdir -p backups
 **2.2 Create Formula Files:**
 
 Create `docs/formulas/appsheet_formulas.md`:
-```markdown
 # AppSheet Formulas - [Project Name from config]
 
 **Last Updated:** [Current Date]
@@ -1459,7 +1414,6 @@ Updates Enabled: Yes
 Adds Enabled: Yes
 Deletes Enabled: Yes
 Security: [Configure as needed]
-```
 
 **Columns:**
 
@@ -1493,7 +1447,6 @@ No archived versions yet.
 ```
 
 Create `docs/formulas/googlesheet_formulas.md`:
-```markdown
 # Google Sheets Formulas - [Project Name]
 
 **Last Updated:** [Current Date]
@@ -1510,7 +1463,6 @@ Create `docs/formulas/googlesheet_formulas.md`:
 **Formula:**
 ```sheets
 =[Your formula here]
-```
 
 **Purpose:** [Description]
 **Dependencies:** [Other columns]
@@ -1521,7 +1473,6 @@ Create `docs/formulas/googlesheet_formulas.md`:
 ```
 
 Create `docs/formulas/appscript_code.md`:
-```markdown
 # Google Apps Script Code - [Project Name]
 
 **Last Updated:** [Current Date]
@@ -1541,7 +1492,6 @@ Create `docs/formulas/appscript_code.md`:
 function exampleFunction() {
   // Your code here
 }
-```
 
 **Installation Steps:**
 1. Open Google Sheet → Extensions → Apps Script
@@ -1555,7 +1505,6 @@ function exampleFunction() {
 ```
 
 Create `docs/formulas/lookerstudio_formulas.md`:
-```markdown
 # Looker Studio Formulas & Queries - [Project Name]
 
 **Last Updated:** [Current Date]
@@ -1572,12 +1521,10 @@ Create `docs/formulas/lookerstudio_formulas.md`:
 ---
 
 [Add data sources and calculated fields using template from Section 4.4]
-```
 
 **2.3 Create Supporting Files:**
 
 Create `README.md`:
-```markdown
 # [Project Name from config]
 
 AppSheet-based system for [purpose - ask user or leave placeholder].
@@ -1623,10 +1570,8 @@ AppSheet-based system for [purpose - ask user or leave placeholder].
 See [CLAUDE.md](CLAUDE.md) for AI assistant instructions and documentation procedures.
 
 See [APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md) for complete system template.
-```
 
 Create `CHANGELOG.md`:
-```markdown
 # [Project Name] - Version Changelog
 
 **Purpose:** Track version history and feature evolution.
@@ -1664,10 +1609,8 @@ Create `CHANGELOG.md`:
 | Version | Archived Date | Location |
 |---------|---------------|----------|
 | (none yet) | - | - |
-```
 
 Create `backups/README.md`:
-```markdown
 # Archived Versions - [Project Name]
 
 ---
@@ -1700,10 +1643,8 @@ See root CHANGELOG.md for version history summary.
 - Compare formulas across versions
 - Understand evolution of system
 - Reference old implementations
-```
 
 Create `docs/templates/STABLE_SYSTEM_TEMPLATE.md`:
-```markdown
 # STABLE SYSTEM TEMPLATE
 
 This template shows the exact structure for documenting each Stable System in `appsheet_formulas.md`.
@@ -1779,12 +1720,10 @@ This template shows the exact structure for documenting each Stable System in `a
 ### 🔄 ROLLBACK INSTRUCTIONS
 
 [Step-by-step rollback procedure to previous version]
-```
 
 **2.4 Create/Update CLAUDE.md:**
 
 If CLAUDE.md doesn't exist, create it:
-```markdown
 # CLAUDE.md
 
 This file provides guidance to Claude Code when working with this repository.
@@ -1831,14 +1770,12 @@ See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 - **[docs/project/PRD.md](docs/project/PRD.md)** - Product requirements document
 - **[CHANGELOG.md](CHANGELOG.md)** - Version history
 - **[backups/README.md](backups/README.md)** - Archived versions index
-```
 
 If CLAUDE.md already exists, append the documentation system section.
 
 **2.5 Create PRD.md placeholder:**
 
 Create `docs/project/PRD.md`:
-```markdown
 # [Project Name] - Product Requirements Document
 
 ## Project Purpose
@@ -1872,7 +1809,6 @@ Create `docs/project/PRD.md`:
 ---
 
 [Add more sections as needed]
-```
 
 **2.6 Notify User:**
 
@@ -2133,9 +2069,7 @@ IF (section MISSING or OUTDATED):
 ```
 
 **Example - What to Check:**
-```markdown
 ❌ OLD/INCORRECT in CLAUDE.md:
-```
 EXPERIMENTAL (Latest ideas being tested)
     ↓
 STABLE SYSTEM (Latest working version)
@@ -2190,9 +2124,7 @@ IF (COMPLETE TABLE SCHEMAS exists but incomplete):
 ```
 
 **Example - What Counts as "Complete":**
-```markdown
 ❌ INCOMPLETE Table Schema:
-```
 ### Food Data Table
 Columns:
 - Date (Date)

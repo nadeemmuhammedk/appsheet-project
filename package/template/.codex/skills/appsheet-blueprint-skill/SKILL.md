@@ -90,7 +90,6 @@ Check against requirements:
 ## Quick Template Preview
 
 ### Table Documentation (Minimal Example)
-```markdown
 #### 1. Students Table
 
 **Google Sheets:** "Students" tab
@@ -107,7 +106,6 @@ Table: Students
 
   # Row-Level Security Filter
   Security Filter (row-level): [Owner] = USEREMAIL()
-```
 
 **Columns:**
 **Column A: StudentID**
@@ -126,7 +124,6 @@ Description: "Unique identifier for student"
 See [TEMPLATES.md](TEMPLATES.md) for complete templates with all fields.
 
 ### Action Documentation (Minimal Example)
-```markdown
 **Action: Mark Present**
 ```appsheet
 Action Name: Mark Present
@@ -137,7 +134,6 @@ Column values to set:
   LastUpdated: NOW()
 SHOW IF: [Status] = "Absent"
 Icon: check_circle
-```
 ```
 
 See [TEMPLATES.md](TEMPLATES.md) for complete action template.

@@ -58,7 +58,6 @@ Every column MUST have:
 
 ### Pattern 1: Basic Table with Security
 
-```markdown
 #### 1. Students Table
 
 **Google Sheets:** "Students" tab
@@ -66,6 +65,7 @@ Every column MUST have:
 **Primary Key:** StudentID
 
 **Table-Level Settings:**
+
 ```appsheet
 Table: Students
   # Table-Level Operations
@@ -79,12 +79,11 @@ Table: Students
 
 **Columns:**
 [Complete column documentation...]
-```
 
 ### Pattern 2: Action with Referenced Rows
 
-```markdown
 **Action: Mark Present**
+
 ```appsheet
 Action Name: Mark Present
 For a record of this table: Students
@@ -100,12 +99,11 @@ Display prominently: Yes
 Icon: check_circle
 Description: "Mark this student as present"
 ```
-```
 
 ### Pattern 3: View with Security
 
-```markdown
 **View: Students Deck**
+
 ```appsheet
 View Name: Students Deck
 View Type: deck
@@ -131,7 +129,6 @@ SHOW IF: TRUE
 Security:
   Instructors: Can see all students
   Students: Can see only their own record
-```
 ```
 
 ## Best Practices When Using This Skill

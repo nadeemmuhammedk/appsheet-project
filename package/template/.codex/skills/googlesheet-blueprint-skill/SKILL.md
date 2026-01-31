@@ -76,7 +76,6 @@ Check against requirements:
 ## Quick Template Preview
 
 ### ARRAYFORMULA Documentation (Minimal Example)
-```markdown
 ### Column E: Second Installment Date
 
 **Purpose:** Auto-calculate second installment due date (1 month after start date)
@@ -98,7 +97,6 @@ Check against requirements:
         )
     )
 )
-```
 
 **How It Works:**
 1. Header Row: If row number is 1, displays "Second Installment Date"
@@ -115,7 +113,6 @@ Check against requirements:
 ```
 
 ### VLOOKUP Documentation (Minimal Example)
-```markdown
 ### Column F: Batch Starting Date
 
 **Purpose:** Inherit Batch Starting Date from Batch Data table
@@ -137,7 +134,6 @@ Check against requirements:
         )
     )
 )
-```
 
 **Dependencies:**
 - Requires: Column B (Batch) to be filled

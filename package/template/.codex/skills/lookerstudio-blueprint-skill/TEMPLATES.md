@@ -5,14 +5,13 @@
 **All Looker Studio documentation files should include a table of contents after the version header.**
 
 **Standard TOC Structure:**
-```markdown
+
 ### 📋 TABLE OF CONTENTS
 
 1. [Data Source Configuration](#data-source-configuration)
 2. [Calculated Fields](#calculated-fields)
 3. [Blended Data Sources](#blended-data-sources)
 4. [Report Configurations](#report-configurations)
-```
 
 ---
 
@@ -20,7 +19,6 @@
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
-```markdown
 ### Data Source: [Source Name]
 
 **Connection:**
@@ -30,6 +28,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 - Refresh: Manual / Automatic (on view) / Every [X] hours
 
 **Schema:**
+
 ```
 Field Name         | Type      | Aggregation | Description
 -------------------|-----------|-------------|---------------------------
@@ -42,7 +41,6 @@ Field Name         | Type      | Aggregation | Description
 **Data Freshness:** [How often data updates]
 **Row Count:** ~[Approximate number of rows]
 **Last Updated:** [Date of last schema change]
-```
 
 ---
 
@@ -50,7 +48,6 @@ Field Name         | Type      | Aggregation | Description
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
-```markdown
 ### Calculated Field: [Field Name]
 
 **Type:** Metric / Dimension
@@ -59,6 +56,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 **Category:** [e.g., Engagement / Performance / Time-based]
 
 **Formula:**
+
 ```looker
 [Complete Looker Studio formula]
 ```
@@ -68,13 +66,13 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 **Dependencies:** [Other fields this references]
 
 **Example Calculation:**
+
 ```
 Input: [Field values]
 Output: [Result]
 ```
 
 **Notes:** [Edge cases, limitations, or special considerations]
-```
 
 ---
 
@@ -82,7 +80,6 @@ Output: [Result]
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
-```markdown
 ### Blended Data: [Blend Name]
 
 **Purpose:** [Why this blend is needed]
@@ -101,7 +98,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 **Use Case:** [When to use this blended data]
 
 **Notes:** [Performance considerations, limitations]
-```
 
 ---
 
@@ -109,7 +105,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
-```markdown
 ### Report: [Report Name]
 
 **Purpose:** [What this report displays]
@@ -126,7 +121,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 - Click [Chart] → Filters [Other Charts]
 
 **Refresh Schedule:** [How often report updates]
-```
 
 ---
 
@@ -134,7 +128,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
 **Use for:** Sum, Count, Average calculations
 
-```markdown
 ### Calculated Field: [Metric Name]
 
 **Type:** Metric
@@ -143,6 +136,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 **Category:** [e.g., Financial / Operational / Performance]
 
 **Formula:**
+
 ```looker
 SUM([Field Name])
 ```
@@ -166,7 +160,6 @@ AVG([Field Name])
 **Notes:**
 - ✅ [What works well]
 - ⚠️ [Any limitations or edge cases]
-```
 
 ---
 
@@ -174,7 +167,6 @@ AVG([Field Name])
 
 **Use for:** Text, Date, or Boolean fields used for grouping
 
-```markdown
 ### Calculated Field: [Dimension Name]
 
 **Type:** Dimension
@@ -183,6 +175,7 @@ AVG([Field Name])
 **Category:** [e.g., Categorization / Time Period / Status]
 
 **Formula:**
+
 ```looker
 [Formula expression]
 ```
@@ -198,7 +191,6 @@ AVG([Field Name])
 **Notes:**
 - ✅ [Grouping logic]
 - ⚠️ [Sorting behavior]
-```
 
 ---
 
@@ -206,7 +198,6 @@ AVG([Field Name])
 
 **Use for:** Calculating rates, percentages, ratios
 
-```markdown
 ### Calculated Field: [Percentage Name]
 
 **Type:** Metric
@@ -215,6 +206,7 @@ AVG([Field Name])
 **Category:** [e.g., Performance / Conversion / Growth]
 
 **Formula:**
+
 ```looker
 SUM([Numerator Field]) / SUM([Denominator Field]) * 100
 ```
@@ -231,7 +223,6 @@ SUM([Numerator Field]) / SUM([Denominator Field]) * 100
 **Notes:**
 - ⚠️ Returns null if denominator is 0 (division by zero)
 - 💡 Consider adding CASE statement to handle zero denominator
-```
 
 ---
 
@@ -239,7 +230,6 @@ SUM([Numerator Field]) / SUM([Denominator Field]) * 100
 
 **Use for:** Creating time-based groupings
 
-```markdown
 ### Calculated Field: [Time Period Name]
 
 **Type:** Dimension
@@ -248,6 +238,7 @@ SUM([Numerator Field]) / SUM([Denominator Field]) * 100
 **Category:** Time-based
 
 **Formula:**
+
 ```looker
 CONCAT(CAST(YEAR([Date Field]) AS TEXT), "-", CAST(MONTH([Date Field]) AS TEXT))
 ```
@@ -267,7 +258,6 @@ DATETIME_TRUNC([Date Field], MONTH)
 **Notes:**
 - ✅ Enables time-series analysis
 - ✅ Sortable chronologically
-```
 
 ---
 
@@ -275,7 +265,6 @@ DATETIME_TRUNC([Date Field], MONTH)
 
 **Use for:** CASE/WHEN logic for categorization
 
-```markdown
 ### Calculated Field: [Category Name]
 
 **Type:** Dimension
@@ -284,6 +273,7 @@ DATETIME_TRUNC([Date Field], MONTH)
 **Category:** Categorization
 
 **Formula:**
+
 ```looker
 CASE
   WHEN [Condition 1] THEN "Value 1"
@@ -303,7 +293,6 @@ END
 **Notes:**
 - ✅ Simplifies complex data into readable categories
 - ⚠️ Order of WHEN clauses matters (first match wins)
-```
 
 ---
 
@@ -311,7 +300,6 @@ END
 
 **Use for:** Documenting individual charts in reports
 
-```markdown
 ### Chart: [Chart Name]
 
 **Chart Type:** Time Series / Bar Chart / Pie Chart / Table / Scorecard
@@ -341,7 +329,6 @@ END
 - Axis labels: [Yes/No]
 
 **Used In:** [Report name, section]
-```
 
 ---
 
@@ -349,7 +336,6 @@ END
 
 **Use for:** Documenting interactive filters
 
-```markdown
 ### Filter Control: [Filter Name]
 
 **Type:** Dropdown / Date Range / Slider / Text Input
@@ -366,13 +352,13 @@ END
 
 **Filter Behavior:**
 - Cascading filters: [Yes/No - describes dependency]
-```
 
 ---
 
 ## Common Looker Studio Formula Patterns
 
 ### Pattern 1: Total Aggregation
+
 ```looker
 SUM(Field)
 COUNT(Field)
@@ -380,16 +366,19 @@ AVG(Field)
 ```
 
 ### Pattern 2: Percentage Calculation
+
 ```looker
 SUM(Part) / SUM(Total) * 100
 ```
 
 ### Pattern 3: Year-Month Grouping
+
 ```looker
 CONCAT(CAST(YEAR(Date) AS TEXT), "-", CAST(MONTH(Date) AS TEXT))
 ```
 
 ### Pattern 4: Conditional Category
+
 ```looker
 CASE
   WHEN Value > 100 THEN "High"
@@ -399,11 +388,13 @@ END
 ```
 
 ### Pattern 5: Date Difference
+
 ```looker
 DATEDIFF(EndDate, StartDate)
 ```
 
 ### Pattern 6: Text Concatenation
+
 ```looker
 CONCAT(Field1, " - ", Field2)
 ```

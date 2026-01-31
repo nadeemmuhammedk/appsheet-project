@@ -72,7 +72,6 @@ Check against requirements:
 ## Quick Template Preview
 
 ### Data Source Documentation (Minimal Example)
-```markdown
 ### Data Source: Google Sheets - Sales Data
 
 **Connection:**
@@ -91,10 +90,8 @@ Quantity        | Number  | Sum         | Items sold
 
 **Data Freshness:** Updates when report is opened
 **Row Count:** ~5,000 rows
-```
 
 ### Calculated Field Documentation (Minimal Example)
-```markdown
 ### Calculated Field: Total Profit
 
 **Type:** Metric
@@ -104,7 +101,6 @@ Quantity        | Number  | Sum         | Items sold
 **Formula:**
 ```looker
 SUM(Revenue) - SUM(Cost)
-```
 
 **Purpose:** Calculate profit margin across all transactions
 **Used In:** Profit Overview chart, Monthly Reports

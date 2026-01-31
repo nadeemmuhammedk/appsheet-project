@@ -79,7 +79,6 @@ Check against requirements:
 ## Quick Template Preview
 
 ### Function Documentation (Minimal Example)
-```markdown
 ### Function: processData
 
 **Purpose:** Clean and validate data from a source sheet
@@ -109,7 +108,6 @@ function processData(sourceSheet, targetSheet) {
 
   return {success: true, processedCount: 100};
 }
-```
 
 **Installation:**
 1. Open Apps Script editor (Extensions → Apps Script)

@@ -8,7 +8,6 @@ This file contains examples of how to use the PRD skill effectively, including c
 
 This is a complete example of a well-written PRD for a student management application.
 
-```markdown
 # Product Requirements Document (PRD)
 
 **Project Name:** [Institution Name] Student Management System
@@ -235,14 +234,13 @@ Google Sheets (cloud-based spreadsheet)
 - For detailed technical specifications, see `docs/formulas/` folder
 - This document should be reviewed and updated as requirements evolve
 - Keep it concise and focused on strategic alignment
-```
 
 ---
 
 ## Example 2: Good vs Bad PRD Sections
 
 ### ❌ BAD: Vague Problem Statement
-```markdown
+
 ## 1. Purpose & Problem Statement
 
 **What problem are we solving?**
@@ -250,7 +248,6 @@ We need to improve student management and make things more efficient.
 
 **Why is this important?**
 Because it will help the institute.
-```
 
 **Problems:**
 - No specific pain points identified
@@ -258,7 +255,7 @@ Because it will help the institute.
 - Doesn't explain WHO has the problem
 
 ### ✅ GOOD: Specific Problem Statement
-```markdown
+
 ## 1. Purpose & Problem Statement
 
 **What problem are we solving?**
@@ -272,7 +269,6 @@ Automating student data management will:
 - Reduce administrative overhead by 60% (save 20 hours/week)
 - Eliminate fee tracking errors, preventing ₹50,000+ annual revenue leakage
 - Enable real-time reporting for regulatory compliance
-```
 
 **Why it's good:**
 - Specific, measurable problems
@@ -297,28 +293,26 @@ Automating student data management will:
    - OR add to "Won't-Have (Out of Scope)" if not aligned
 
 3. **Update PRD if approved**
-   ```markdown
+
    ## Document History
    | Version | Date | Author | Changes |
    |---------|------|--------|---------|
    | 1.0.0 | 2026-01-20 | [Author Name] | Initial PRD |
    | 1.1.0 | 2026-02-10 | [Author Name] | Added parent mobile app to Could-Have (deferred to Phase 2) |
-   ```
 
 ---
 
 ## Example 4: Integration with Technical Documentation
 
 **PRD says WHAT:**
-```markdown
+
 ### Must-Have Features (MVP)
 1. **Attendance Tracking** - Mark daily attendance for each batch with Present/Absent/Leave status
-```
 
 **Technical docs say HOW:**
 
 In `docs/formulas/appsheet_formulas.md`:
-```markdown
+
 #### Attendance Table
 
 **Column: Status**
@@ -331,7 +325,6 @@ SHOW IF: TRUE
 REQUIRE: YES
 Description: "Student attendance status for the day"
 ```
-```
 
 **Key Principle:** PRD defines business requirements, technical docs define implementation.
 
@@ -340,7 +333,7 @@ Description: "Student attendance status for the day"
 ## Example 5: Using MoSCoW Prioritization Effectively
 
 ### ❌ BAD: Everything is Must-Have
-```markdown
+
 ### Must-Have Features (MVP)
 1. Student enrollment
 2. Attendance tracking
@@ -352,12 +345,11 @@ Description: "Student attendance status for the day"
 8. Mobile app for instructors
 9. Advanced analytics
 10. Performance tracking
-```
 
 **Problem:** No real prioritization, scope creep, unrealistic MVP
 
 ### ✅ GOOD: Clear Prioritization
-```markdown
+
 ### Must-Have Features (MVP)
 1. **Student Enrollment** - Core functionality, can't track students without it
 2. **Attendance Tracking** - Primary use case, regulatory requirement
@@ -374,7 +366,6 @@ Description: "Student attendance status for the day"
 ### Won't-Have (Out of Scope)
 - Multi-branch support (single location only for MVP)
 - Online payment gateway (manual entry sufficient)
-```
 
 **Why it's good:**
 - Clear separation of critical vs nice-to-have
@@ -464,7 +455,7 @@ Use this checklist before finalizing a PRD:
 ### ❌ Including Application Version Numbers
 
 **WRONG:**
-```markdown
+
 ## 3. Features & Functionality
 
 ### V1 Features (MVP)
@@ -477,12 +468,11 @@ Use this checklist before finalizing a PRD:
 
 ### V3 Features (Future)
 1. Parent portal
-```
 
 **Why it's wrong:** PRD version ≠ Application version. Use MoSCoW prioritization instead.
 
 **CORRECT:**
-```markdown
+
 ## 3. Features & Functionality
 
 ### Must-Have Features (MVP)
@@ -495,27 +485,24 @@ Use this checklist before finalizing a PRD:
 
 ### Could-Have Features (Future)
 1. Parent portal
-```
 
 ### ❌ Too Much Technical Detail
 
 **WRONG:**
-```markdown
+
 ### Must-Have Features (MVP)
 1. **Student Enrollment** - Create a "Students" table in Google Sheets with columns:
    - StudentID (UNIQUEID() formula)
    - Name (Type: Text, REQUIRE: TRUE)
    - Enrollment Date (Type: Date, Initial Value: TODAY())
    - Batch (Type: Ref to Batches, VALID_IF: SELECT(Batches[BatchID], [Active]=TRUE))
-```
 
 **Why it's wrong:** This is implementation detail, belongs in technical docs.
 
 **CORRECT:**
-```markdown
+
 ### Must-Have Features (MVP)
 1. **Student Enrollment** - Register new students with personal details, course enrollment, and batch assignment. System should auto-generate unique student IDs and validate batch capacity.
-```
 
 ---
 

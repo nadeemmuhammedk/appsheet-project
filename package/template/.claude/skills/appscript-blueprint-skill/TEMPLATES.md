@@ -5,7 +5,7 @@
 **All Apps Script documentation files should include a table of contents after the version header.**
 
 **Standard TOC Structure:**
-```markdown
+
 ### 📋 TABLE OF CONTENTS
 
 1. [Script Overview](#script-overview)
@@ -13,7 +13,6 @@
 3. [Installation Guide](#installation-guide)
 4. [Testing & Monitoring](#testing--monitoring)
 5. [Troubleshooting](#troubleshooting)
-```
 
 ---
 
@@ -21,7 +20,6 @@
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.3:
 
-```markdown
 ### Function: [Function Name]
 
 **Purpose:** [Brief description of what this function does]
@@ -42,6 +40,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.3:
 - Type: [Description of return value]
 
 **Code:**
+
 ```javascript
 /**
  * [Detailed function description]
@@ -105,7 +104,6 @@ If this script causes issues:
 - **Error: "Cannot read property..."** → Check if sheet/range exists
 - **Error: "Authorization required"** → Re-run and accept permissions
 - **Script timeout** → Optimize or break into smaller functions
-```
 
 ---
 
@@ -113,7 +111,6 @@ If this script causes issues:
 
 **Use for:** Introducing the overall automation purpose
 
-```markdown
 ## Script Overview
 
 **Project Name:** [Name]
@@ -131,7 +128,6 @@ If this script causes issues:
 - Sheets affected: [List of sheets]
 - Trigger schedule: [Frequency and time]
 - Status: [Active/Inactive]
-```
 
 ---
 
@@ -139,7 +135,6 @@ If this script causes issues:
 
 **Use for:** Functions that run on a schedule
 
-```markdown
 ### Function: [Function Name]
 
 **Trigger Type:** Time-driven
@@ -154,6 +149,7 @@ If this script causes issues:
 6. Save
 
 **Trigger Configuration Code (Alternative):**
+
 ```javascript
 /**
  * Create time-driven trigger for scheduled execution
@@ -183,7 +179,6 @@ function setupTrigger() {
 - [ ] Verify trigger appears in Triggers list
 - [ ] Wait for scheduled run or test with immediate trigger
 - [ ] Check Logs after execution
-```
 
 ---
 
@@ -191,7 +186,6 @@ function setupTrigger() {
 
 **Use for:** Functions that respond to spreadsheet events
 
-```markdown
 ### Function: [Function Name]
 
 **Trigger Type:** Event-driven
@@ -206,6 +200,7 @@ function setupTrigger() {
 5. Save
 
 **Trigger Code for On Edit:**
+
 ```javascript
 /**
  * Runs when spreadsheet is edited
@@ -225,6 +220,7 @@ function onEdit(e) {
 ```
 
 **Trigger Code for On Open:**
+
 ```javascript
 /**
  * Runs when spreadsheet is opened
@@ -243,7 +239,6 @@ function onOpen() {
 - [ ] Reopen sheet (for On Open)
 - [ ] Verify function executes
 - [ ] Check Logs for errors
-```
 
 ---
 
@@ -251,7 +246,6 @@ function onOpen() {
 
 **Use for:** Helper functions called by other functions
 
-```markdown
 ### Function: [Utility Function Name]
 
 **Purpose:** [Brief description of utility function]
@@ -264,6 +258,7 @@ function onOpen() {
 **Returns:** Type: [Description]
 
 **Code:**
+
 ```javascript
 /**
  * Utility function description
@@ -276,7 +271,6 @@ function utilityFunction(paramName) {
   return result;
 }
 ```
-```
 
 ---
 
@@ -284,7 +278,6 @@ function utilityFunction(paramName) {
 
 **Use for:** One-time data transformation scripts
 
-```markdown
 ### Script: Migrate [Old Format] to [New Format]
 
 **Purpose:** One-time migration script to transform data structure
@@ -294,6 +287,7 @@ function utilityFunction(paramName) {
 **Trigger Type:** Manual (run once during migration)
 
 **Planned Implementation:**
+
 ```javascript
 function migrateData() {
   // 1. Read all data from source
@@ -314,13 +308,13 @@ function migrateData() {
 **Rollback:**
 - [ ] Restore from backup tab
 - [ ] Or revert to spreadsheet version history
-```
 
 ---
 
 ## Common Apps Script Patterns
 
 ### Pattern 1: Batch Data Processing
+
 ```javascript
 // Get all data at once (faster than row-by-row)
 const data = sheet.getDataRange().getValues();
@@ -335,6 +329,7 @@ sheet.getRange(2, 1, results.length, results[0].length).setValues(results);
 ```
 
 ### Pattern 2: Delete Rows from Bottom
+
 ```javascript
 // Always delete from bottom to top to avoid index shifting
 const rowsToDelete = [5, 3, 7]; // Example row numbers
@@ -343,6 +338,7 @@ rowsToDelete.forEach(row => sheet.deleteRow(row));
 ```
 
 ### Pattern 3: Error Handling with Try-Catch
+
 ```javascript
 try {
   // Main logic
@@ -355,6 +351,7 @@ try {
 ```
 
 ### Pattern 4: Check Sheet Exists
+
 ```javascript
 function getSheet(sheetName) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -370,6 +367,7 @@ function getSheet(sheetName) {
 ```
 
 ### Pattern 5: Send Email Notification
+
 ```javascript
 function sendNotification(subject, body) {
   MailApp.sendEmail({

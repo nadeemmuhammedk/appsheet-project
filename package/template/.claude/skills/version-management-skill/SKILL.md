@@ -186,7 +186,6 @@ Return the integration plan to main agent. Main agent will immediately execute w
 3. Update CHANGELOG.md and backups/README.md with new format:
 
 **CHANGELOG.md Format (Date-Based, NOT Version-Based):**
-```markdown
 ## YYYY-MM-DD - [Feature Name]
 **Files Changed:** [filename.md]
 **Status:** ✅ DEPLOYED
@@ -195,14 +194,11 @@ Return the integration plan to main agent. Main agent will immediately execute w
 - Feature bullet point 1
 - Feature bullet point 2
 - Feature bullet point 3
-```
 
 **backups/README.md Format:**
-```markdown
 | Date | File | Feature | Location |
 |------|------|---------|----------|
 | YYYY-MM-DD | filename.md | Feature Name | YYYY-MM-DD-filename/ |
-```
 
 **Important:**
 - NO "V3 - STABLE" or version-based headers in CHANGELOG

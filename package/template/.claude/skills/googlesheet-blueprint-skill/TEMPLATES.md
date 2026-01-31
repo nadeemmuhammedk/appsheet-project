@@ -5,14 +5,13 @@
 **All formula documentation files should include a table of contents after the version header.**
 
 **Standard TOC Structure:**
-```markdown
+
 ### 📋 TABLE OF CONTENTS
 
 1. [Sheet 1 Formulas](#sheet-1-formulas)
 2. [Sheet 2 Formulas](#sheet-2-formulas)
 3. [Common Formula Patterns](#common-formula-patterns)
 4. [Formula Dependencies](#formula-dependencies)
-```
 
 ---
 
@@ -20,7 +19,6 @@
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 
-```markdown
 ### Column [Letter]: [Column Name]
 
 **Purpose:** [Brief description of what this formula does]
@@ -30,6 +28,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 **Trigger:** [When the formula populates/calculates]
 
 **Formula:**
+
 ```excel
 =[Complete formula here with proper indentation]
 ```
@@ -51,7 +50,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 - ✅ [What works well about this formula]
 - ⚠️ [Any warnings or limitations]
 - 💡 [Performance considerations]
-```
 
 ---
 
@@ -59,7 +57,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 
 **Use for:** Formulas that apply to an entire column and auto-fill for new rows
 
-```markdown
 ### Column [Letter]: [Column Name]
 
 **Purpose:** [Auto-calculate values based on other columns]
@@ -69,6 +66,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 **Trigger:** Populates when [Column Name] is filled
 
 **Formula:**
+
 ```excel
 =ARRAYFORMULA(
     IF(
@@ -100,7 +98,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 - ✅ Auto-fills for new rows
 - ✅ Handles blank rows gracefully
 - ⚠️ [Any edge cases to note]
-```
 
 ---
 
@@ -108,7 +105,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 
 **Use for:** Looking up values from another sheet based on a key
 
-```markdown
 ### Column [Letter]: [Column Name]
 
 **Purpose:** [Retrieve data from another sheet]
@@ -118,6 +114,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 **Trigger:** Populates when [Lookup Column] is filled
 
 **Formula:**
+
 ```excel
 =ARRAYFORMULA(
     IF(
@@ -152,7 +149,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 - ✅ Changes propagate automatically
 - ✅ VLOOKUP with FALSE for exact match
 - ⚠️ Returns #N/A if lookup value not found (consider IFERROR wrapper)
-```
 
 ---
 
@@ -160,7 +156,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 
 **Use for:** Complex data filtering, aggregation, and transformation
 
-```markdown
 ### Column [Letter]: [Column Name]
 
 **Purpose:** [Query/transform data from another range]
@@ -170,6 +165,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 **Trigger:** [Manual/Automatic]
 
 **Formula:**
+
 ```excel
 =QUERY('[Other Sheet]'![Range], "[QUERY_LANGUAGE]", [Headers])
 ```
@@ -191,7 +187,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 - ✅ Powerful for complex data operations
 - ⚠️ QUERY language syntax is specific (not standard SQL)
 - 💡 Consider using named ranges for readability
-```
 
 ---
 
@@ -199,7 +194,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 
 **Use for:** Importing data from a different spreadsheet
 
-```markdown
 ### Column [Letter]: [Column Name]
 
 **Purpose:** [Import data from external spreadsheet]
@@ -209,6 +203,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 **Trigger:** [Requires initial authorization]
 
 **Formula:**
+
 ```excel
 =IMPORTRANGE("[Spreadsheet URL]", "[Sheet Name]![Range]")
 ```
@@ -227,7 +222,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 - ⚠️ Requires one-time authorization
 - ⚠️ Large imports may slow down spreadsheet
 - ⚠️ #REF! error if access is revoked
-```
 
 ---
 
@@ -312,7 +306,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
 
 **Use for:** Documenting how formulas relate to each other
 
-```markdown
 ## Formula Dependencies
 
 ### Cross-Sheet Dependencies
@@ -335,7 +328,6 @@ When modifying batch data:
 1. Update [Source Column] first
 2. [Dependent Formula 1] recalculates automatically
 3. [Dependent Formula 2] uses result from Formula 1
-```
 
 ---
 

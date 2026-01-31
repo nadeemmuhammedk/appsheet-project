@@ -11,7 +11,7 @@
 - Reduce cognitive load when searching for specific components
 
 **Standard TOC Structure:**
-```markdown
+
 ## 📋 TABLE OF CONTENTS
 
 1. [System Overview](#-system-overview)
@@ -29,7 +29,6 @@
 7. [Version History](#-version-history)
 
 ---
-```
 
 **When generating documentation:**
 - Include TOC after version header, before main content
@@ -52,7 +51,6 @@
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 
-```markdown
 #### [N]. [Table Name] Table
 
 **Google Sheets:** "[Tab Name]" tab
@@ -60,6 +58,7 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 **Primary Key:** [Column Name]
 
 **Table-Level Settings:**
+
 ```appsheet
 Table: [Table Name]
   # Table-Level Operations
@@ -84,6 +83,7 @@ Notes:
 ---
 
 **Column [A]: [Column Name]**
+
 ```appsheet
 Google Sheets: Column A, Type: Text
 AppSheet Configuration:
@@ -104,6 +104,7 @@ AppSheet Configuration:
 ---
 
 **Column [Name] (Virtual)**
+
 ```appsheet
 Google Sheets: N/A (Virtual column)
 AppSheet Configuration:
@@ -117,14 +118,13 @@ AppSheet Configuration:
   REQUIRE: NO
   Description: "[Purpose]"
 ```
-```
 
 ### Action Documentation Template
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 
-```markdown
 **Action: [Name]**
+
 ```appsheet
 Action Name: [Name]
 For a record of this table: [Table Name]
@@ -148,14 +148,13 @@ Display prominently: Yes/No
 Icon: [Icon name]
 Description: "[User-facing description]"
 ```
-```
 
 ### View Documentation Template
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 
-```markdown
 **View: [Name]**
+
 ```appsheet
 View Name: [Name]
 View Type: deck/table/form/detail/dashboard
@@ -180,14 +179,13 @@ SHOW IF: [Formula or TRUE]
 Security:
   [Role]: [Can see/cannot see]
 ```
-```
 
 ### Security Documentation Template
 
 From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 
-```markdown
 **Table-Level Settings:**
+
 ```appsheet
 Table: [Table Name]
   # Table-Level Operations
@@ -212,12 +210,11 @@ Table: [Table Name]
 
   Security Filter (row-level): [Formula]
 ```
-```
 
 ### Enum Documentation Template
 
-```markdown
 **Enum: [Name]**
+
 ```appsheet
 Enum Name: [Name]
 Values:
@@ -230,7 +227,6 @@ Used in:
   - [Table].[Column]
 
 Description: "[Purpose and usage]"
-```
 ```
 
 ## How to Use This Skill

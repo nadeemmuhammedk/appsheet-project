@@ -114,13 +114,11 @@ After creating PRD, inform user:
 **Initial Version:** Always start at `1.0.0`
 
 **Version History Table:** Update the "Document History" section when making changes:
-```markdown
 | Version | Date | Author | Changes |
 |---------|------|--------|---------|
 | 1.0.0 | 2026-01-20 | [Name] | Initial PRD |
 | 1.1.0 | 2026-01-25 | [Name] | Added payment gateway feature |
 | 1.1.1 | 2026-01-26 | [Name] | Clarified authentication requirements |
-```
 
 **IMPORTANT:** The version in the PRD refers to the **PRD document version**, NOT the application/system version. The PRD can evolve independently of the system being built.
 
