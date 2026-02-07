@@ -1,5 +1,30 @@
 # Apps Script Blueprint Templates
 
+## File Header Template
+
+```
+# Apps Script Code
+
+**Project:** [Project Name]
+**Last Updated:** [YYYY-MM-DD]
+
+---
+
+## STABLE SYSTEM
+
+**Version:** V[X]
+
+---
+```
+
+**Rules:**
+- H1 title is the doc type only — do NOT include the project name
+- `**Project:**` goes on its own metadata line under the H1
+- Version number is on `**Version:** V[X]` below `## STABLE SYSTEM`, not in the heading
+- `**Last Updated:**` covers the date — no separate version date line needed
+
+---
+
 ## Table of Contents Requirement
 
 **All Apps Script documentation files should include a table of contents after the version header.**

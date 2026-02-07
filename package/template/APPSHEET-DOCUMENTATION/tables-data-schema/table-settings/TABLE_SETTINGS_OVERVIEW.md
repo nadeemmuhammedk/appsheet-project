@@ -33,11 +33,20 @@ Formula-based permissions for fine-grained control.
 
 | Setting | Purpose | Formula Returns |
 |---------|---------|-----------------|
-| **UPDATES** | Who can edit records | TRUE/FALSE |
-| **ADDS** | Who can add records | TRUE/FALSE |
-| **DELETES** | Who can delete records | TRUE/FALSE |
+| **Are updates allowed?** | Expression to control operations | See permission levels below |
 | **Row filter formula** | Which records visible | TRUE/FALSE |
 
+**Permission Levels (from official documentation):**
+- `"ALL_CHANGES"` - Can add, update, and delete records
+- `"ADDS_ONLY"` - Can add new records only
+- `"ADDS_AND_UPDATES"` - Can add and update records (no delete)
+- `"ADDS_AND_DELETES"` - Can add and delete records (no update)
+- `"UPDATES_ONLY"` - Can update existing records only
+- `"UPDATES_AND_DELETES"` - Can update and delete records (no add)
+- `"DELETES_ONLY"` - Can delete records only
+- `"READ_ONLY"` - Can only view records (no modifications)
+
+[See Table Operations (Expression-Based Control) →](TABLE_OPERATIONS.md#7-expression-based-operations-control)
 [See Table Security →](TABLE_SECURITY.md)
 [See Row Filtering →](ROW_FILTERING.md)
 
@@ -46,32 +55,27 @@ Additional table configurations.
 
 | Setting | Purpose |
 |---------|---------|
-| **Are updates allowed?** | Checkbox or Expression to control operations (returns "ALL_CHANGES" or "READ_ONLY") |
 | **Localization** | Multi-language support |
 | **Table name** | Display name for table |
-
-[See Table Operations (Expression-Based Control) →](TABLE_OPERATIONS.md#7-expression-based-operations-control)
 [See Table Localization →](TABLE_LOCALIZATION.md)
 
 ---
 
 ## 3. Common Configuration Patterns
 
-### Open Access (Default)
+### Method 1: Simple Toggles (Static Control)
+
+#### Open Access (Default)
 ```appsheet
 Updates Enabled: Yes
 Adds Enabled: Yes
 Deletes Enabled: Yes
 
-UPDATES: TRUE
-ADDS: TRUE
-DELETES: TRUE
-
 Row filter formula: (blank - show all)
 ```
 **Use for:** Internal apps, trusted users, collaborative data
 
-### Read-Only Table
+#### Read-Only Table
 ```appsheet
 Updates Enabled: No
 Adds Enabled: No
@@ -79,47 +83,64 @@ Deletes Enabled: No
 ```
 **Use for:** Reference data, lookup tables, reports
 
-### Admin-Only Modifications
-```appsheet
-Updates Enabled: Yes
-Adds Enabled: Yes
-Deletes Enabled: Yes
-
-UPDATES: USERROLE() = "Admin"
-ADDS: USERROLE() = "Admin"
-DELETES: USERROLE() = "Admin"
-```
-**Use for:** System tables, configuration data
-
-### User Ownership Model
-```appsheet
-Updates Enabled: Yes
-Adds Enabled: Yes
-Deletes Enabled: Yes
-
-UPDATES: OR([Owner] = USEREMAIL(), USERROLE() = "Admin")
-ADDS: TRUE
-DELETES: OR([Owner] = USEREMAIL(), USERROLE() = "Admin")
-
-Row filter formula: OR([Owner] = USEREMAIL(), USERROLE() = "Admin")
-```
-**Use for:** User-specific data, personal records
-
-### Approval Workflow
+#### No Delete Protection
 ```appsheet
 Updates Enabled: Yes
 Adds Enabled: Yes
 Deletes Enabled: No
-
-UPDATES: OR(
-  AND([Status] = "Draft", [CreatedBy] = USEREMAIL()),
-  AND([Status] = "Pending", USERROLE() = "Approver"),
-  USERROLE() = "Admin"
-)
-ADDS: TRUE
-DELETES: USERROLE() = "Admin"
 ```
-**Use for:** Approval processes, submissions
+**Use for:** Historical data, audit logs
+
+### Method 2: Expression-Based Control (Conditional/Role-Based)
+
+#### Admin-Only Modifications
+```appsheet
+Are updates allowed?: IF(
+  USERROLE() = "Admin",
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+```
+**Use for:** System tables, configuration data
+
+#### Manager Can Edit, Others Read-Only
+```appsheet
+Are updates allowed?: IF(
+  IN(USEREMAIL(), SELECT(Managers[Email], TRUE)),
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+```
+**Use for:** Management-controlled data
+
+#### Hierarchical Permissions (Manager/Staff/Viewer)
+```appsheet
+Are updates allowed?: IF(
+  USERROLE() = "Manager",
+  "ALL_CHANGES",
+  IF(
+    USERROLE() = "Staff",
+    "UPDATES_ONLY",
+    "READ_ONLY"
+  )
+)
+```
+**Use for:** Multi-tier access (Manager > Staff > Viewer)
+- Manager: Can add, update, delete
+- Staff: Can update only
+- Others: Read-only
+
+#### User Ownership Model
+```appsheet
+Are updates allowed?: IF(
+  OR([Owner] = USEREMAIL(), USERROLE() = "Admin"),
+  "ALL_CHANGES",
+  "READ_ONLY"
+)
+
+Row filter formula: OR([Owner] = USEREMAIL(), USERROLE() = "Admin")
+```
+**Use for:** User-specific data, personal records
 
 ---
 
@@ -162,21 +183,15 @@ Further restricts editability
 ## 5. Security Model
 
 ### Complete Security Configuration
+
+**Option A: Using Simple Toggles**
 ```appsheet
 # Table: Orders
 
-# Enable operations
+# Enable operations (simple on/off)
 Updates Enabled: Yes
 Adds Enabled: Yes
 Deletes Enabled: No
-
-# Who can perform operations
-UPDATES: OR(
-  [Owner] = USEREMAIL(),
-  IN(USERROLE(), LIST("Manager", "Admin"))
-)
-ADDS: TRUE  # Anyone can create orders
-DELETES: USERROLE() = "Admin"  # Only admins can delete
 
 # Which records are visible
 Row filter formula: OR(
@@ -187,6 +202,33 @@ Row filter formula: OR(
 # Users see: own orders, assigned orders, or all if Manager/Admin
 ```
 
+**Option B: Using Expression-Based Control**
+```appsheet
+# Table: Orders
+
+# Who can perform operations (conditional)
+Are updates allowed?: IF(
+  IN(USERROLE(), LIST("Manager", "Admin")),
+  "ALL_CHANGES",
+  IF(
+    [Owner] = USEREMAIL(),
+    "UPDATES_ONLY",
+    "READ_ONLY"
+  )
+)
+
+# Which records are visible
+Row filter formula: OR(
+  [Owner] = USEREMAIL(),
+  [AssignedTo] = USEREMAIL(),
+  IN(USERROLE(), LIST("Manager", "Admin"))
+)
+# Result:
+# - Manager/Admin: Can add, update, delete all visible orders
+# - Owner: Can update their own orders only
+# - Others: Read-only
+```
+
 ---
 
 ## 6. Common Use Cases
@@ -195,39 +237,52 @@ Row filter formula: OR(
 ```appsheet
 Table: Customer Data
 
-Updates Enabled: Yes
-Adds Enabled: Yes
-Deletes Enabled: No
-
-UPDATES: [CustomerEmail] = USEREMAIL()
-ADDS: TRUE
-DELETES: FALSE
+# Expression-based control
+Are updates allowed?: IF(
+  [CustomerEmail] = USEREMAIL(),
+  "UPDATES_ONLY",
+  "READ_ONLY"
+)
 
 Row filter formula: [CustomerEmail] = USEREMAIL()
 ```
+**Result:** Customers can update their own data but cannot add/delete records
 
 ### Team Collaboration
 ```appsheet
 Table: Projects
 
-Updates Enabled: Yes
-Adds Enabled: Yes
-Deletes Enabled: Yes
-
-UPDATES: IN(USEREMAIL(), [TeamMembers])
-ADDS: TRUE
-DELETES: [ProjectLead] = USEREMAIL()
+# Expression-based control
+Are updates allowed?: IF(
+  USERROLE() = "Admin",
+  "ALL_CHANGES",
+  IF(
+    [ProjectLead] = USEREMAIL(),
+    "ALL_CHANGES",
+    IF(
+      IN(USEREMAIL(), [TeamMembers]),
+      "UPDATES_ONLY",
+      "READ_ONLY"
+    )
+  )
+)
 
 Row filter formula: OR(
   IN(USEREMAIL(), [TeamMembers]),
   USERROLE() = "Admin"
 )
 ```
+**Result:**
+- Admin: Full access
+- Project Lead: Can add, update, delete
+- Team Members: Can update only
+- Others: Read-only
 
 ### Audit Log (Append-Only)
 ```appsheet
 Table: Activity Log
 
+# Simple toggle approach
 Updates Enabled: No
 Adds Enabled: Yes
 Deletes Enabled: No

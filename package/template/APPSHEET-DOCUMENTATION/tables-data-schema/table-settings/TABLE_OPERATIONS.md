@@ -127,20 +127,24 @@ Deletes Enabled: No
 
 ---
 
-## 6. With Security Formulas
+## 6. Combining Toggles with Expression-Based Control
 
+You can use either:
+- **Simple toggles** (Yes/No) for static control
+- **Expression-based control** for conditional/role-based permissions
+
+Example using expression-based control:
 ```appsheet
-# Enable operations
-Updates Enabled: Yes
-Adds Enabled: Yes
-Deletes Enabled: Yes
+# Expression-based control (conditional)
+Are updates allowed?: IF(
+  USERROLE() = "Admin",
+  "ALL_CHANGES",
+  "ADDS_ONLY"
+)
 
-# Then restrict with formulas
-UPDATES: USERROLE() = "Admin"
-ADDS: TRUE
-DELETES: USERROLE() = "Admin"
-
-# Result: Anyone can add, only admins can edit/delete
+# Result:
+# - Admins can add, edit, delete
+# - Others can add only
 ```
 
 ---
@@ -149,19 +153,29 @@ DELETES: USERROLE() = "Admin"
 
 **Location:** Data > Tables > [Table Name] > Are updates allowed?
 
-Instead of using checkboxes, you can enter an expression that returns:
-- **"ALL_CHANGES"** - Enable Updates, Adds, and Deletes
-- **"READ_ONLY"** - Disable all modifications
+Instead of using checkboxes, you can enter an expression that returns one of these permission levels:
+
+**All Permission Levels (from official documentation):**
+- **"ALL_CHANGES"** - Can add, update, and delete records
+- **"ADDS_ONLY"** - Can add new records only
+- **"ADDS_AND_UPDATES"** - Can add and update records (no delete)
+- **"ADDS_AND_DELETES"** - Can add and delete records (no update)
+- **"UPDATES_ONLY"** - Can update existing records only
+- **"UPDATES_AND_DELETES"** - Can update and delete records (no add)
+- **"DELETES_ONLY"** - Can delete records only
+- **"READ_ONLY"** - Can only view records (no modifications)
 
 ### When to Use Expressions vs Checkboxes
 
 **Use Checkboxes When:**
 - Simple on/off for all users
 - Static operation permissions
+- Same permission for everyone
 
 **Use Expressions When:**
 - Conditional control based on user
 - Role-based operation toggling
+- Different users need different permission levels
 - Dynamic permission logic
 
 ### Basic Pattern
@@ -171,6 +185,20 @@ IF(
   condition,
   "ALL_CHANGES",
   "READ_ONLY"
+)
+```
+
+### Hierarchical Permissions Pattern
+
+```appsheet
+IF(
+  [role condition 1],
+  "ALL_CHANGES",
+  IF(
+    [role condition 2],
+    "UPDATES_ONLY",
+    "READ_ONLY"
+  )
 )
 ```
 
@@ -231,35 +259,45 @@ IF(
 # - Other roles: read-only
 ```
 
-### Combining with Security Formulas
+### Using Different Permission Levels
 
-Expression-based operations work with security formulas (UPDATES/ADDS/DELETES):
-
+#### Staff Can Update Only, Manager Can Do Everything
 ```appsheet
-# Are updates allowed? (Expression)
-IF(USERROLE() = "Manager", "ALL_CHANGES", "READ_ONLY")
+IF(
+  IN(USEREMAIL(), SELECT(Managers[Email], TRUE)),
+  "ALL_CHANGES",
+  IF(
+    IN(USEREMAIL(), SELECT(Staff[Email], TRUE)),
+    "UPDATES_ONLY",
+    "READ_ONLY"
+  )
+)
 
-# Security formulas (if needed)
-UPDATES: [Owner] = USEREMAIL()
-ADDS: TRUE
-DELETES: [Status] = "Draft"
-
-# Result for Managers:
-# - Can add any record
-# - Can only edit records they own
-# - Can only delete Draft records
-
-# Result for non-Managers:
-# - READ_ONLY (cannot add, edit, or delete anything)
+# Result:
+# - Managers: Can add, edit, delete
+# - Staff: Can edit existing records only
+# - Others: Read-only
 ```
 
-### Expression vs Security Formula Control
+#### Customers Can Add Only
+```appsheet
+IF(
+  USERROLE() = "Admin",
+  "ALL_CHANGES",
+  "ADDS_ONLY"
+)
 
-| Control Method | Returns | Controls | Use Case |
-|----------------|---------|----------|----------|
-| **Expression** | "ALL_CHANGES" or "READ_ONLY" | Enable/disable all operations | User or role-based operation toggling |
-| **Security Formula** | TRUE or FALSE | Per-operation, per-record | Granular control (who can do what to which records) |
-| **Checkboxes** | Yes or No | Enable/disable operations | Simple static on/off |
+# Result:
+# - Admin: Full access
+# - Customers: Can add new records only (cannot edit or delete)
+```
+
+### Control Method Comparison
+
+| Control Method | Returns | Use Case |
+|----------------|---------|----------|
+| **Checkboxes** | Yes or No | Simple static on/off for all users |
+| **Expression** | 8 permission levels (ALL_CHANGES, ADDS_ONLY, ADDS_AND_UPDATES, ADDS_AND_DELETES, UPDATES_ONLY, UPDATES_AND_DELETES, DELETES_ONLY, READ_ONLY) | Conditional/role-based permissions with granular control |
 
 ### Common Patterns
 

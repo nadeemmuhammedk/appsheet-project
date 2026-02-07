@@ -483,6 +483,470 @@ function showSettings() {
 
 ---
 
+## Example 7: Multi-Code-File Project Structure
+
+**Use for:** Projects with more than one Apps Script file. Each code file gets its own self-contained block under a shared project header. Adding or updating a script means editing only its block — nothing else moves.
+
+### Why This Structure
+
+When a project has a single script, flat sections work fine. Once you add a second script, shared section names like "Installation Guide" or "Testing" become ambiguous. Grouping everything under the code file name solves this.
+
+### File-Level Layout
+
+```markdown
+# Apps Script Code
+
+**Project:** [Project Name]       ← set once at the top
+**Last Updated:** [Date]
+
+---
+
+## PopulateFromTemplate           ← Code File 1 (self-contained block)
+  - Script Overview
+  - Functions
+  - Installation Guide
+  - Testing & Monitoring
+  - Troubleshooting
+  - Rollback
+
+---
+
+## ArchiveExpiredRecords          ← Code File 2 (same structure)
+  - Script Overview
+  - Functions
+  - Installation Guide
+  - Testing & Monitoring
+  - Troubleshooting
+  - Rollback
+```
+
+---
+
+### Code File 1 — Full Example: PopulateFromTemplate
+
+---
+
+## PopulateFromTemplate
+
+### Script Overview
+
+**Code File Name:** PopulateFromTemplate
+**Purpose:** Polls a source sheet every 10 minutes for records with Status = "Active" and auto-populates a details sheet from a row template. A duplicate guard prevents re-processing.
+
+**Problem Being Solved:**
+- When a record becomes "Active" in the source sheet, detail rows need to be created manually in a separate sheet
+- Manual creation is slow and error-prone
+
+**Solution:**
+- A time-driven trigger checks the source sheet every 10 minutes
+- Any "Active" record not already in the details sheet gets populated from a template sheet
+- A duplicate guard skips records that already exist
+
+**Spreadsheet Connections:**
+
+| Spreadsheet | Sheet | Role |
+|---|---|---|
+| Source App | Records | READ — source of record status |
+| Target App | row_template | READ — template rows |
+| Target App | record_details | WRITE — populated rows |
+
+**Current Configuration:**
+- Sheets affected: Records (Source App), row_template, record_details (Target App)
+- Trigger schedule: Every 10 minutes (time-driven)
+- Status: Experimental
+
+---
+
+### Functions
+
+#### Function: populateDetails
+
+**Purpose:** Main scheduled function. Reads all records with Status = "Active" from the source sheet, checks for duplicates in record_details, reads matching rows from row_template, and writes new rows.
+
+**Trigger Type:** Time-driven (Every 10 minutes)
+
+**File Location:** Extensions → Apps Script → `PopulateFromTemplate.gs`
+
+**Authorization Required:** Access to both Source App and Target App spreadsheets; Gmail (for error notification emails)
+
+**Created:** [Date]
+**Last Modified:** [Date]
+
+**Parameters:** None (triggered by schedule)
+
+**Returns:** None (writes directly to record_details; logs results via console)
+
+**Code:**
+
+```javascript
+// ─── CONFIGURATION ──────────────────────────────────────────
+const SOURCE_SPREADSHEET_ID = "YOUR_SOURCE_SPREADSHEET_ID";
+
+const RECORDS_SHEET   = "Records";
+const TEMPLATE_SHEET  = "row_template";
+const DETAILS_SHEET   = "record_details";
+
+const REC_NAME_IDX    = 0;   // Column A — Record name
+const REC_TYPE_IDX    = 1;   // Column B — Record type
+const REC_STATUS_IDX  = 3;   // Column D — Status
+
+const DET_NAME_IDX    = 1;   // Column B — Record name (duplicate check)
+
+const NOTIFY_EMAIL = "YOUR_EMAIL_ADDRESS";
+
+// ─────────────────────────────────────────────────────────────
+/**
+ * Polls source for Active records and populates record_details from template.
+ * Duplicate guard: skips any record already present in record_details.
+ *
+ * @return {void} Writes directly to record_details sheet
+ */
+function populateDetails() {
+  try {
+    const sourceSS      = SpreadsheetApp.openById(SOURCE_SPREADSHEET_ID);
+    const recordsSheet  = sourceSS.getSheetByName(RECORDS_SHEET);
+    const records       = recordsSheet.getDataRange().getValues();
+
+    const activeRecords = records.slice(1).filter(row => row[REC_STATUS_IDX] === "Active");
+
+    if (activeRecords.length === 0) {
+      console.log("No Active records. Nothing to do.");
+      return;
+    }
+
+    const thisSS        = SpreadsheetApp.getActiveSpreadsheet();
+    const detailsSheet  = thisSS.getSheetByName(DETAILS_SHEET);
+    const templateSheet = thisSS.getSheetByName(TEMPLATE_SHEET);
+
+    const existingData    = detailsSheet.getDataRange().getValues();
+    const existingNames   = new Set(existingData.slice(1).map(row => row[DET_NAME_IDX]));
+
+    const templateData = templateSheet.getDataRange().getValues();
+
+    for (const record of activeRecords) {
+      const recordName = record[REC_NAME_IDX];
+      const recordType = record[REC_TYPE_IDX];
+
+      if (existingNames.has(recordName)) {
+        console.log("Record '" + recordName + "' already exists. Skipping.");
+        continue;
+      }
+
+      const matching = templateData.slice(1).filter(row => row[1] === recordType);
+
+      if (matching.length === 0) {
+        console.log("No template rows for type '" + recordType + "'. Skipping.");
+        continue;
+      }
+
+      const now = new Date();
+      const newRows = matching.map(t => [
+        generateDetailId(),  // A — DetailID
+        recordName,          // B — Record name
+        t[1],                // C — Type
+        t[2],                // D — Category
+        t[3],                // E — Description
+        "",                  // F — Status
+        "",                  // G — Completed Date
+        now                  // H — Created Date
+      ]);
+
+      const lastRow = detailsSheet.getLastRow();
+      detailsSheet.getRange(lastRow + 1, 1, newRows.length, 8).setValues(newRows);
+      existingNames.add(recordName);
+
+      console.log("Added " + newRows.length + " rows for '" + recordName + "'.");
+    }
+
+  } catch (err) {
+    console.error("ERROR in populateDetails: " + err.message);
+    try {
+      MailApp.sendEmail({
+        to: NOTIFY_EMAIL,
+        subject: "[App] Populate Error",
+        body: "populateDetails failed.\n\nError: " + err.message + "\n\nTime: " + new Date().toString()
+      });
+    } catch (mailErr) {
+      console.error("Failed to send error email: " + mailErr.message);
+    }
+  }
+}
+```
+
+---
+
+#### Function: generateDetailId
+
+**Purpose:** Utility — generates an 8-character random alphanumeric ID used as the unique suffix in DetailID values.
+
+**Called By:** `populateDetails` (once per new row written to record_details)
+
+**Parameters:** None
+
+**Returns:**
+- `String` — 8-character random string using uppercase A–Z and digits 0–9
+
+**Code:**
+
+```javascript
+/**
+ * Generates an 8-character random alphanumeric ID.
+ * @return {string} 8-character random ID
+ *
+ * @example
+ * generateDetailId(); // Returns something like "A3K9X1PQ"
+ */
+function generateDetailId() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let id = "";
+  for (let i = 0; i < 8; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id;
+}
+```
+
+---
+
+### Installation Guide
+
+#### Prerequisites
+
+1. **Source App Spreadsheet ID** — the long string between `/d/` and `/edit` in the source Google Sheet URL
+
+2. Confirm these tab names exist (case-sensitive):
+
+| Spreadsheet | Required Tab |
+|---|---|
+| Source App | `Records` |
+| Target App | `row_template` |
+| Target App | `record_details` |
+
+3. Confirm column positions match the script constants before running
+
+#### Setup Steps
+
+1. Open the **Target App** Google Sheet
+2. Go to **Extensions → Apps Script**
+3. Paste both `populateDetails` and `generateDetailId` functions (including configuration constants)
+4. Replace `YOUR_SOURCE_SPREADSHEET_ID` with the actual source spreadsheet ID
+5. Replace `YOUR_EMAIL_ADDRESS` in `NOTIFY_EMAIL`
+6. Click **Save**
+7. Click ▶ **Run** next to `populateDetails` to authorize
+8. Click **Allow** when prompted
+
+#### Trigger Setup
+
+1. Click the **Triggers** icon (clock) in the left sidebar
+2. Click **Add Trigger**
+3. Function to run: `populateDetails`
+4. Event source: `Time driven`
+5. Type of time trigger: `Every 10 minutes`
+6. Click **Save**
+
+---
+
+### Testing & Monitoring
+
+#### Manual Test
+
+1. Confirm at least one record in the source sheet has Status = `Active`
+2. Confirm `record_details` does **not** already have rows for that record
+3. Run `populateDetails` manually from the Apps Script editor
+4. Open `record_details` — new rows should appear
+
+#### Verification Checklist
+
+- [ ] DetailID is present and unique
+- [ ] Record name matches the source
+- [ ] Type and Category match the template rows for that record type
+- [ ] Row count matches the number of template rows for that type
+- [ ] Status and Completed Date are empty
+- [ ] Created Date has a timestamp
+
+#### Duplicate Guard Test
+
+1. Run the script again
+2. Confirm **no new rows** appear in `record_details`
+3. Check logs — should show: `Record '[name]' already exists. Skipping.`
+
+#### Edge Case Tests
+
+- [ ] Record with Status ≠ "Active" — no rows created
+- [ ] Record type with no matching template rows — log shows skip message
+- [ ] Empty source sheet (header only) — log shows "Nothing to do"
+- [ ] Invalid spreadsheet ID — error email sent to `NOTIFY_EMAIL`
+
+---
+
+### Troubleshooting
+
+| Problem | Likely Cause | Fix |
+|---|---|---|
+| No rows appear | Spreadsheet ID is wrong | Re-copy from URL — no spaces, no `/edit` |
+| No rows appear | Tab name mismatch | Check exact name — case-sensitive |
+| No rows appear | No records have Status = "Active" | Verify source data |
+| Wrong row count | Record type mismatch | Source type must match template exactly |
+| Permission error | Not authorized | Run manually once → click Allow |
+| `Cannot read property of null` | Sheet name doesn't exist | Double-check tab name |
+| Duplicates appearing | Record name inconsistency | Check source data format |
+
+---
+
+### Rollback
+
+1. **Disable the trigger:** Apps Script → Triggers → delete the `populateDetails` trigger
+2. **Remove written rows:** Delete rows in `record_details` created by the script (identified by DetailID)
+3. **Revert the script:** File → Manage versions → restore previous version
+
+---
+
+### Code File 2 — Structure Outline: ArchiveExpiredRecords
+
+The second code file follows the exact same pattern. Only the content changes.
+
+---
+
+## ArchiveExpiredRecords
+
+### Script Overview
+
+**Code File Name:** ArchiveExpiredRecords
+**Purpose:** Runs daily at 2 AM and moves records older than 90 days from the active sheet to an archive sheet.
+
+**Problem Being Solved:**
+- The active data sheet grows over time, slowing down queries and views
+- Old records need to be preserved but removed from active use
+
+**Solution:**
+- A daily trigger checks each record's date
+- Records older than 90 days are copied to the archive sheet and deleted from active
+
+**Spreadsheet Connections:**
+
+| Spreadsheet | Sheet | Role |
+|---|---|---|
+| Target App | active_records | READ/DELETE — current records |
+| Target App | archived_records | WRITE — destination for old records |
+
+**Current Configuration:**
+- Sheets affected: active_records, archived_records
+- Trigger schedule: Daily at 2 AM (time-driven)
+- Status: Experimental
+
+---
+
+### Functions
+
+#### Function: archiveExpiredRecords
+
+**Purpose:** Main scheduled function. Identifies records older than 90 days, copies them to archived_records, then deletes from active_records (bottom to top to avoid index shifting).
+
+**Trigger Type:** Time-driven (Daily at 2 AM)
+
+**File Location:** Extensions → Apps Script → `ArchiveExpiredRecords.gs`
+
+**Authorization Required:** Access to Target App spreadsheet
+
+**Created:** [Date]
+**Last Modified:** [Date]
+
+**Parameters:** None
+
+**Returns:** None (moves rows between sheets; logs count)
+
+**Code:**
+
+```javascript
+const ACTIVE_SHEET   = "active_records";
+const ARCHIVE_SHEET  = "archived_records";
+const DATE_COL_IDX   = 4;   // 0-based index of the date column
+const MAX_AGE_DAYS   = 90;
+
+/**
+ * Moves records older than MAX_AGE_DAYS from active to archive sheet.
+ * Deletes from bottom to top to prevent index shifting.
+ *
+ * @return {void}
+ */
+function archiveExpiredRecords() {
+  const ss            = SpreadsheetApp.getActiveSpreadsheet();
+  const activeSheet   = ss.getSheetByName(ACTIVE_SHEET);
+  const archiveSheet  = ss.getSheetByName(ARCHIVE_SHEET);
+
+  const data     = activeSheet.getDataRange().getValues();
+  const cutoff   = new Date();
+  cutoff.setDate(cutoff.getDate() - MAX_AGE_DAYS);
+
+  const toArchive = [];
+  const rowsToDelete = [];
+
+  for (let i = 1; i < data.length; i++) {
+    if (new Date(data[i][DATE_COL_IDX]) < cutoff) {
+      toArchive.push(data[i]);
+      rowsToDelete.push(i + 1);  // 1-based row number
+    }
+  }
+
+  if (toArchive.length === 0) {
+    console.log("No expired records.");
+    return;
+  }
+
+  // Write to archive
+  const lastRow = archiveSheet.getLastRow();
+  archiveSheet.getRange(lastRow + 1, 1, toArchive.length, toArchive[0].length)
+    .setValues(toArchive);
+
+  // Delete from active (bottom to top)
+  for (let i = rowsToDelete.length - 1; i >= 0; i--) {
+    activeSheet.deleteRow(rowsToDelete[i]);
+  }
+
+  console.log("Archived " + toArchive.length + " records.");
+}
+```
+
+---
+
+### Installation Guide
+
+1. Open the Target App Google Sheet → Extensions → Apps Script
+2. Create file: `ArchiveExpiredRecords.gs`
+3. Paste the function and constants
+4. Save and run once to authorize
+5. Set up a daily trigger at 2 AM for `archiveExpiredRecords`
+
+---
+
+### Testing & Monitoring
+
+- [ ] Run manually with test data that includes records older than 90 days
+- [ ] Verify those rows moved to `archived_records`
+- [ ] Verify they are removed from `active_records`
+- [ ] Run again — confirm no movement if all records are recent
+- [ ] Confirm row order in archive matches source
+
+---
+
+### Troubleshooting
+
+| Problem | Likely Cause | Fix |
+|---|---|---|
+| Nothing moves | All records are within 90 days | Add a test record with an old date |
+| Wrong rows moved | Date column index is off | Verify `DATE_COL_IDX` matches actual column |
+| Rows deleted but not archived | Script errored mid-run | Check logs; restore from Sheets version history |
+
+---
+
+### Rollback
+
+1. **Disable trigger:** Delete the `archiveExpiredRecords` trigger
+2. **Restore rows:** Copy moved rows back from `archived_records` to `active_records`
+3. **Revert script:** File → Manage versions → restore previous version
+
+---
+
 ## Common Apps Script Patterns
 
 | Pattern | Code Snippet | Use Case |
