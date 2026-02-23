@@ -76,6 +76,31 @@ function getPackageVersion() {
 }
 
 /**
+ * Get the installed version stored in the project directory
+ * Returns null if no version file exists
+ */
+function getInstalledVersion() {
+  try {
+    const versionFile = path.join(process.cwd(), '.appsheet-project-version');
+    if (fs.existsSync(versionFile)) {
+      return fs.readFileSync(versionFile, 'utf8').trim();
+    }
+    return null;
+  } catch (error) {
+    return null;
+  }
+}
+
+/**
+ * Write the current package version to the project's version file
+ */
+function writeInstalledVersion() {
+  const version = getPackageVersion();
+  const versionFile = path.join(process.cwd(), '.appsheet-project-version');
+  fs.writeFileSync(versionFile, version, 'utf8');
+}
+
+/**
  * Get list of system paths that should be updated
  */
 function getSystemPaths() {
@@ -206,6 +231,8 @@ async function initProject() {
       }
     }
 
+    writeInstalledVersion();
+
     const version = getPackageVersion();
 
     console.log('');
@@ -258,7 +285,13 @@ function showUpdatePreview(systemPaths) {
   console.log(`${colors.bright}${colors.cyan}╚═══════════════════════════════════════════════════════════════╝${colors.reset}`);
   console.log('');
 
-  console.log(`${colors.cyan}Updating to:${colors.reset} ${colors.bright}v${version}${colors.reset}`);
+  const installedVersion = getInstalledVersion();
+  if (installedVersion) {
+    console.log(`${colors.cyan}Installed version:${colors.reset} ${colors.bright}v${installedVersion}${colors.reset}`);
+    console.log(`${colors.cyan}Updating to:${colors.reset}      ${colors.bright}v${version}${colors.reset}`);
+  } else {
+    console.log(`${colors.cyan}Updating to:${colors.reset} ${colors.bright}v${version}${colors.reset}`);
+  }
   console.log(`${colors.cyan}Project directory:${colors.reset} ${targetDir}`);
   console.log('');
   console.log(`${colors.bright}${colors.yellow}The following system files will be updated:${colors.reset}`);
@@ -381,6 +414,18 @@ async function updateProject() {
     process.exit(1);
   }
 
+  // Step 1b: Check if already up to date
+  const installedVersion = getInstalledVersion();
+  const currentVersion = getPackageVersion();
+
+  if (installedVersion === currentVersion) {
+    console.log('');
+    console.log(`${colors.bright}${colors.green}✓ Already up to date!${colors.reset}`);
+    console.log(`${colors.dim}Your project is already on the latest version: ${colors.reset}${colors.bright}v${currentVersion}${colors.reset}`);
+    console.log('');
+    return;
+  }
+
   // Step 2: Get system paths
   const systemPaths = getSystemPaths();
 
@@ -396,6 +441,7 @@ async function updateProject() {
   // Step 5: Perform update
   try {
     copySystemFiles(systemPaths);
+    writeInstalledVersion();
 
     // Step 6: Show success message
     const version = getPackageVersion();

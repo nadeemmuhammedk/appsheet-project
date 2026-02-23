@@ -2,6 +2,8 @@
 
 ## File Header Template
 
+### When Starting New Feature (Experimental Phase)
+
 ```
 # AppSheet Formulas
 
@@ -10,9 +12,59 @@
 
 ---
 
-## STABLE SYSTEM
+## ⚠️ EXPERIMENTAL - TESTING IN PROGRESS
+
+**Feature:** [Feature Name]
+**Status:** ⚠ EXPERIMENTAL - NOT YET DEPLOYED
+**Started:** [YYYY-MM-DD]
+**Purpose:** [Brief description of what this feature does]
+
+### What's New
+
+[... experimental content ...]
+
+### Changes Summary
+
+[... changes ...]
+
+### Implementation Steps
+
+[... steps ...]
+
+### Testing Checklist
+
+[... checklist ...]
+
+### Rollback Instructions
+
+[... rollback instructions ...]
+
+---
+
+## ✅ STABLE SYSTEM
 
 **Version:** V[X]
+**Last Updated:** [YYYY-MM-DD]
+**Feature:** [Main feature of this stable version]
+
+---
+```
+
+### Production-Only (No Experimental Features)
+
+```
+# AppSheet Formulas
+
+**Project:** [Project Name]
+**Last Updated:** [YYYY-MM-DD]
+
+---
+
+## ✅ STABLE SYSTEM
+
+**Version:** V[X]
+**Last Updated:** [YYYY-MM-DD]
+**Feature:** [Main feature of this stable version]
 
 ---
 ```
@@ -20,8 +72,12 @@
 **Rules:**
 - H1 title is the doc type only — do NOT include the project name
 - `**Project:**` goes on its own metadata line under the H1
-- Version number is on `**Version:** V[X]` below `## STABLE SYSTEM`, not in the heading
-- `**Last Updated:**` covers the date — no separate version date line needed
+- **EXPERIMENTAL header:** NO version number (version only assigned when promoted to stable)
+- **STABLE header:** MUST include version number `**Version:** V[X]`
+- Clear separator `---` between EXPERIMENTAL and STABLE sections
+- `**Last Updated:**` in both sections shows when each was last modified
+- EXPERIMENTAL section goes at TOP of file (before STABLE section)
+- Use ⚠️ emoji for EXPERIMENTAL, ✅ emoji for STABLE SYSTEM
 
 ---
 

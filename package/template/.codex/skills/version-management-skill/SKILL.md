@@ -36,9 +36,13 @@ Manages the Experimental→Stable promotion workflow for all formula documentati
 
 ```
 [File Name]
-├── EXPERIMENTAL V[X]  (if testing new features)
-└── STABLE SYSTEM V[X-1]  (current production)
+├── EXPERIMENTAL  (if testing new features - NO version number yet)
+└── STABLE SYSTEM V[X]  (current production - HAS version number)
 ```
+
+**Version Number Rule:**
+- EXPERIMENTAL: NO version number (only gets one when promoted to stable)
+- STABLE SYSTEM: HAS version number V[X]
 
 **Older versions?** → Archive to `backups/[date]-[filename]/`
 
@@ -69,7 +73,7 @@ Manages the Experimental→Stable promotion workflow for all formula documentati
            │
            ▼
 ┌─────────────────────┐
-│  EXPERIMENTAL V[X]  │
+│  EXPERIMENTAL       │  (NO version number)
 │  "Testing in progress"│
 └──────────┬──────────┘
            │ When features are tested
@@ -78,8 +82,8 @@ Manages the Experimental→Stable promotion workflow for all formula documentati
            │
            ▼
 ┌─────────────────────┐
-│  Integrate V[X]     │
-│  into STABLE V[X]   │
+│  Integrate changes  │
+│  into STABLE V[X]   │  (GETS version when promoted)
 │  (cumulative)       │
 └─────────────────────┘
            │
@@ -88,6 +92,8 @@ Manages the Experimental→Stable promotion workflow for all formula documentati
 │  STABLE SYSTEM V[X] │◄───────────────────────
 │  "Production ready" │    Restore from backup
 └─────────────────────┘
+
+**Key:** Version number is ONLY assigned when promoting to STABLE
 ```
 
 **Key Concept:** V3 = V2 + new features (additive, NOT replacement)
@@ -144,7 +150,7 @@ STABLE SYSTEM V[X] - [Feature Name]
 **Present the complete plan to user with confirmation:**
 
 ```
-Ready to promote EXPERIMENTAL V[X] to STABLE?
+Ready to promote EXPERIMENTAL to STABLE?
 
 **What will be integrated:**
 - [Feature/table 1]
@@ -305,7 +311,7 @@ version-management-skill:
 
 Main agent:
   → Shows user the EXPERIMENTAL section plan
-  → Adds EXPERIMENTAL V[X] section with user approval
+  → Adds EXPERIMENTAL section (NO version number) with user approval
   → Invokes blueprint skills to add content
 ```
 
@@ -435,11 +441,49 @@ When user says "let's build a new feature" or similar:
    - Insert after file header/metadata
    - Maintain order: EXPERIMENTAL → STABLE → Archive pointer
    - Set status to "⚠ EXPERIMENTAL - TESTING IN PROGRESS"
+   - **NO version number in EXPERIMENTAL header**
    - Suggest invoking blueprint skills to add documentation templates
+
+**Template Structure:**
+```markdown
+# [Document Title]
+
+**Project:** [Project Name]
+**Last Updated:** [YYYY-MM-DD]
+
+---
+
+## ⚠️ EXPERIMENTAL - TESTING IN PROGRESS
+                    ^
+                    NO VERSION NUMBER
+
+**Feature:** [Feature Name]
+**Status:** ⚠ EXPERIMENTAL - NOT YET DEPLOYED
+**Started:** [YYYY-MM-DD]
+**Purpose:** [Brief description]
+
+### What's New
+[... experimental content ...]
+
+---
+
+## ✅ STABLE SYSTEM
+            ^
+**Version:** V[X]    <-- VERSION NUMBER HERE
+**Last Updated:** [YYYY-MM-DD]
+**Feature:** [Main feature]
+
+---
+
+[... stable documentation ...]
+```
 
 **Placement Rule:**
 - EXPERIMENTAL always goes at TOP (lines immediately after metadata)
+- EXPERIMENTAL header: NO version number (version assigned on promotion)
 - STABLE comes second (middle of file)
+- STABLE header: HAS version number V[X]
+- Clear separator `---` between EXPERIMENTAL and STABLE
 - Archive pointer at bottom
 - Rationale: Active development needs quick access
 
