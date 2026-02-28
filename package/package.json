@@ -1,6 +1,6 @@
 {
 	"name": "appsheet-project",
-	"version": "1.0.7",
+	"version": "1.0.71",
 	"description": "Scaffolding tool for AppSheet projects - Initializes complete development environment with Claude Code skills, documentation, and templates",
 	"bin": {
 		"appsheet-project": "./bin/appsheet-project.js"

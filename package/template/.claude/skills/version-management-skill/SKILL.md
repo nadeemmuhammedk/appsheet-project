@@ -622,4 +622,4 @@ When user says "let's build a new feature" or similar:
 - Skill returns plans to main agent instead of directly editing files
 - Updated all workflows to reflect plan-based approach
 
-**Source:** APPSHEET_SYSTEM_BLUEPRINT.md Section 5
+**Source:** version-management-skill/SKILL.md
