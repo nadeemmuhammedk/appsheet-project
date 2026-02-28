@@ -45,7 +45,6 @@
 
 **Version:** V[X]
 **Last Updated:** [YYYY-MM-DD]
-**Feature:** [Main feature of this stable version]
 
 ---
 ```
@@ -64,7 +63,6 @@
 
 **Version:** V[X]
 **Last Updated:** [YYYY-MM-DD]
-**Feature:** [Main feature of this stable version]
 
 ---
 ```
@@ -73,7 +71,7 @@
 - H1 title is the doc type only — do NOT include the project name
 - `**Project:**` goes on its own metadata line under the H1
 - **EXPERIMENTAL header:** NO version number (version only assigned when promoted to stable)
-- **STABLE header:** MUST include version number `**Version:** V[X]`
+- **STABLE header:** MUST include version number (`**Version:** V[X]`) and last updated date
 - Clear separator `---` between EXPERIMENTAL and STABLE sections
 - `**Last Updated:**` in both sections shows when each was last modified
 - EXPERIMENTAL section goes at TOP of file (before STABLE section)
@@ -106,14 +104,12 @@
    - [Action 1](#action-1-action-name)
    - [Action 2](#action-2-action-name)
 5. [Bot Automation](#-bot-automation) (if applicable)
-6. [Rollback Instructions](#-rollback-instructions)
-7. [Version History](#-version-history)
 
 ---
 
 **When generating documentation:**
 - Include TOC after version header, before main content
-- Link to all major sections (tables, views, actions, bot automation, rollback, version history)
+- Link to all major sections (system overview, tables, views, actions, bot automation)
 - Include subsections for tables/views/actions if 3 or more exist
 - Use markdown anchor format: lowercase, hyphens, no special chars (except keep emoji codes)
 - Test all links work correctly
@@ -128,9 +124,26 @@
 
 ---
 
+### System Overview Template
+
+```
+### 📋 SYSTEM OVERVIEW
+
+**Key Features:**
+- [Feature 1: brief description]
+- [Feature 2: brief description]
+- [Feature 3: brief description]
+```
+
+**Rules:**
+- List each major table, view, action, or automation as a bullet point
+- Keep each item to one line — name + brief description
+- Ordered roughly by importance (core tables first, then views, then automation)
+
+---
+
 ### Table Documentation Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 
 #### [N]. [Table Name] Table
 
@@ -202,7 +215,6 @@ AppSheet Configuration:
 
 ### Action Documentation Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 
 **Action: [Name]**
 
@@ -232,7 +244,6 @@ Description: "[User-facing description]"
 
 ### View Documentation Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 
 **View: [Name]**
 
@@ -263,7 +274,6 @@ Security:
 
 ### Security Documentation Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1:
 
 **Table-Level Settings:**
 
@@ -338,8 +348,7 @@ Description: "[Purpose and usage]"
 When responding to a documentation request:
 
 1. **Identify the component type** (table, view, action, security, enum)
-2. **Read APPSHEET_SYSTEM_BLUEPRINT.md** Section 4.1 for templates
-3. **Extract the appropriate template:**
+2. **Extract the appropriate template from TEMPLATES.md** in this skill:
    - Table: Complete schema with ALL columns
    - View: Complete view configuration
    - Action: Complete action documentation
@@ -358,7 +367,7 @@ When responding to a documentation request:
 **User:** "Show me how to document a table"
 
 **Response:**
-1. Read `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1
+1. Use templates from TEMPLATES.md in this skill
 2. Extract table documentation template
 3. Provide template with all fields:
    ```
@@ -385,7 +394,7 @@ When responding to a documentation request:
 **Claude thinks:** Need to document this table with complete schema
 
 **Claude automatically:**
-1. Reads `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1
+1. Uses templates from TEMPLATES.md in this skill
 2. Generates complete table documentation with ALL fields:
    - Table-level settings (Updates, Adds, Deletes, Security)
    - Column A: Name (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE, Description)
@@ -402,7 +411,7 @@ When responding to a documentation request:
 **Claude thinks:** Need complete view documentation template
 
 **Claude automatically:**
-1. Reads `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1 view template
+1. Uses templates from TEMPLATES.md in this skill view template
 2. Generates complete view documentation:
    - View Name, View Type, For this data, Position
    - Display settings (Image, Primary header, Secondary header, Summary)
@@ -420,7 +429,7 @@ When responding to a documentation request:
 **Claude thinks:** Need complete action documentation template
 
 **Claude automatically:**
-1. Reads `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.1 action template
+1. Uses templates from TEMPLATES.md in this skill action template
 2. Generates complete action documentation:
    - Action Name, For a record of this table
    - Do this (behavior type)

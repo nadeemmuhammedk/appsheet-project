@@ -41,7 +41,6 @@
 
 **Version:** V[X]
 **Last Updated:** [YYYY-MM-DD]
-**Feature:** [Main feature of this stable version]
 
 ---
 ```
@@ -60,7 +59,6 @@
 
 **Version:** V[X]
 **Last Updated:** [YYYY-MM-DD]
-**Feature:** [Main feature of this stable version]
 
 ---
 ```
@@ -69,7 +67,7 @@
 - H1 title is the doc type only — do NOT include the project name
 - `**Project:**` goes on its own metadata line under the H1
 - **EXPERIMENTAL header:** NO version number (version only assigned when promoted to stable)
-- **STABLE header:** MUST include version number `**Version:** V[X]`
+- **STABLE header:** MUST include version number (`**Version:** V[X]`) and last updated date
 - Clear separator `---` between EXPERIMENTAL and STABLE sections
 - `**Last Updated:**` in both sections shows when each was last modified
 - EXPERIMENTAL section goes at TOP of file (before STABLE section)
@@ -79,22 +77,60 @@
 
 ## Table of Contents Requirement
 
-**All Looker Studio documentation files should include a table of contents after the version header.**
+**All Looker Studio documentation files must include a table of contents after the version header and before the main content.**
+
+**Purpose:**
+- Improve navigation in long documentation files
+- Enable quick jumping to specific data sources, calculated fields, or reports
+- Maintain consistent structure across all documentation files
+- Reduce cognitive load when searching for specific components
 
 **Standard TOC Structure:**
 
-### 📋 TABLE OF CONTENTS
+## 📋 TABLE OF CONTENTS
 
-1. [Data Source Configuration](#data-source-configuration)
-2. [Calculated Fields](#calculated-fields)
-3. [Blended Data Sources](#blended-data-sources)
-4. [Report Configurations](#report-configurations)
+1. [System Overview](#-system-overview)
+2. [Data Source Configuration](#data-source-configuration)
+3. [Calculated Fields](#calculated-fields)
+4. [Blended Data Sources](#blended-data-sources)
+5. [Report Configurations](#report-configurations)
+
+---
+
+**When generating documentation:**
+- Include TOC after version header, before main content
+- Link to all major sections (system overview, data sources, calculated fields, reports)
+- Use markdown anchor format: lowercase, hyphens, no special chars (except keep emoji codes)
+- Test all links work correctly
+
+**Anchor Link Format Rules:**
+- Lowercase only
+- Replace spaces with hyphens
+- Remove special characters except hyphens
+- Keep emoji codes as-is (e.g., `#-system-overview` for "### 📋 SYSTEM OVERVIEW")
+
+---
+
+### System Overview Template
+
+```
+### 📋 SYSTEM OVERVIEW
+
+**Key Features:**
+- [Feature 1: brief description]
+- [Feature 2: brief description]
+- [Feature 3: brief description]
+```
+
+**Rules:**
+- List each major data source, calculated field, or report as a bullet point
+- Keep each item to one line — name + brief description
+- Ordered roughly by importance (data sources first, then calculated fields, then reports)
 
 ---
 
 ## Data Source Configuration Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
 ### Data Source: [Source Name]
 
@@ -123,7 +159,6 @@ Field Name         | Type      | Aggregation | Description
 
 ## Calculated Field Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
 ### Calculated Field: [Field Name]
 
@@ -155,7 +190,6 @@ Output: [Result]
 
 ## Blended Data Source Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
 ### Blended Data: [Blend Name]
 
@@ -180,7 +214,6 @@ From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
 ## Report Configuration Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.4:
 
 ### Report: [Report Name]
 
@@ -495,7 +528,7 @@ CONCAT(Field1, " - ", Field2)
 ### Response Pattern
 
 1. **Identify the component type** (Data Source, Calculated Field, Blend, Chart)
-2. **Read APPSHEET_SYSTEM_BLUEPRINT.md** Section 4.4 for templates
+2. **Extract the appropriate template from TEMPLATES.md** in this skill
 3. **Extract the appropriate template** from this file
 4. **Generate complete documentation** with all fields
 5. **Verify completeness** against blueprint requirements
@@ -521,4 +554,4 @@ CONCAT(Field1, " - ", Field2)
 
 **Version:** 1.0
 **Last Updated:** 2026-01-21
-**Source:** APPSHEET_SYSTEM_BLUEPRINT.md Section 4.4
+**Source:** lookerstudio-blueprint-skill/TEMPLATES.md

@@ -41,7 +41,6 @@
 
 **Version:** V[X]
 **Last Updated:** [YYYY-MM-DD]
-**Feature:** [Main feature of this stable version]
 
 ---
 ```
@@ -60,7 +59,6 @@
 
 **Version:** V[X]
 **Last Updated:** [YYYY-MM-DD]
-**Feature:** [Main feature of this stable version]
 
 ---
 ```
@@ -69,7 +67,7 @@
 - H1 title is the doc type only — do NOT include the project name
 - `**Project:**` goes on its own metadata line under the H1
 - **EXPERIMENTAL header:** NO version number (version only assigned when promoted to stable)
-- **STABLE header:** MUST include version number `**Version:** V[X]`
+- **STABLE header:** MUST include version number (`**Version:** V[X]`) and last updated date
 - Clear separator `---` between EXPERIMENTAL and STABLE sections
 - `**Last Updated:**` in both sections shows when each was last modified
 - EXPERIMENTAL section goes at TOP of file (before STABLE section)
@@ -79,13 +77,19 @@
 
 ## Table of Contents Requirement
 
-**All Apps Script documentation files should include a table of contents after the version header.**
+**All Apps Script documentation files must include a table of contents after the version header and before the main content.**
+
+**Purpose:**
+- Improve navigation in long documentation files
+- Enable quick jumping to specific functions, triggers, or utilities
+- Maintain consistent structure across all documentation files
+- Reduce cognitive load when searching for specific components
 
 **Standard TOC Structure:**
 
-### 📋 TABLE OF CONTENTS
+## 📋 TABLE OF CONTENTS
 
-1. [Script Overview](#script-overview)
+1. [System Overview](#-system-overview)
 2. [Functions](#functions)
 3. [Installation Guide](#installation-guide)
 4. [Testing & Monitoring](#testing--monitoring)
@@ -93,9 +97,40 @@
 
 ---
 
+**When generating documentation:**
+- Include TOC after version header, before main content
+- Link to all major sections (system overview, functions, triggers, installation, testing)
+- Use markdown anchor format: lowercase, hyphens, no special chars (except keep emoji codes)
+- Test all links work correctly
+
+**Anchor Link Format Rules:**
+- Lowercase only
+- Replace spaces with hyphens
+- Remove special characters except hyphens
+- Keep emoji codes as-is (e.g., `#-system-overview` for "### 📋 SYSTEM OVERVIEW")
+
+---
+
+### System Overview Template
+
+```
+### 📋 SYSTEM OVERVIEW
+
+**Key Features:**
+- [Feature 1: brief description]
+- [Feature 2: brief description]
+- [Feature 3: brief description]
+```
+
+**Rules:**
+- List each major function, trigger, or utility as a bullet point
+- Keep each item to one line — name + brief description
+- Ordered roughly by importance (core functions first, then triggers, then utilities)
+
+---
+
 ## Function Documentation Template
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.3:
 
 ### Function: [Function Name]
 
@@ -474,7 +509,7 @@ function sendNotification(subject, body) {
 ### Response Pattern
 
 1. **Identify the script type** (Function, Trigger, Utility, Migration)
-2. **Read APPSHEET_SYSTEM_BLUEPRINT.md** Section 4.3 for templates
+2. **Extract the appropriate template from TEMPLATES.md** in this skill
 3. **Extract the appropriate template** from this file
 4. **Generate complete documentation** with all fields
 5. **Verify completeness** against blueprint requirements
@@ -501,4 +536,4 @@ function sendNotification(subject, body) {
 
 **Version:** 1.0
 **Last Updated:** 2026-01-21
-**Source:** APPSHEET_SYSTEM_BLUEPRINT.md Section 4.3
+**Source:** appscript-blueprint-skill/TEMPLATES.md

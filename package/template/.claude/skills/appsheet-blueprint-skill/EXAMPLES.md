@@ -2,7 +2,7 @@
 
 ### Completeness Requirements
 
-From `APPSHEET_SYSTEM_BLUEPRINT.md`:
+Documentation rules:
 
 **STABLE section MUST include:**
 - ✅ ALL tables with complete schemas
@@ -53,6 +53,12 @@ Every column MUST have:
 - SHOW IF (if conditional)
 - REQUIRE status
 - Description (purpose and behavior)
+
+**Table of Contents anchor link examples:**
+- "### 📋 SYSTEM OVERVIEW" → `#-system-overview`
+- "#### 1. Student Data Table" → `#1-student-data-table`
+- "#### Action 1: Create_Attendance" → `#action-1-create_attendance`
+- "#### View 2: Batch Deck" → `#view-2-batch-deck`
 
 ## Common Documentation Patterns
 

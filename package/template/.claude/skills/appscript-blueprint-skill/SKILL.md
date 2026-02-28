@@ -28,7 +28,7 @@ Generate complete documentation templates for Google Apps Script automation code
 
 ## Template Overview
 
-This skill provides complete documentation templates from `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.3:
+This skill provides complete documentation templates (see [TEMPLATES.md](TEMPLATES.md)):
 
 **Available Templates:**
 - **Function Documentation** - Purpose, trigger type, code, parameters, return values
@@ -49,11 +49,10 @@ Determine what needs documentation:
 - **Testing/Verification?** → Use testing checklist template
 - **Troubleshooting?** → Include common issues and solutions
 
-### Step 2: Read Blueprint Template
+### Step 2: Read Template
 
 Access the appropriate template from:
 - [TEMPLATES.md](TEMPLATES.md) - All complete templates
-- APPSHEET_SYSTEM_BLUEPRINT.md Section 4.3 - Source templates
 
 ### Step 3: Generate Complete Documentation
 
@@ -234,7 +233,7 @@ When promoting to stable:
 
 **Always use complete templates:** Don't omit fields. Every function needs purpose, code, installation steps, testing checklist, and troubleshooting.
 
-**Read from APPSHEET_SYSTEM_BLUEPRINT.md:** The source of truth for documentation format is Section 4.3.
+**Templates are in TEMPLATES.md**: Use TEMPLATES.md as the source of truth for all documentation format templates.
 
 ## Detailed Templates and Examples
 
@@ -246,4 +245,4 @@ For comprehensive templates and examples, see:
 
 **Version:** 1.0
 **Last Updated:** 2026-01-21
-**Source:** APPSHEET_SYSTEM_BLUEPRINT.md Section 4.3
+**Source:** appscript-blueprint-skill/SKILL.md

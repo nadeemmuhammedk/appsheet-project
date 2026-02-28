@@ -28,7 +28,7 @@ Generate complete documentation templates for Google Sheets formulas used in App
 
 ## Template Overview
 
-This skill provides complete documentation templates from `APPSHEET_SYSTEM_BLUEPRINT.md` Section 4.2:
+This skill provides complete documentation templates (see [TEMPLATES.md](TEMPLATES.md)):
 
 **Available Templates:**
 - **Column Formula Documentation** - Formula Type, Cell Location, Range, Purpose, Dependencies, Behavior
@@ -47,11 +47,10 @@ Determine what needs documentation:
 - **Calculated field?** → Use calculation template
 - **QUERY/IMPORTRANGE?** → Use data import template
 
-### Step 2: Read Blueprint Template
+### Step 2: Read Template
 
 Access the appropriate template from:
 - [TEMPLATES.md](TEMPLATES.md) - All complete templates
-- APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2 - Source templates
 
 ### Step 3: Generate Complete Documentation
 
@@ -239,7 +238,7 @@ When promoting to stable:
 
 **Always use complete templates:** Don't omit fields. Every formula needs: Formula Type, Cell Location, Range, Formula, Purpose, Dependencies, Behavior, Example Output, Notes.
 
-**Read from APPSHEET_SYSTEM_BLUEPRINT.md:** The source of truth for documentation format is Section 4.2. Templates in TEMPLATES.md are extracted from the blueprint.
+**Templates are in TEMPLATES.md**: Use TEMPLATES.md as the source of truth for all documentation format templates.
 
 ## Detailed Templates and Examples
 
@@ -251,4 +250,4 @@ For comprehensive templates and real-world examples, see:
 
 **Version:** 1.0
 **Last Updated:** 2026-01-21
-**Source:** APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2
+**Source:** googlesheet-blueprint-skill/SKILL.md

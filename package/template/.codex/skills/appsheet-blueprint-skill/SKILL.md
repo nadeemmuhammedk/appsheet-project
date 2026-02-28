@@ -44,7 +44,7 @@ Generate complete documentation templates and ensure completeness when documenti
 
 ## Template Overview
 
-This skill provides complete documentation templates from `APPSHEET_SYSTEM_BLUEPRINT.md`:
+This skill provides complete documentation templates (see [TEMPLATES.md](TEMPLATES.md)):
 
 **Available Templates:**
 - **Table Schema** - All AppSheet configuration fields (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE)
@@ -65,11 +65,10 @@ Determine what needs documentation:
 - **Action?** → Use action documentation template
 - **Security?** → Use security rules template
 
-### Step 2: Read Blueprint Template
+### Step 2: Read Template
 
 Access the appropriate template from:
 - [TEMPLATES.md](TEMPLATES.md) - All complete templates
-- APPSHEET_SYSTEM_BLUEPRINT.md Section 4.1 - Source templates
 
 ### Step 3: Generate Complete Documentation
 
@@ -215,7 +214,7 @@ When promoting to stable:
 
 **Always use complete templates**: Don't omit fields. Every column needs: Column Name, Type, Key, Initial Value, App Formula, VALID_IF, EDITABLE, EDITABLE IF, SHOW, SHOW IF, REQUIRE, Description.
 
-**Read from APPSHEET_SYSTEM_BLUEPRINT.md**: The source of truth for documentation format is Section 4.1. Templates in TEMPLATES.md are extracted from the blueprint.
+**Templates are in TEMPLATES.md**: Use TEMPLATES.md as the source of truth for all documentation format templates.
 
 **Always include Table of Contents**: Documentation files MUST have a TOC after the version header linking to all major sections (system overview, tables, views, actions, bot automation, rollback, version history). Security rules are documented within table schemas, not as a separate section. See TEMPLATES.md for standard TOC format and anchor link rules.
 

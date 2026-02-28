@@ -947,6 +947,46 @@ function archiveExpiredRecords() {
 
 ---
 
+## Example 8: Spreadsheet Backup Function
+
+### Function: exportBackup
+
+**Purpose:** Create a timestamped copy of the active spreadsheet as a backup
+
+**Trigger Type:** Manual
+
+**File Location:** Extensions → Apps Script → `Utilities.gs`
+
+**Authorization Required:** Access to Google Drive
+
+**Parameters:** None
+
+**Returns:**
+- String: URL of the newly created backup spreadsheet
+
+**Code:**
+```javascript
+/**
+ * Creates a timestamped backup copy of the active spreadsheet.
+ * @return {string} URL of the backup spreadsheet
+ */
+function exportBackup() {
+	const ss = SpreadsheetApp.getActiveSpreadsheet();
+	const timestamp = Utilities.formatDate(new Date(), 'GMT', 'yyyy-MM-dd_HHmmss');
+	const backupName = ss.getName() + ' - Backup ' + timestamp;
+	const backup = ss.copy(backupName);
+	Logger.log('Backup created: ' + backupName);
+	return backup.getUrl();
+}
+```
+
+**Testing Checklist:**
+- [ ] Run function, check Execution Log for backup URL
+- [ ] Open the URL, verify spreadsheet is a complete copy
+- [ ] Verify timestamp in backup name is correct
+
+---
+
 ## Common Apps Script Patterns
 
 | Pattern | Code Snippet | Use Case |
