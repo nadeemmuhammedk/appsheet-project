@@ -233,7 +233,7 @@ IF(
 #### App Owner Control
 ```appsheet
 IF(
-  ISAPPOWNER(),
+  USEREMAIL() = CONTEXT("OwnerEmail"),
   "ALL_CHANGES",
   "READ_ONLY"
 )
@@ -326,7 +326,7 @@ IF(
 
 #### App Creator Only
 ```appsheet
-IF(ISAPPOWNER(), "ALL_CHANGES", "READ_ONLY")
+IF(USEREMAIL() = CONTEXT("OwnerEmail"), "ALL_CHANGES", "READ_ONLY")
 ```
 
 ---
