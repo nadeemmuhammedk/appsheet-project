@@ -2,6 +2,50 @@
 
 Table operations settings control whether users can create, read, update, and delete records.
 
+---
+
+## Quick Reference Template
+
+**Location in AppSheet:** Data → [Table] → Table Settings → Are updates allowed?
+
+### Mode 1: Simple Toggles (same permission for all users)
+```appsheet
+Updates Enabled: Yes | No
+Adds Enabled:    Yes | No
+Deletes Enabled: Yes | No
+```
+
+### Mode 2: Expression (dynamic, role-based)
+```appsheet
+Are updates allowed?:
+  IF(
+    [who gets more access],
+    "[higher permission]",
+    "[lower permission]"        # fallback for everyone else
+  )
+```
+
+**All valid permission strings:**
+
+| String | Add | Update | Delete |
+|---|---|---|---|
+| "ALL_CHANGES" | ✓ | ✓ | ✓ |
+| "ADDS_ONLY" | ✓ | | |
+| "ADDS_AND_UPDATES" | ✓ | ✓ | |
+| "ADDS_AND_DELETES" | ✓ | | ✓ |
+| "UPDATES_ONLY" | | ✓ | |
+| "UPDATES_AND_DELETES" | | ✓ | ✓ |
+| "DELETES_ONLY" | | | ✓ |
+| "READ_ONLY" | | | |
+
+**Common condition functions:**
+- `USEREMAIL()` — logged-in user's email
+- `CONTEXT("OwnerEmail")` — app creator's email (bootstrap-safe, works before users sheet has data)
+- `LOOKUP(USEREMAIL(), "users", "UserEmail", "Role")` — role from custom users table
+- `USERROLE()` — role from AppSheet's built-in user management
+
+---
+
 ## 1. Operations Settings
 
 **Location:** Data > Tables > [Table Name] > Are updates allowed?
