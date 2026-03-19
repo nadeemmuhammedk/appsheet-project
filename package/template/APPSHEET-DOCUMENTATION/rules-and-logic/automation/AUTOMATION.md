@@ -1,27 +1,185 @@
 # AppSheet Automation Reference
 
-Automation lets AppSheet run processes without explicit user interaction.
+Automation lets AppSheet run processes without explicit user interaction. A **Bot** listens for a trigger event and executes a process (sequence of steps) when conditions are met.
 
 ## 1. Core Components
-- **Bot:** The automation container.
-- **Event:** The trigger (data change or schedule).
-- **Process:** The workflow executed by the bot.
-- **Steps/Tasks:** The individual actions inside a process.
+
+| Component | Description |
+|-----------|-------------|
+| **Bot** | The automation container — holds one trigger and one process |
+| **Event (Trigger)** | The condition that fires the bot (data change or schedule) |
+| **Process** | The workflow executed when the bot fires |
+| **Steps/Tasks** | Individual actions inside a process (send email, call webhook, set values, etc.) |
+
+**Editor path:** Automation > Bots
+
+---
 
 ## 2. Where Bots Run
-- **Device:** Useful for periodic data capture (like GPS).
-- **Cloud service:** Triggered by schedule or backend data changes.
 
-## 3. Event Types
-- **Data change:** Added, updated, or deleted rows.
-- **Schedule:** Daily/weekly or custom schedules.
+- **Cloud service** — triggered by schedule or backend data changes (most common)
+- **Device** — useful for periodic local data capture (e.g., GPS tracking)
 
-## 4. Common Tasks
-- Send an email or notification.
-- Call a webhook to external services.
-- Create a file (PDF/CSV) using templates.
-- Run a data-change action.
+---
 
-## 5. Notes
-- Bots can trigger multi-step workflows.
-- Use templates to format messages or generated files.
+## 3. Event Types (Trigger Patterns)
+
+### Pattern 1: Trigger on New Records Only
+Use when: You want to react to a record being created (e.g., send a welcome email when a user signs up).
+
+```appsheet
+Trigger:
+  Event: Adds Only
+  Table: [Table Name]
+  Condition: [optional condition expression]
+```
+
+---
+
+### Pattern 2: Trigger on Updates Only
+Use when: You want to react to a record being edited (e.g., notify when a status changes).
+
+```appsheet
+Trigger:
+  Event: Updates Only
+  Table: [Table Name]
+  Condition: [optional condition expression]
+```
+
+---
+
+### Pattern 3: Trigger on Adds or Updates
+Use when: The same automation should fire on both creates and edits.
+
+```appsheet
+Trigger:
+  Event: Adds and Updates
+  Table: [Table Name]
+  Condition: [optional condition expression]
+```
+
+---
+
+### Pattern 4: Trigger When a Specific Column Changes
+Use when: You only want to fire when a particular field is modified, not on every update.
+
+```appsheet
+Trigger:
+  Event: Adds and Updates
+  Table: [Table Name]
+  Condition: [ColumnName] <> [_THISROW_BEFORE].[ColumnName]
+```
+
+**Note:** `[_THISROW_BEFORE]` holds the previous state of the row. This pattern is the standard way to detect a column value change.
+
+---
+
+### Pattern 5: Trigger on a Schedule
+Use when: You want to run automation on a time basis (daily digest, weekly report, stale-record alerts).
+
+```appsheet
+Trigger:
+  Event: Schedule
+  Frequency: Daily / Weekly / Custom
+  Time: [HH:MM]
+```
+
+---
+
+## 4. Relay Flag Pattern
+
+**Purpose:** Flag rows for external processing (Apps Script, webhook) without embedding complex logic inside AppSheet automation. Keeps responsibilities separated: AppSheet flags, external system processes.
+
+### Step 1 — Hidden Flag Column on the Table
+```appsheet
+Column Name: _[Process Name] Flag
+Type: Yes/No
+EDITABLE: FALSE
+SHOW: FALSE
+Initial Value: FALSE
+```
+
+### Step 2 — Bot to Set the Flag
+```appsheet
+Bot Name: Flag [Record] for [Process]
+Enabled: Yes
+
+Trigger:
+  Event Name: [Event Name]
+  Table: [Table Name]
+  Event: Adds Only  (or Adds and Updates)
+  Condition: [Business logic condition — e.g., [Status] = "Complete"]
+
+Process:
+  Step Name: Set Flag
+  Step: Run a data action → Set row values
+    _[Process Name] Flag = TRUE
+```
+
+### Step 3 — External System Reads and Clears Flag
+The external system (Apps Script / webhook) polls periodically:
+
+```
+1. SELECT rows WHERE _[Process Name] Flag = TRUE
+2. Process each row (e.g., update a related table, send notification)
+3. SET _[Process Name] Flag = FALSE on each processed row
+```
+
+**Why this pattern:**
+- Avoids complex AppSheet webhook logic for multi-step operations
+- Decouples AppSheet's responsibility (flag) from processing responsibility (external)
+- Easy to debug — the flag column shows exactly which rows are pending
+
+---
+
+## 5. Common Process Steps
+
+### Send Email
+```appsheet
+Step: Send an email
+  To: [EmailField]  (or static address)
+  Subject: "Notification: " & [RecordName]
+  Body: Template or expression
+```
+
+### Call a Webhook (HTTP POST)
+```appsheet
+Step: Call a webhook
+  URL: https://your-endpoint.example.com/hook
+  Body: {
+    "recordId": "<<[KeyColumn]>>",
+    "status": "<<[StatusField]>>"
+  }
+```
+
+### Run a Data Action
+```appsheet
+Step: Run a data action
+  Action: [Name of Data Action on the table]
+```
+
+### Create a File (PDF/CSV)
+```appsheet
+Step: Create a new file
+  Template: [Google Doc/Sheet template name]
+  Output format: PDF
+  Save to: [FileColumn]
+```
+
+---
+
+## 6. Constraints & Gotchas
+
+- **Bots only fire on server-side changes** — changes made offline that sync later will trigger bots when the sync completes
+- **`[_THISROW_BEFORE]`** is only available in Update events — using it in an Adds Only event will return blank
+- **Condition expressions** in the trigger reduce unnecessary bot runs — always add a condition to avoid firing on every row change
+- **Bot execution order** is not guaranteed when multiple bots fire on the same event — design bots to be independent
+- **Scheduled bots** run at the app owner's timezone by default
+- **Relay flag pattern** requires the external system to clear the flag — if the external system fails without clearing, the flag remains TRUE and the row will be reprocessed on the next run
+
+---
+
+## 7. Related Documentation
+
+- [Actions](../actions/ACTIONS.md) — actions that can be triggered by bots
+- [Table Security](../../tables-data-schema/table-settings/TABLE_SECURITY.md) — controlling which rows bots can modify

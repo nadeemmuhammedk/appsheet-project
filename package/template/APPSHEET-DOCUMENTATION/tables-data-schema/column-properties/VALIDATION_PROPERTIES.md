@@ -27,7 +27,74 @@ VALID_IF: <expression that returns TRUE or FALSE>
 
 ---
 
-## 2. Basic Validation Patterns
+## 2. VALID_IF as a Dropdown List
+
+When `VALID_IF` returns a **list** (not TRUE/FALSE), AppSheet turns the column into a dropdown showing only the allowed values. This is the primary pattern for dynamic, filtered dropdowns.
+
+### Simple Category Filter
+Filter a data table to a specific category.
+
+```appsheet
+VALID_IF: SELECT(data[Value],
+  [Category] = "CategoryName"
+)
+```
+
+### Filter by Single Parent Field (Cascading Dropdown)
+Show only values that match a field on the current row (e.g., show only services for the selected division).
+
+```appsheet
+VALID_IF: SELECT(data[Value],
+  AND(
+    [Category] = "CategoryName",
+    [ParentField] = [_THISROW].[ParentColumn]
+  )
+)
+```
+
+### Filter by Multiple Parent Fields
+```appsheet
+VALID_IF: SELECT(data[Value],
+  AND(
+    [Category] = "CategoryName",
+    [FilterField1] = [_THISROW].[Field1],
+    [FilterField2] = [_THISROW].[Field2]
+  )
+)
+```
+
+### Filter by a Value Looked Up from a Related Table
+```appsheet
+VALID_IF: SELECT(data[Value],
+  AND(
+    [Category] = "CategoryName",
+    [FilterField] = LOOKUP([RefColumn], "ParentTable", "KeyColumn", "FilterField")
+  )
+)
+```
+
+### Exclude Specific Values
+```appsheet
+VALID_IF: SELECT(data[Value],
+  AND(
+    [Category] = "CategoryName",
+    NOT([Value] IN({"ExcludedValue1", "ExcludedValue2"}))
+  )
+)
+```
+
+### Hardcoded List (No Data Table)
+Use when the valid values are fixed and don't come from a data table.
+
+```appsheet
+VALID_IF: {"Value1", "Value2", "Value3"}
+```
+
+**Constraint:** The `data` table pattern above assumes a lookup/enum table with a `Category` column and a `Value` column. Adjust table and column names to match your actual schema.
+
+---
+
+## 3. Basic Validation Patterns
 
 ### Not Blank (Required)
 ```appsheet

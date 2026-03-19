@@ -34,5 +34,38 @@
   - *Custom Action:* Run a specific action.
 - **Row Swiped Left/Right:** Optional swipe actions.
 
-## 5. Documentation
+## 5. Configuration Patterns
+
+### Pattern 1: Grouped by Category
+Use when: Records should be grouped into sections by a category field, with a count shown per group.
+
+```appsheet
+View Type: Deck
+For this data: [Table Name]
+Group by: [Category Column]
+Group aggregate: Count
+Sort by: [Date Column] Descending
+
+Display settings:
+  Primary header: [Main Field]
+  Secondary header: [Status Field]
+  Summary column: [Count or Amount Field]
+```
+
+### Pattern 2: Ungrouped with Sort
+Use when: All records shown in a flat list, ordered by priority or date.
+
+```appsheet
+View Type: Deck
+For this data: [Table Name]
+Sort by: [Priority Column] Ascending
+
+Display settings:
+  Primary header: [Name Field]
+  Secondary header: [Description or Status Field]
+```
+
+---
+
+## 6. Documentation
 - **Description:** Internal notes about this view's purpose.

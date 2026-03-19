@@ -129,6 +129,18 @@ Initial Value: [CustomerRef].[DefaultPaymentTerms]
 Initial Value: INDEX(ORDERBY(Records[Status], [CreatedDate], TRUE), 1)
 ```
 
+### Any Matching Value from Filtered List
+Use when: You want to auto-select the first matching option from a filtered data table (e.g., default to the first service available for the selected division).
+
+```appsheet
+Initial Value: ANY(SELECT(data[Value],
+  AND(
+    [Category] = "CategoryName",
+    [FilterField] = [_THISROW].[ParentColumn]
+  )
+))
+```
+
 ### Conditional Initialization
 ```appsheet
 # Based on user role
@@ -151,6 +163,21 @@ Initial Value: IFS(
 ---
 
 ## 4. App Formula Patterns
+
+### Extract Date or Time from DateTime
+Use when: A column stores a DateTime value and you need just the date or just the time portion as a separate column.
+
+```appsheet
+# Extract date portion from a DateTime column
+Column Name: [Date Only]
+Type: Date
+App Formula: DATE([DateTimeColumn])
+
+# Extract time portion from a DateTime column
+Column Name: [Time Only]
+Type: Time
+App Formula: TIME([DateTimeColumn])
+```
 
 ### Text Calculations
 ```appsheet
