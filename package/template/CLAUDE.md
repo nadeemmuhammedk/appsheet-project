@@ -145,5 +145,6 @@ This project includes specialized Claude skills in **[.claude/skills/](.claude/s
 - **appscript-blueprint-skill** - Generate complete Google Apps Script documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for functions, triggers, installation steps, testing checklists, and troubleshooting
 - **version-management-skill** - Manage Experimental→Stable promotion workflow for ALL documentation types. Handles 2-version discipline, archive creation, integration process, and completeness verification. Use when marking system as stable, promoting experimental to stable, or starting new feature work.
 - **prd-skill** - Create or update Product Requirements Documents (PRD) following the standardized PRD template. Use at project start, when planning new features, or when user explicitly requests PRD updates. Helps define product scope, user personas, success metrics, and technical requirements.
+- **plan-feature-skill** - Generate a structured feature implementation plan file at the project root. Produces a progress checklist, phase-by-phase sections (Google Sheets, AppSheet, Apps Script Docs, Apply Code, Testing), clear manual-vs-docs separation, and a Files to Modify table. Use when planning any new feature before starting implementation.
 
-**Usage:** Invoke skills with `/skill-name` (e.g., `/appsheet-blueprint-skill`, `/version-management-skill`)
+**Usage:** Invoke skills with `/skill-name` (e.g., `/appsheet-blueprint-skill`, `/version-management-skill`, `/plan-feature-skill`)
