@@ -137,6 +137,18 @@ The **[APPSHEET-DOCUMENTATION/](APPSHEET-DOCUMENTATION/)** directory contains co
     - Virtual columns, Primary keys, Data relationships
     - See [TABLES_DATA_SCHEMA.md](APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md) for index
 
+## Google Sheets Naming Conventions
+
+Apply these in all work on this project:
+
+- **Tab names:** `snake_case` (e.g., `lead_interactions`, `dropdown_refs`)
+- **Column headers:** `PascalCase` (e.g., `LeadStatus`, `PhoneNumber`, `CreatedAt`)
+
+These apply when:
+- Creating or documenting new sheet tabs or columns
+- Writing formula documentation that references tab or column names
+- Writing Apps Script code that references sheet names or column headers
+
 ## AGENT Skills
 
 This project includes specialized AGENT skills in **[.codex/skills/](.codex/skills/)**:
