@@ -168,7 +168,101 @@ Step: Create a new file
 
 ---
 
-## 6. Constraints & Gotchas
+## 6. Real-World Patterns
+
+### CONDITIONAL TRIGGER — Status Rank Comparison (Pipeline Progression Guard)
+
+**Use case:** Fire automation only when a record moves FORWARD in a defined pipeline. Prevents the bot from triggering on status rollbacks or neutral edits.
+
+```appsheet
+# Map pipeline stages to numeric ranks in IFS
+# Higher number = later stage. TRUE, 0 catches unmapped values (always fails the comparison).
+
+Trigger Condition:
+  AND(
+    NOT(ISBLANK([OutcomeField])),
+    IFS(
+      [OutcomeField] = "Stage1", 1,
+      [OutcomeField] = "Stage2", 2,
+      [OutcomeField] = "Stage3", 3,
+      [OutcomeField] = "Stage4", 4,
+      [OutcomeField] = "Stage5", 5,
+      TRUE, 0
+    )
+    >
+    IFS(
+      LOOKUP([RefColumn], "ParentTable", "KeyColumn", "StatusField") = "Stage1", 1,
+      LOOKUP([RefColumn], "ParentTable", "KeyColumn", "StatusField") = "Stage2", 2,
+      LOOKUP([RefColumn], "ParentTable", "KeyColumn", "StatusField") = "Stage3", 3,
+      LOOKUP([RefColumn], "ParentTable", "KeyColumn", "StatusField") = "Stage4", 4,
+      LOOKUP([RefColumn], "ParentTable", "KeyColumn", "StatusField") = "Stage5", 5,
+      TRUE, 0
+    )
+  )
+```
+
+**Notes:**
+- `TRUE, 0` is the fallback — unmapped values get rank 0, which always fails the `>` comparison
+- The LOOKUP fetches the CURRENT status from the parent record for comparison against the new outcome
+- `NOT(ISBLANK([OutcomeField]))` prevents firing on records where no outcome was entered
+- Add more IFS branches to extend the pipeline
+
+---
+
+### RELAY FLAG — Full Pattern with External System (Apps Script)
+
+**Use case:** Bot marks a row immediately when an event fires; a server-side job (Apps Script) processes the flagged rows asynchronously and clears the flags. Decouples fast AppSheet event handling from heavy computation.
+
+```appsheet
+# Hidden flag column on the table
+Column Name: _[ProcessName]Flag
+Type: Yes/No
+EDITABLE: FALSE
+SHOW: FALSE
+Initial Value: FALSE
+
+# Optional error column (Apps Script writes here on failure)
+Column Name: _[ProcessName]Error
+Type: LongText
+EDITABLE: FALSE
+SHOW: FALSE
+
+# Bot sets the flag when condition is met
+Bot Name: Mark [Record] for [ProcessName]
+Trigger:
+  Event: Adds Only
+  Table: [TableName]
+  Condition: [BusinessLogicCondition]
+Process:
+  Step: Run a data action → Set row values
+    _[ProcessName]Flag = TRUE
+```
+
+**Apps Script side (time-driven job):**
+
+```javascript
+// Pseudocode — implement in Apps Script
+function processProcessNameFlags() {
+  // 1. Find all rows where flag = TRUE
+  // 2. For each flagged row:
+  //    a. Read values needed
+  //    b. Apply business logic (update other tables, call APIs, etc.)
+  //    c. Clear flag: _[ProcessName]Flag = FALSE
+  //    d. On error: write to _[ProcessName]Error, leave flag TRUE for retry
+}
+// Trigger: time-driven, every N minutes
+```
+
+**Notes:**
+- Bot fires synchronously within the AppSheet save event (no delay for the user)
+- Apps Script runs on a schedule — latency is acceptable for background processing
+- Leaving the flag `TRUE` on error allows automatic retry on the next scheduled run
+- The error column provides a visible audit trail without exposing it to end users (`SHOW: FALSE`)
+- See `code-reference/appscript/RELAY_FLAG_PROCESSOR.md` for the full Apps Script implementation
+
+---
+
+## 7. Constraints & Gotchas
 
 - **Bots only fire on server-side changes** — changes made offline that sync later will trigger bots when the sync completes
 - **`[_THISROW_BEFORE]`** is only available in Update events — using it in an Adds Only event will return blank

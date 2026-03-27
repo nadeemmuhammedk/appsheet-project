@@ -453,6 +453,127 @@ DELETES: [ProjectLead] = USEREMAIL()
 
 ---
 
+## 14. Real-World Patterns
+
+### SECURITY FILTER — Multi-Column AND Filter
+
+**Use case:** Users should only see rows that match ALL of their assigned attributes. Common in multi-tenant apps where access is scoped by two dimensions (e.g., region AND department).
+
+```appsheet
+Security Filter (row-level):
+  OR(
+    USEREMAIL() = CONTEXT("OwnerEmail"),
+    LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "AdminRole",
+    AND(
+      [Dimension1Field] = LOOKUP(USEREMAIL(), "users", "UserEmail", "Dimension1"),
+      [Dimension2Field] = LOOKUP(USEREMAIL(), "users", "UserEmail", "Dimension2")
+    )
+  )
+```
+
+**Notes:**
+- The `AND(...)` clause enforces that BOTH dimensions must match
+- The outer `OR(...)` gives app owner and admins an unconditional bypass
+- Extend to three dimensions by adding a third condition inside `AND()`
+
+---
+
+### SECURITY FILTER — Role-Tiered Security (Three-Tier Access Hierarchy)
+
+**Use case:** Different roles get different scopes of data visibility. Tier 1 (admin) sees all rows, Tier 2 (manager) sees their scoped rows, Tier 3 (base user) sees a restricted subset.
+
+```appsheet
+Security Filter (row-level):
+  OR(
+    USEREMAIL() = CONTEXT("OwnerEmail"),
+
+    # Tier 1: Admin sees all rows unconditionally
+    LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "AdminRole",
+
+    # Tier 2: Manager sees rows within their assigned scope
+    AND(
+      LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "ManagerRole",
+      [ScopeField] = LOOKUP(USEREMAIL(), "users", "UserEmail", "ScopeField")
+    ),
+
+    # Tier 3: Base user sees only their own records OR records in an open state
+    AND(
+      LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "BaseRole",
+      OR(
+        [AssignedToField] = USEREMAIL(),
+        ISBLANK([ClosedField])
+      )
+    )
+  )
+```
+
+**Notes:**
+- Each tier is a separate `AND(...)` clause inside the top-level `OR()`
+- `CONTEXT("OwnerEmail")` is always first — ensures the app creator has access even before the users table is populated
+- `ISBLANK([ClosedField])` restricts base users to open/pending records only
+
+---
+
+### SECURITY FILTER — Dereference Parent Record in Child Table Filter
+
+**Use case:** The child table has no direct scope columns. Access is determined by the parent record's attributes, reached through the foreign key column.
+
+```appsheet
+Security Filter (child table row-level):
+  OR(
+    USEREMAIL() = CONTEXT("OwnerEmail"),
+    LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "AdminRole",
+    AND(
+      LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "ManagerRole",
+      [ForeignKeyColumn].[ScopeField1] = LOOKUP(USEREMAIL(), "users", "UserEmail", "ScopeField1"),
+      [ForeignKeyColumn].[ScopeField2] = LOOKUP(USEREMAIL(), "users", "UserEmail", "ScopeField2")
+    )
+  )
+```
+
+**Notes:**
+- `[ForeignKeyColumn].[ScopeField]` dereferences the parent row's attribute directly
+- No need to duplicate scope columns on the child table
+- Works with any Ref-type column
+- Can chain two levels deep: `[ChildRef].[ParentRef].[GrandparentField]`
+
+---
+
+### TABLE PERMISSIONS — Role-Tiered Permissions (Three Tiers via IFS)
+
+**Use case:** Admin gets full CRUD, manager gets add and edit (no delete), base user gets read-only.
+
+```appsheet
+Are updates allowed? (expression):
+  IFS(
+    OR(
+      USEREMAIL() = CONTEXT("OwnerEmail"),
+      LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "AdminRole"
+    ),
+    "ALL_CHANGES",
+
+    LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "ManagerRole",
+    "ADDS_AND_UPDATES",
+
+    TRUE,
+    "READ_ONLY"
+  )
+
+# Companion delete permission (admin/owner only)
+Are deletes allowed? (expression):
+  OR(
+    USEREMAIL() = CONTEXT("OwnerEmail"),
+    LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "AdminRole"
+  )
+```
+
+**Permission values:**
+- `"ALL_CHANGES"` — Can add, edit, and delete
+- `"ADDS_AND_UPDATES"` — Can add and edit; cannot delete
+- `"READ_ONLY"` — View only; no modifications
+
+---
+
 **Related Documentation:**
 - [Table Operations](TABLE_OPERATIONS.md)
 - [Row Filtering](ROW_FILTERING.md)

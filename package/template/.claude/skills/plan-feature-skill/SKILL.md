@@ -30,6 +30,8 @@ The plan contains:
 
 The skill generates the plan content and outputs it — the main Claude instance writes it to the file.
 
+> ⚠️ **STOP after writing the plan file.** Do not begin implementation. Wait for the user to explicitly ask to start implementing before taking any further action.
+
 ---
 
 ## How to Use
@@ -71,14 +73,16 @@ Label each item to make responsibility clear:
 - `Docs:` prefix → Claude's documentation update
 - No prefix → implied manual step (user does it in an external tool)
 
+**Ordering rule for AppSheet + Docs phase:** Always list `Docs:` items before `AppSheet:` items. Claude updates the documentation first, then the user applies the changes in AppSheet.
+
 Example:
 ```markdown
 ### Phase 1: Google Sheets
 - [ ] Google Sheets: Add `IsActive` checkbox column at Col N in `records` tab
 
 ### Phase 2: AppSheet + Docs
-- [ ] AppSheet: Add `IsActive` column (Type: Yes/No, Initial value: FALSE)
 - [ ] Docs: Update `docs/formulas/appsheet_formulas.md` — add `IsActive` to `records` table
+- [ ] AppSheet: Add `IsActive` column (Type: Yes/No, Initial value: FALSE)
 
 ### Phase 3: Apps Script Docs
 - [ ] Docs: Update `docs/formulas/appscript_code.md` — add `REC_IS_ACTIVE_COL = 14` constant
@@ -108,7 +112,7 @@ After the checklist, write a detailed section per phase:
 
 **Per phase:**
 - **Google Sheets phase:** List each sheet tab change (add column, header name, column type/format, column position)
-- **AppSheet + Docs phase:** List each column/view/action change with full AppSheet config (Name, Type, SHOW IF, REQUIRE, etc.) + what Claude updates in the docs file
+- **AppSheet + Docs phase:** List Docs items first (Claude updates documentation), then AppSheet items (user applies changes). Full AppSheet config (Name, Type, SHOW IF, REQUIRE, etc.) goes in the phase detail section.
 - **Apps Script Docs phase:** Show the exact code additions/changes (constants, function edits, new functions) as code blocks — these go into `appscript_code.md`
 - **Apply Code phase:** Just the scope line + "Apply in this order:" list of what to copy
 - **Testing phase:** Numbered test cases with input conditions and expected output
@@ -177,6 +181,6 @@ A complete plan MUST include:
 
 ---
 
-**Version:** 1.0
-**Last Updated:** 2026-03-24
+**Version:** 1.1
+**Last Updated:** 2026-03-27
 **Source:** plan-feature-skill/SKILL.md

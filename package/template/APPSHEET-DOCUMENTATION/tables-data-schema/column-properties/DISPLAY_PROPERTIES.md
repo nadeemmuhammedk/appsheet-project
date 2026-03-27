@@ -458,6 +458,68 @@ Others: SEARCH: No
 
 ---
 
+## 12. Real-World Patterns
+
+### Segment-Based Field Visibility (Multi-Tenant / Division Pattern)
+
+**Use case:** Show or hide fields based on a top-level segment selector (e.g., division, region, category). Different segments have different field sets on the same form.
+
+```appsheet
+# Show only for Segment A
+Column Name: [SegmentAField]
+SHOW IF: [SegmentColumn] = "SegmentAValue"
+
+# Show only for Segment B
+Column Name: [SegmentBField]
+SHOW IF: [SegmentColumn] = "SegmentBValue"
+
+# Show only when two conditions align (segment + parent dropdown)
+Column Name: [ContextualField]
+SHOW IF: AND(
+  [SegmentColumn]       = "SegmentAValue",
+  [ParentCategoryColumn] = "SpecificCategory"
+)
+
+# Hide for one specific combination, show for everything else
+Column Name: [ChildField]
+SHOW IF: NOT(AND(
+  [SegmentColumn]       = "SegmentAValue",
+  [ParentCategoryColumn] = "ExcludedCategory"
+))
+```
+
+**Notes:**
+- Use `AND()` when the field should appear only when ALL conditions are met
+- Use `NOT(AND(...))` to exclude one combination while showing for all others
+- Field ORDER in the form matters — segment/parent fields must appear ABOVE dependent fields
+
+---
+
+### Display Name — Dynamic Column Label via Formula
+
+**Use case:** Relabel a column dynamically based on another column's value. Useful when a single field serves different semantic purposes depending on context (e.g., a text field that holds a campaign name for some lead types and a post URL for others).
+
+```appsheet
+# Dynamic label based on a sibling column value
+Column Name: [FieldName]
+Type: Text
+Display name (formula): IF([ContextColumn] = "ContextValue", "Label A", "Label B")
+
+# Real-world example — campaign name field that relabels for boost leads
+Column Name: CampaignName
+Type: Text
+Display name (formula): IF([LeadSource] = "Instagram Boost", "Post URL", "Campaign Name")
+```
+
+**Notes:**
+- Display name formula is set in the column's **Display properties** tab in the AppSheet data editor
+- The formula must return a text string — any AppSheet expression is valid
+- The column name (used in formulas and the sheet header) is unchanged — only the UI label changes
+- SHOW IF, VALID_IF, and all other properties remain independent of the display name formula
+- Confirmed working in AppSheet as of 2026-03-27
+
+---
+
 **Related Documentation:**
 - [Column Properties Overview](COLUMN_PROPERTIES_OVERVIEW.md)
 - [Validation Properties](VALIDATION_PROPERTIES.md)

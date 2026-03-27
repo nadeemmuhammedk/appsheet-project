@@ -379,6 +379,133 @@ Deletes Enabled: No
 
 ---
 
+## 11. Real-World Patterns
+
+### Data-Driven Enum Config Table
+
+**Purpose:** Centralise all dropdown values in a single Google Sheets tab. App owners add or edit values in the sheet; all AppSheet dropdowns update automatically with no config changes needed.
+
+**Config Table Structure:**
+
+```
+Sheet Tab Name: [EnumConfigTabName]
+
+Columns:
+  A: Category   — name of the enum group (e.g., "Status", "Type", "Region")
+  B: Value      — the actual option text shown in the dropdown
+  C: [Filter1]  — (optional) first filter dimension (e.g., Segment, Division)
+  D: [Filter2]  — (optional) second filter dimension (e.g., ParentCategory)
+
+Example rows:
+  | Category  | Value    | Filter1  | Filter2  |
+  |-----------|----------|----------|----------|
+  | Status    | Open     |          |          |
+  | Status    | Closed   |          |          |
+  | Type      | TypeA    | SegmentX |          |
+  | SubType   | SubType1 | SegmentX | TypeA    |
+  | SubType   | SubType2 | SegmentX | TypeB    |
+```
+
+**AppSheet Table Registration:**
+
+```appsheet
+Table Name: [EnumConfigTableName]
+Source: [EnumConfigTabName] (Google Sheets tab)
+Updates Enabled: No
+Adds Enabled: No
+Deletes Enabled: No
+```
+
+**VALID_IF Using Config Table:**
+
+```appsheet
+# Simple category filter
+VALID_IF: SELECT([EnumConfigTableName][Value],
+  [Category] = "CategoryName"
+)
+
+# Filtered by one dimension (current row's segment)
+VALID_IF: SELECT([EnumConfigTableName][Value],
+  AND(
+    [Category]     = "CategoryName",
+    [Filter1Column] = [_THISROW].[SegmentColumn]
+  )
+)
+
+# Filtered by two dimensions (cascading)
+VALID_IF: SELECT([EnumConfigTableName][Value],
+  AND(
+    [Category]      = "CategoryName",
+    [Filter1Column] = [_THISROW].[SegmentColumn],
+    [Filter2Column] = [_THISROW].[ParentTypeColumn]
+  )
+)
+```
+
+**Advantages:**
+- Owner edits the sheet to add/remove options — no AppSheet developer required
+- Single source of truth for all enum values
+- Filter columns enable dependent dropdowns and multi-tenant segmentation
+
+---
+
+### Auto-Generated Reference Table (Dynamic Suggestions Source)
+
+**Purpose:** A read-only reference table auto-populated from existing free-text values in the main sheet. Used as the suggestion source for soft dropdowns so users see historical entries as autocomplete options.
+
+**Google Sheets Formula (QUERY + UNIQUE + SORT):**
+
+```excel
+# Cell A2 of the reference tab — leave row 1 for headers ("Category", "Value"):
+=SORT(
+  UNIQUE(
+    QUERY(
+      {
+        ARRAYFORMULA(IF(MainSheet!ColA2:ColA<>"","CategoryA","")), MainSheet!ColA2:ColA;
+        ARRAYFORMULA(IF(MainSheet!ColB2:ColB<>"","CategoryB","")), MainSheet!ColB2:ColB;
+        ARRAYFORMULA(IF(MainSheet!ColC2:ColC<>"","CategoryC","")), MainSheet!ColC2:ColC
+      },
+      "SELECT Col1, Col2 WHERE Col1 <> ''",
+      0
+    )
+  ),
+  1, TRUE,
+  2, TRUE
+)
+```
+
+**Result:** Two-column table (Category | Value) — auto-deduplicates, auto-sorts, self-maintaining.
+
+**AppSheet Registration:**
+
+```appsheet
+Table Name: [ReferenceTableName]
+Source: [ReferenceTabName] (Google Sheets tab)
+Updates Enabled: No
+Adds Enabled: No
+Deletes Enabled: No
+```
+
+**Soft Dropdown Using This Table:**
+
+```appsheet
+Column Name: [SoftDropdownField]
+Type: Enum
+Suggested values: SELECT([ReferenceTableName][Value],
+  [Category] = "CategoryName"
+)
+Allow other values: TRUE
+VALID_IF: (leave blank)
+```
+
+**Notes:**
+- The curly-brace `{...; ...}` syntax stacks multiple column pairs into a single virtual array
+- `SORT(..., 1, TRUE, 2, TRUE)` sorts alphabetically by category then by value
+- New free-text entries in the main sheet automatically appear as suggestions on next sync
+- Row 1 of the reference tab must have headers; the formula populates from row 2
+
+---
+
 **Detailed Documentation:**
 - [Table Operations](TABLE_OPERATIONS.md)
 - [Table Security](TABLE_SECURITY.md)

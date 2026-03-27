@@ -398,6 +398,26 @@ EDITABLE IF: OR(
 
 ---
 
+## 10. Real-World Patterns
+
+### EDITABLE IF — Lock-on-First-Write for Reference Columns
+
+**Use case:** Allow a Ref-type foreign key to be set on record creation but prevent reassignment after the record is saved. Common for parent-child links (e.g., assign an interaction to a lead, but never re-assign it).
+
+```appsheet
+Column Name: [ForeignKeyRefColumn]
+Type: Ref
+EDITABLE IF: ISBLANK([ForeignKeyRefColumn])
+```
+
+**Notes:**
+- On a new (blank) record the field is editable — user can link to the parent
+- After saving, the field becomes read-only — the link is locked permanently
+- Combine with `Initial Value` to pre-populate the key from a LINKTOFORM call
+- Do NOT use `EDITABLE: FALSE` alone — that prevents setting it on creation too
+
+---
+
 **Related Documentation:**
 - [Column Properties Overview](COLUMN_PROPERTIES_OVERVIEW.md)
 - [Validation Properties](VALIDATION_PROPERTIES.md)

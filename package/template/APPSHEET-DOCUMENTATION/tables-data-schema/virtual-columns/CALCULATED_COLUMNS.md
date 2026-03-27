@@ -187,6 +187,41 @@ App Formula: IFS(
 
 ---
 
+## 7. Real-World Patterns
+
+### Extract Date and Time from DateTime (for View Grouping and Sorting)
+
+**Use case:** Extract date-only and time-only components from a DateTime column. Use the date virtual column as a "Group by" field in deck/table views; use the time column for correct sort order within each group.
+
+```appsheet
+# Date component — used for grouping rows by calendar date
+Column Name: [RecordDate]
+Type: Date
+App Formula: DATE([DateTimeColumn])
+SHOW IF: FALSE    ← hidden from forms; used only for view configuration
+
+# Time component — used for sorting within a date group
+Column Name: [RecordTime]
+Type: Time
+App Formula: TIME([DateTimeColumn])
+SHOW IF: FALSE    ← hidden from forms; used only for view configuration
+```
+
+**View configuration using these virtual columns:**
+
+```appsheet
+View Type: Deck (or Table)
+Group by: [RecordDate]        ← shows date headers (e.g., "Mar 24")
+Sort by:  [RecordTime] Desc   ← most recent entry at top within each date group
+```
+
+**Notes:**
+- AppSheet may auto-generate these virtual columns when a DateTime column is detected
+- `SHOW IF: FALSE` hides them from forms and detail views without deleting the columns
+- Avoids storing redundant date/time columns in the backing sheet
+
+---
+
 **Related Documentation:**
 - [Virtual Columns Overview](VIRTUAL_COLUMNS_OVERVIEW.md)
 - [Formula Properties](../column-properties/FORMULA_PROPERTIES.md)

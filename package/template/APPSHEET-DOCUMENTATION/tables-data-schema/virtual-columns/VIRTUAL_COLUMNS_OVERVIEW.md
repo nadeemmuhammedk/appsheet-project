@@ -447,6 +447,58 @@ App Formula: TODAY() - MAX(REF_ROWS("PurchaseOrders", "ProductRef")[OrderDate])
 
 ---
 
+## 11. Real-World Patterns
+
+### Stored vs Calculated Decision Framework
+
+**Purpose:** Decide whether to calculate a value as a Google Sheets ARRAYFORMULA (stored in the sheet) or as an AppSheet virtual column (App Formula).
+
+**Decision Table:**
+
+| Requirement | Preferred Approach |
+|---|---|
+| External tool (Looker Studio, BI, Apps Script) needs to read the value | **Google Sheets ARRAYFORMULA** |
+| Value is queried frequently across many rows | **Google Sheets ARRAYFORMULA** |
+| Value is only needed inside AppSheet views and formulas | AppSheet App Formula |
+| Value must sometimes be editable by the user | Real stored column (no formula) |
+| Simple aggregation only used in one AppSheet view | Either |
+
+**Google Sheets ARRAYFORMULA (Stored):**
+
+```excel
+# Header cell (Row 1) of the calculated column in the main sheet:
+=ARRAYFORMULA(
+  IF(ROW(A:A)=1, "ColumnHeader",
+    IF(A:A="", "",
+      COUNTIF(RelatedSheet!B:B, A:A)    ← replace with your calculation
+    )
+  )
+)
+```
+
+**AppSheet App Formula (Virtual — not stored):**
+
+```appsheet
+Column Name: [VirtualFieldName]
+Type: Number
+App Formula: COUNT(SELECT([ChildTable][KeyColumn],
+  [RefColumn] = [_THISROW].[KeyColumn]
+))
+```
+
+**Hybrid Pattern (Sheets calculates, AppSheet reads):**
+
+```appsheet
+# Google Sheets: ARRAYFORMULA writes the value to the column
+# AppSheet: reads it as a regular non-virtual column (no App Formula needed)
+Column Name: [CalculatedCol]
+Type: Number
+App Formula: (none)
+EDITABLE: FALSE    ← prevents accidental overwrite of the sheet-calculated value
+```
+
+---
+
 **Detailed Documentation:**
 - [Reverse Reference Patterns](REVERSE_REFERENCE.md)
 - [Lookup Patterns](LOOKUP_PATTERNS.md)

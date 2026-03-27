@@ -568,6 +568,79 @@ VALID_IF: OR(
 
 ---
 
+## 13. Real-World Patterns
+
+### VALID_IF — Dependent (Cascading) Dropdown
+
+**Use case:** A child dropdown shows only values valid for the currently selected parent dropdown value. Both source from a central config table that has a linking column.
+
+```appsheet
+# Parent column (top-level selector)
+Column Name: [ParentCategoryColumn]
+Type: Enum
+VALID_IF: SELECT(data[Value],
+  [Category] = "ParentCategoryName"
+)
+
+# Child column (filtered by parent selection)
+Column Name: [ChildCategoryColumn]
+Type: Enum
+VALID_IF: SELECT(data[Value],
+  AND(
+    [Category]          = "ChildCategoryName",
+    [ParentLinkColumn]  = [_THISROW].[ParentCategoryColumn]
+  )
+)
+
+# Three-level dependent dropdown (grandparent → parent → child)
+Column Name: [GrandchildCategoryColumn]
+Type: Enum
+VALID_IF: SELECT(data[Value],
+  AND(
+    [Category]          = "GrandchildCategoryName",
+    [ParentLinkColumn]  = [_THISROW].[ParentCategoryColumn],
+    [SegmentLinkColumn] = [_THISROW].[SegmentColumn]
+  )
+)
+```
+
+**Notes:**
+- `[_THISROW].[ParentCategoryColumn]` references the current form row's selected parent value
+- The data/config table must have a linking column to enable cascading
+- When the parent value changes, the child dropdown is automatically re-filtered
+- Form field order matters: parent field must appear ABOVE child field in the form view
+
+---
+
+### VALID_IF vs Suggested Values — Soft Dropdown Pattern
+
+**Use case:** Show a list of known/historical values as autocomplete suggestions, but allow the user to freely type any new value. `VALID_IF` always hard-validates and blocks free text even when "Allow other values" is enabled.
+
+```appsheet
+# CORRECT — soft dropdown (autocomplete + free text allowed)
+Column Name: [SoftDropdownField]
+Type: Enum
+Suggested values: SELECT(referenceTable[Value],
+  [Category] = "CategoryName"
+)
+Allow other values: TRUE
+VALID_IF: (leave blank)
+
+# WRONG — VALID_IF blocks free text even with the flag set
+Column Name: [SoftDropdownField]
+Type: Text
+VALID_IF: SELECT(referenceTable[Value], [Category] = "CategoryName")
+Allow other values: TRUE    ← This flag does NOT override VALID_IF restriction
+```
+
+**Notes:**
+- Use `Type: Enum` + `Suggested values` formula + `Allow other values: TRUE`
+- Never add `VALID_IF` when free text entry is required — VALID_IF always hard-validates regardless of the allow-other-values flag
+- The suggestion source (`referenceTable`) is typically a read-only table auto-populated from existing column values
+- Ideal for semi-open fields: referrer names, institution names, channel names
+
+---
+
 **Related Documentation:**
 - [Column Properties Overview](COLUMN_PROPERTIES_OVERVIEW.md)
 - [Formula Properties](FORMULA_PROPERTIES.md)

@@ -139,6 +139,41 @@ OR(
 
 ---
 
+### Pattern 7: Role-Tiered Security (Three-Tier Access Hierarchy)
+
+**Use case:** Different roles get different scopes of data visibility. Tier 1 (admin) sees all rows, Tier 2 (manager) sees their scoped rows, Tier 3 (base user) sees a restricted subset.
+
+```appsheet
+OR(
+  USEREMAIL() = CONTEXT("OwnerEmail"),
+
+  # Tier 1: Admin sees all rows unconditionally
+  LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "AdminRole",
+
+  # Tier 2: Manager sees rows within their assigned scope
+  AND(
+    LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "ManagerRole",
+    [ScopeField] = LOOKUP(USEREMAIL(), "users", "UserEmail", "ScopeField")
+  ),
+
+  # Tier 3: Base user sees only their own records OR records in an open state
+  AND(
+    LOOKUP(USEREMAIL(), "users", "UserEmail", "Role") = "BaseRole",
+    OR(
+      [AssignedToField] = USEREMAIL(),
+      ISBLANK([ClosedField])
+    )
+  )
+)
+```
+
+**Notes:**
+- Each tier is a separate `AND(...)` clause inside the top-level `OR()`
+- `CONTEXT("OwnerEmail")` is always first — ensures the app creator has access even before the users table is populated
+- `ISBLANK([ClosedField])` restricts base users to open/pending records only
+
+---
+
 ## 6. Related Documentation
 
 - [Table Security](../../tables-data-schema/table-settings/TABLE_SECURITY.md) — UPDATES/ADDS/DELETES permissions
