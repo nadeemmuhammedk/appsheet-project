@@ -137,6 +137,42 @@ The **[APPSHEET-DOCUMENTATION/](APPSHEET-DOCUMENTATION/)** directory contains co
     - Virtual columns, Primary keys, Data relationships
     - See [TABLES_DATA_SCHEMA.md](APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md) for index
 
+## Formula Formatting
+
+Apply these formatting rules to all formulas and code written or documented in this project.
+
+### Google Sheets and AppSheet Formulas
+
+Any formula containing nested function calls must be written multi-line, with each argument on its own indented line:
+
+```
+=FUNCTION(
+    argument1,
+    NESTED_FUNCTION(
+        argument1,
+        argument2
+    ),
+    argument3
+)
+```
+
+Single-function or literal expressions may stay on one line:
+```
+=TODAY()
+=TRUE
+="Active"
+```
+
+This applies to:
+- Google Sheets formulas (ARRAYFORMULA, QUERY, VLOOKUP, BYROW, IF, etc.)
+- AppSheet formulas (VALID_IF, App Formula, SHOW IF, Initial Value, etc.)
+
+### Apps Script
+
+Apps Script follows standard JavaScript formatting conventions. Use tab characters for indentation.
+
+---
+
 ## Google Sheets Naming Conventions
 
 Apply these in all work on this project:
