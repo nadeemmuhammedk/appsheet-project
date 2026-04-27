@@ -138,6 +138,12 @@ Patterns for linking tables together.
 - [Many-to-Many](data-relationships/MANY_TO_MANY.md)
 - [Lookup Inheritance](data-relationships/LOOKUP_INHERITANCE.md)
 
+### [Data Patterns](data-patterns/DROPDOWN_ENUMS_PATTERN.md)
+Reusable table design patterns.
+
+- [Centralized Enum Table Pattern](data-patterns/DROPDOWN_ENUMS_PATTERN.md)
+- [Dynamic Reference Table Pattern](data-patterns/DROPDOWN_REFS_PATTERN.md)
+
 ## 6. See Also
 
 - [AppSheet Formulas Reference](../formulas-reference/FORMULAS_REFERENCE.md)

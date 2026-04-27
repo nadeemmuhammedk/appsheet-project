@@ -312,3 +312,4 @@ SHOW IF: USERROLE() = "Manager" OR [AssignedTo] = USEREMAIL()
 - [Validation Properties](../column-properties/VALIDATION_PROPERTIES.md)
 - [Formulas Reference](../../formulas-reference/FORMULAS_REFERENCE.md)
 - [List Functions](../../formulas-reference/list/LIST_FUNCTIONS.md)
+- [Centralized Enum Table Pattern](../data-patterns/DROPDOWN_ENUMS_PATTERN.md) — managing all enum values in one sheet tab with support for dependent dropdowns
