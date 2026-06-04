@@ -220,6 +220,29 @@ Detail_Type_TypeA_         Detail X       ← dependent enum (Level 3)
 
 ---
 
+## 9. Known Behaviours & Gotchas
+
+### Reordering rows does not trigger a cache refresh
+
+AppSheet caches the contents of the `dropdown_enums` table. When you reorder existing rows in Google Sheets (drag, cut/paste, or in-place value swap), AppSheet's change detection does not register it as a meaningful data change — the cached dropdown order stays stale even after using **Regenerate Structure** or syncing the app.
+
+**Symptom:** Dropdown options appear in the old order despite the sheet having the correct row order. Regenerate + sync do not fix it.
+
+**Fix:** Add a dummy row anywhere in the table (any Category + Value), save the sheet, then delete it and save again. Adding a new row triggers a structural change that AppSheet's cache invalidation does detect — it re-reads the full table and picks up the corrected row order at the same time.
+
+```
+Workaround steps:
+1. Add a dummy row: Category = "TEMP", Value = "TEMP"
+2. Save the sheet
+3. Delete the dummy row
+4. Save the sheet
+5. Sync the app — dropdown now reflects the correct row order
+```
+
+This applies to any dropdown sourced from `dropdown_enums` via `SELECT` + `VALID_IF`.
+
+---
+
 **Related Documentation:**
 - [Enum Types](../column-types/ENUM_TYPES.md)
 - [Dynamic Reference Table Pattern](DROPDOWN_REFS_PATTERN.md)
