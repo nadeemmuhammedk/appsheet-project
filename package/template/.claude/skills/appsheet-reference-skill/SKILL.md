@@ -31,44 +31,44 @@ Quick access to AppSheet formula syntax, view configurations, action patterns, a
 
 ### Available Documentation
 
-All AppSheet reference materials are in `APPSHEET-DOCUMENTATION/`:
+All AppSheet reference materials are in `_APPSHEET-DOCUMENTATION/`:
 
 **Formulas** (`formulas-reference/`):
-- [Syntax and Basics](../../APPSHEET-DOCUMENTATION/formulas-reference/syntax-and-basics/SYNTAX_AND_BASICS.md)
-- [Conditional Logic](../../APPSHEET-DOCUMENTATION/formulas-reference/conditional/CONDITIONAL.md) - IF, IFS, SWITCH
-- [List and SELECT](../../APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md) - SELECT, ANY, IN, FILTER
-- [Logical Functions](../../APPSHEET-DOCUMENTATION/formulas-reference/logical/LOGICAL.md) - AND, OR, NOT, ISBLANK
-- [Text Functions](../../APPSHEET-DOCUMENTATION/formulas-reference/text/TEXT_FUNCTIONS.md) - CONCATENATE, FIND, SUBSTITUTE
-- [Date/Time Functions](../../APPSHEET-DOCUMENTATION/formulas-reference/date-time/DATE_AND_TIME.md) - TODAY, NOW, YEAR, MONTH
-- [Math Functions](../../APPSHEET-DOCUMENTATION/formulas-reference/math/MATH_FUNCTIONS.md) - SUM, AVG, ROUND
-- [References](../../APPSHEET-DOCUMENTATION/formulas-reference/references/REFERENCES_AND_DEREFERENCE.md) - REF columns, dereferencing
+- [Syntax and Basics](../../_APPSHEET-DOCUMENTATION/formulas-reference/syntax-and-basics/SYNTAX_AND_BASICS.md)
+- [Conditional Logic](../../_APPSHEET-DOCUMENTATION/formulas-reference/conditional/CONDITIONAL.md) - IF, IFS, SWITCH
+- [List and SELECT](../../_APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md) - SELECT, ANY, IN, FILTER
+- [Logical Functions](../../_APPSHEET-DOCUMENTATION/formulas-reference/logical/LOGICAL.md) - AND, OR, NOT, ISBLANK
+- [Text Functions](../../_APPSHEET-DOCUMENTATION/formulas-reference/text/TEXT_FUNCTIONS.md) - CONCATENATE, FIND, SUBSTITUTE
+- [Date/Time Functions](../../_APPSHEET-DOCUMENTATION/formulas-reference/date-time/DATE_AND_TIME.md) - TODAY, NOW, YEAR, MONTH
+- [Math Functions](../../_APPSHEET-DOCUMENTATION/formulas-reference/math/MATH_FUNCTIONS.md) - SUM, AVG, ROUND
+- [References](../../_APPSHEET-DOCUMENTATION/formulas-reference/references/REFERENCES_AND_DEREFERENCE.md) - REF columns, dereferencing
 
 **Views** (`views-interface/`):
-- [Table View](../../APPSHEET-DOCUMENTATION/views-interface/table/TABLE_VIEW.md)
-- [Deck View](../../APPSHEET-DOCUMENTATION/views-interface/deck/DECK_VIEW.md)
-- [Form View](../../APPSHEET-DOCUMENTATION/views-interface/form/FORM_VIEW.md)
-- [Detail View](../../APPSHEET-DOCUMENTATION/views-interface/detail/DETAIL_VIEW.md)
-- [Calendar View](../../APPSHEET-DOCUMENTATION/views-interface/calendar/CALENDAR_VIEW.md)
-- [Chart View](../../APPSHEET-DOCUMENTATION/views-interface/chart/CHART_VIEW.md)
-- [Dashboard View](../../APPSHEET-DOCUMENTATION/views-interface/dashboard/DASHBOARD_VIEW.md)
-- [Gallery View](../../APPSHEET-DOCUMENTATION/views-interface/gallery/GALLERY_VIEW.md)
-- [Map View](../../APPSHEET-DOCUMENTATION/views-interface/map/MAP_VIEW.md)
+- [Table View](../../_APPSHEET-DOCUMENTATION/views-interface/table/TABLE_VIEW.md)
+- [Deck View](../../_APPSHEET-DOCUMENTATION/views-interface/deck/DECK_VIEW.md)
+- [Form View](../../_APPSHEET-DOCUMENTATION/views-interface/form/FORM_VIEW.md)
+- [Detail View](../../_APPSHEET-DOCUMENTATION/views-interface/detail/DETAIL_VIEW.md)
+- [Calendar View](../../_APPSHEET-DOCUMENTATION/views-interface/calendar/CALENDAR_VIEW.md)
+- [Chart View](../../_APPSHEET-DOCUMENTATION/views-interface/chart/CHART_VIEW.md)
+- [Dashboard View](../../_APPSHEET-DOCUMENTATION/views-interface/dashboard/DASHBOARD_VIEW.md)
+- [Gallery View](../../_APPSHEET-DOCUMENTATION/views-interface/gallery/GALLERY_VIEW.md)
+- [Map View](../../_APPSHEET-DOCUMENTATION/views-interface/map/MAP_VIEW.md)
 
 **Rules & Logic** (`rules-and-logic/`):
-- [Actions](../../APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md) - Data operations, navigation, SHOW IF
-- [Automation](../../APPSHEET-DOCUMENTATION/rules-and-logic/automation/AUTOMATION.md) - Bots, workflows
-- [Data Validity](../../APPSHEET-DOCUMENTATION/rules-and-logic/data-validity-constraints/DATA_VALIDITY_AND_CONSTRAINTS.md) - VALID_IF, constraints
-- [Security Filters](../../APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md) - Row-level security, USEREMAIL()
-- [Slices](../../APPSHEET-DOCUMENTATION/rules-and-logic/slices/SLICES.md) - Data subsets, filtered views
+- [Actions](../../_APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md) - Data operations, navigation, SHOW IF
+- [Automation](../../_APPSHEET-DOCUMENTATION/rules-and-logic/automation/AUTOMATION.md) - Bots, workflows
+- [Data Validity](../../_APPSHEET-DOCUMENTATION/rules-and-logic/data-validity-constraints/DATA_VALIDITY_AND_CONSTRAINTS.md) - VALID_IF, constraints
+- [Security Filters](../../_APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md) - Row-level security, USEREMAIL()
+- [Slices](../../_APPSHEET-DOCUMENTATION/rules-and-logic/slices/SLICES.md) - Data subsets, filtered views
 
 **Tables & Data Schema** (`tables-data-schema/`):
-- [Tables & Data Schema Overview](../../APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md)
-- [Column Types](../../APPSHEET-DOCUMENTATION/tables-data-schema/column-types/COLUMN_TYPES_OVERVIEW.md) - Text, Number, Date, Ref, Enum
-- [Column Properties](../../APPSHEET-DOCUMENTATION/tables-data-schema/column-properties/COLUMN_PROPERTIES_OVERVIEW.md) - VALID_IF, SHOW IF, formulas
-- [Table Settings](../../APPSHEET-DOCUMENTATION/tables-data-schema/table-settings/TABLE_SETTINGS_OVERVIEW.md) - Security, operations
-- [Virtual Columns](../../APPSHEET-DOCUMENTATION/tables-data-schema/virtual-columns/VIRTUAL_COLUMNS_OVERVIEW.md) - REF_ROWS, calculations
-- [Primary Keys](../../APPSHEET-DOCUMENTATION/tables-data-schema/primary-keys/PRIMARY_KEYS_OVERVIEW.md) - UNIQUEID patterns
-- [Data Relationships](../../APPSHEET-DOCUMENTATION/tables-data-schema/data-relationships/RELATIONSHIPS_OVERVIEW.md) - 1:M, M:M
+- [Tables & Data Schema Overview](../../_APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md)
+- [Column Types](../../_APPSHEET-DOCUMENTATION/tables-data-schema/column-types/COLUMN_TYPES_OVERVIEW.md) - Text, Number, Date, Ref, Enum
+- [Column Properties](../../_APPSHEET-DOCUMENTATION/tables-data-schema/column-properties/COLUMN_PROPERTIES_OVERVIEW.md) - VALID_IF, SHOW IF, formulas
+- [Table Settings](../../_APPSHEET-DOCUMENTATION/tables-data-schema/table-settings/TABLE_SETTINGS_OVERVIEW.md) - Security, operations
+- [Virtual Columns](../../_APPSHEET-DOCUMENTATION/tables-data-schema/virtual-columns/VIRTUAL_COLUMNS_OVERVIEW.md) - REF_ROWS, calculations
+- [Primary Keys](../../_APPSHEET-DOCUMENTATION/tables-data-schema/primary-keys/PRIMARY_KEYS_OVERVIEW.md) - UNIQUEID patterns
+- [Data Relationships](../../_APPSHEET-DOCUMENTATION/tables-data-schema/data-relationships/RELATIONSHIPS_OVERVIEW.md) - 1:M, M:M
 
 For detailed component guidance, see [REFERENCE.md](REFERENCE.md).
 
@@ -85,7 +85,7 @@ Determine what the user needs:
 
 ### Step 2: Read Relevant Documentation
 
-Use the Read tool to access the specific documentation file from APPSHEET-DOCUMENTATION/.
+Use the Read tool to access the specific documentation file from _APPSHEET-DOCUMENTATION/.
 
 ### Step 3: Extract and Apply
 
@@ -108,31 +108,31 @@ Give the user:
 ```appsheet
 SELECT(Students[StudentID], [Email] = USEREMAIL())
 ```
-Source: [list-and-select](../../APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md), [security-filters](../../APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md)
+Source: [list-and-select](../../_APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md), [security-filters](../../_APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md)
 
 ### Conditional Field Visibility
 ```appsheet
 SHOW IF: [Status] = "Pending"
 ```
-Source: [conditional](../../APPSHEET-DOCUMENTATION/formulas-reference/conditional/CONDITIONAL.md)
+Source: [conditional](../../_APPSHEET-DOCUMENTATION/formulas-reference/conditional/CONDITIONAL.md)
 
 ### Dynamic Dropdown
 ```appsheet
 VALID_IF: SELECT(Classes[ClassID], [Capacity] > 0)
 ```
-Source: [data-validity-constraints](../../APPSHEET-DOCUMENTATION/rules-and-logic/data-validity-constraints/DATA_VALIDITY_AND_CONSTRAINTS.md)
+Source: [data-validity-constraints](../../_APPSHEET-DOCUMENTATION/rules-and-logic/data-validity-constraints/DATA_VALIDITY_AND_CONSTRAINTS.md)
 
 ### Action with Referenced Rows
 ```appsheet
 Referenced Rows: SELECT(Attendance[AttendanceID], [StudentID] = [_THISROW].[StudentID])
 ```
-Source: [actions](../../APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md)
+Source: [actions](../../_APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md)
 
 ### Row-Level Security
 ```appsheet
 Security Filter: [BatchID] = LOOKUP(USEREMAIL(), "Users", "Email", "BatchID")
 ```
-Source: [security-filters](../../APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md)
+Source: [security-filters](../../_APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md)
 
 ## Important Notes
 

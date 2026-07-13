@@ -107,9 +107,9 @@ function getSystemPaths() {
   return [
     '.claude',
     '.codex',
-    'APPSHEET-DOCUMENTATION',
+    '_APPSHEET-DOCUMENTATION',
     'AGENTS.md',
-    'APPSHEET_SYSTEM_BLUEPRINT.md',
+    '_APPSHEET_SYSTEM_BLUEPRINT.md',
     'CLAUDE.md'
   ];
 }
@@ -121,8 +121,8 @@ function getSystemPaths() {
 function detectInitializedProject() {
   const targetDir = process.cwd();
 
-  const hasDocFolder = fs.existsSync(path.join(targetDir, 'APPSHEET-DOCUMENTATION'));
-  const hasBlueprintFile = fs.existsSync(path.join(targetDir, 'APPSHEET_SYSTEM_BLUEPRINT.md'));
+  const hasDocFolder = fs.existsSync(path.join(targetDir, '_APPSHEET-DOCUMENTATION'));
+  const hasBlueprintFile = fs.existsSync(path.join(targetDir, '_APPSHEET_SYSTEM_BLUEPRINT.md'));
 
   return {
     isInitialized: hasDocFolder && hasBlueprintFile,
@@ -155,7 +155,7 @@ function showInstallPreview() {
   console.log(`${colors.bright}📁 Directories:${colors.reset}`);
   console.log(`  ${colors.cyan}•${colors.reset} .claude/skills/          - Claude Code AI assistant skills`);
   console.log(`  ${colors.cyan}•${colors.reset} .codex/skills/           - Codex AI assistant skills`);
-  console.log(`  ${colors.cyan}•${colors.reset} APPSHEET-DOCUMENTATION/  - Complete AppSheet reference library`);
+  console.log(`  ${colors.cyan}•${colors.reset} _APPSHEET-DOCUMENTATION/ - Complete AppSheet reference library`);
   console.log(`  ${colors.cyan}•${colors.reset} docs/                    - Project documentation structure`);
   console.log(`  ${colors.cyan}•${colors.reset} backups/                 - Version backup storage`);
   console.log('');
@@ -165,7 +165,7 @@ function showInstallPreview() {
   console.log(`  ${colors.cyan}•${colors.reset} CHANGELOG.md                   - Version history tracker`);
   console.log(`  ${colors.cyan}•${colors.reset} CLAUDE.md                      - Claude Code guidance`);
   console.log(`  ${colors.cyan}•${colors.reset} AGENTS.md                      - Agent documentation`);
-  console.log(`  ${colors.cyan}•${colors.reset} APPSHEET_SYSTEM_BLUEPRINT.md   - System template & blueprint`);
+  console.log(`  ${colors.cyan}•${colors.reset} _APPSHEET_SYSTEM_BLUEPRINT.md  - System template & blueprint`);
   console.log('');
 
   console.log(`${colors.bright}${colors.yellow}⚠ Warning:${colors.reset} ${colors.yellow}Existing files with the same names will be overwritten.${colors.reset}`);
@@ -245,7 +245,7 @@ async function initProject() {
 
     console.log(`${colors.bright}${colors.green}What's been set up:${colors.reset}`);
     console.log(`  ${colors.green}✓${colors.reset} AI Assistant Skills (${colors.cyan}.claude/skills/, .codex/skills/${colors.reset})`);
-    console.log(`  ${colors.green}✓${colors.reset} AppSheet Documentation (${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset})`);
+    console.log(`  ${colors.green}✓${colors.reset} AppSheet Documentation (${colors.cyan}_APPSHEET-DOCUMENTATION/${colors.reset})`);
     console.log(`  ${colors.green}✓${colors.reset} Project Documentation (${colors.cyan}docs/${colors.reset})`);
     console.log(`  ${colors.green}✓${colors.reset} System Blueprints & Templates`);
     console.log('');
@@ -258,9 +258,9 @@ async function initProject() {
 
     console.log(`${colors.bright}${colors.magenta}Next Steps:${colors.reset}`);
     console.log(`  ${colors.dim}1.${colors.reset} Review ${colors.cyan}README.md${colors.reset} for detailed documentation`);
-    console.log(`  ${colors.dim}2.${colors.reset} Check ${colors.cyan}APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} for system overview`);
+    console.log(`  ${colors.dim}2.${colors.reset} Check ${colors.cyan}_APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} for system overview`);
     console.log(`  ${colors.dim}3.${colors.reset} See ${colors.cyan}https://www.npmjs.com/package/appsheet-project${colors.reset} for all available skills`);
-    console.log(`  ${colors.dim}4.${colors.reset} Explore ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset} for formulas and guides`);
+    console.log(`  ${colors.dim}4.${colors.reset} Explore ${colors.cyan}_APPSHEET-DOCUMENTATION/${colors.reset} for formulas and guides`);
     console.log('');
 
     console.log(`${colors.dim}Your AppSheet development environment is ready!${colors.reset}`);
@@ -401,10 +401,10 @@ async function updateProject() {
 
     // Only show files that are actually missing
     if (detection.missing.docFolder) {
-      console.log(`  ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset} (folder)`);
+      console.log(`  ${colors.cyan}_APPSHEET-DOCUMENTATION/${colors.reset} (folder)`);
     }
     if (detection.missing.blueprintFile) {
-      console.log(`  ${colors.cyan}APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} (file)`);
+      console.log(`  ${colors.cyan}_APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} (file)`);
     }
 
     console.log('');
@@ -454,7 +454,7 @@ async function updateProject() {
     console.log('');
     console.log(`${colors.bright}${colors.magenta}What was updated:${colors.reset}`);
     console.log(`  ${colors.green}✓${colors.reset} AI Assistant Skills (${colors.cyan}.claude/, .codex/${colors.reset})`);
-    console.log(`  ${colors.green}✓${colors.reset} AppSheet Documentation (${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset})`);
+    console.log(`  ${colors.green}✓${colors.reset} AppSheet Documentation (${colors.cyan}_APPSHEET-DOCUMENTATION/${colors.reset})`);
     console.log(`  ${colors.green}✓${colors.reset} System Blueprints & Guides`);
     console.log('');
     console.log(`${colors.bright}${colors.yellow}Note:${colors.reset} ${colors.dim}Your custom files (README.md, docs/, backups/) were preserved.${colors.reset}`);
@@ -512,19 +512,19 @@ function showHelp() {
   console.log('');
   console.log(`${colors.bright}What Gets Installed:${colors.reset}`);
   console.log(`  ${colors.cyan}.claude/skills/, .codex/skills/${colors.reset} - AI assistant skills`);
-  console.log(`  ${colors.cyan}APPSHEET-DOCUMENTATION/${colors.reset}        - Complete reference library`);
+  console.log(`  ${colors.cyan}_APPSHEET-DOCUMENTATION/${colors.reset}       - Complete reference library`);
   console.log(`  ${colors.cyan}docs/${colors.reset}                          - Project documentation`);
   console.log(`  ${colors.cyan}README.md${colors.reset}                     - Main documentation`);
   console.log(`  ${colors.cyan}CHANGELOG.md${colors.reset}                  - Version history`);
   console.log(`  ${colors.cyan}CLAUDE.md${colors.reset}                     - Claude Code guidance`);
   console.log(`  ${colors.cyan}AGENTS.md${colors.reset}                     - Agent documentation`);
-  console.log(`  ${colors.cyan}APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset}  - System template`);
+  console.log(`  ${colors.cyan}_APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} - System template`);
   console.log('');
   console.log(`${colors.bright}${colors.yellow}Important Notes:${colors.reset}`);
   console.log(`  ${colors.yellow}•${colors.reset} Run ${colors.cyan}init${colors.reset} in an empty directory or your project root`);
   console.log(`  ${colors.yellow}•${colors.reset} Run ${colors.cyan}update${colors.reset} to get the latest system files in existing projects`);
   console.log(`  ${colors.yellow}•${colors.reset} Update preserves your custom files (README.md, docs/, etc.)`);
-  console.log(`  ${colors.yellow}•${colors.reset} System files (.claude/, APPSHEET-DOCUMENTATION/, etc.) are overwritten during updates`);
+  console.log(`  ${colors.yellow}•${colors.reset} System files (.claude/, _APPSHEET-DOCUMENTATION/, etc.) are overwritten during updates`);
   console.log('');
   console.log(`${colors.bright}Links:${colors.reset}`);
   console.log(`  ${colors.cyan}npm:${colors.reset}    https://www.npmjs.com/package/appsheet-project`);

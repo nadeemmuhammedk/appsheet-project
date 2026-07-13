@@ -103,8 +103,8 @@ test('Claude skills exist in template/.claude/skills/', () => {
 
 // Test 5: Documentation structure exists in template
 test('Documentation structure exists in template', () => {
-  const docsPath = path.join(__dirname, 'template', 'APPSHEET-DOCUMENTATION');
-  assert(fs.existsSync(docsPath), 'template/APPSHEET-DOCUMENTATION directory not found');
+  const docsPath = path.join(__dirname, 'template', '_APPSHEET-DOCUMENTATION');
+  assert(fs.existsSync(docsPath), 'template/_APPSHEET-DOCUMENTATION directory not found');
 
   const categories = ['formulas-reference', 'rules-and-logic', 'views-interface'];
   for (const category of categories) {
@@ -120,7 +120,7 @@ test('Required markdown files exist in template', () => {
     'CHANGELOG.md',
     'CLAUDE.md',
     'AGENTS.md',
-    'APPSHEET_SYSTEM_BLUEPRINT.md'
+    '_APPSHEET_SYSTEM_BLUEPRINT.md'
   ];
 
   for (const file of requiredFiles) {
@@ -241,7 +241,7 @@ test('package.json bin field is correctly configured', () => {
   const packageJson = require('./package.json');
   assert(packageJson.bin, 'package.json should have bin field');
   assert(packageJson.bin['appsheet-project'], 'package.json bin should have appsheet-project command');
-  assert(packageJson.bin['appsheet-project'] === './bin/appsheet-project.js', 'bin command should point to ./bin/appsheet-project.js');
+  assert(packageJson.bin['appsheet-project'] === 'bin/appsheet-project.js', 'bin command should point to bin/appsheet-project.js');
 });
 
 // Test 15: .npmignore exists

@@ -46,8 +46,8 @@ npx appsheet-project update
 The `update` command synchronizes your project's system files with the latest version of the AppSheet Project package. This ensures you have the newest:
 
 - AI Assistant Skills (`.claude/skills/`, `.codex/skills/`)
-- AppSheet Documentation (`APPSHEET-DOCUMENTATION/`)
-- System Blueprints (`APPSHEET_SYSTEM_BLUEPRINT.md`)
+- AppSheet Documentation (`_APPSHEET-DOCUMENTATION/`)
+- System Blueprints (`_APPSHEET_SYSTEM_BLUEPRINT.md`)
 - Agent Documentation (`AGENTS.md`, `CLAUDE.md`)
 
 **What gets updated:**
@@ -76,9 +76,9 @@ The following system files will be updated:
 
   • .claude/
   • .codex/
-  • APPSHEET-DOCUMENTATION/
+  • _APPSHEET-DOCUMENTATION/
   • AGENTS.md
-  • APPSHEET_SYSTEM_BLUEPRINT.md
+  • _APPSHEET_SYSTEM_BLUEPRINT.md
   • CLAUDE.md
 
 ⚠ Warning: System files will be overwritten with template versions.
@@ -108,7 +108,7 @@ your-project/
 │       └── prd-skill/
 ├── .codex/
 │   └── skills/ (same as .claude/skills/)
-├── APPSHEET-DOCUMENTATION/
+├── _APPSHEET-DOCUMENTATION/
 │   ├── formulas/
 │   │   ├── appsheet_formulas.md
 │   │   ├── googlesheet_formulas.md
@@ -122,7 +122,7 @@ your-project/
 ├── backups/
 ├── utils/
 ├── AGENTS.md
-├── APPSHEET_SYSTEM_BLUEPRINT.md
+├── _APPSHEET_SYSTEM_BLUEPRINT.md
 ├── CHANGELOG.md
 ├── CLAUDE.md
 └── README.md
@@ -232,13 +232,13 @@ Here's exactly what happens:
 - Sets status to "⚠ EXPERIMENTAL - TESTING IN PROGRESS"
 
 ### Step 2: Documentation Generation (`appsheet-blueprint-skill`)
-- Uses templates from `APPSHEET_SYSTEM_BLUEPRINT.md`
+- Uses templates from `_APPSHEET_SYSTEM_BLUEPRINT.md`
 - Documents table schemas, views, actions, security rules
 - Writes documentation to the `EXPERIMENTAL V[X]` section
 
 ### Step 3: Formula Reference (`appsheet-reference-skill`)
 - Helps with specific AppSheet formulas, view types, actions
-- References the `APPSHEET-DOCUMENTATION/` library as needed
+- References the `_APPSHEET-DOCUMENTATION/` library as needed
 
 ### Step 4: Iterative Development
 - You make changes, test, update documentation
@@ -262,9 +262,9 @@ When you say **"mark the system as stable"**:
 After running `npx appsheet-project init`:
 
 1. Review `README.md` for detailed documentation
-2. Check `APPSHEET_SYSTEM_BLUEPRINT.md` for system overview
+2. Check `_APPSHEET_SYSTEM_BLUEPRINT.md` for system overview
 3. Start building - just say "let's build a new feature" to activate the workflow
-4. Explore `APPSHEET-DOCUMENTATION/` for formulas and guides
+4. Explore `_APPSHEET-DOCUMENTATION/` for formulas and guides
 
 ## Links
 

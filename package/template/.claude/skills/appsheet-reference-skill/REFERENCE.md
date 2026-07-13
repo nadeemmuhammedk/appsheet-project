@@ -1,7 +1,7 @@
 ### 1. Formulas Reference (`formulas-reference/`)
 
 #### Syntax and Basics
-**File:** `APPSHEET-DOCUMENTATION/formulas-reference/syntax-and-basics/SYNTAX_AND_BASICS.md`
+**File:** `_APPSHEET-DOCUMENTATION/formulas-reference/syntax-and-basics/SYNTAX_AND_BASICS.md`
 
 **Use cases:**
 - Basic expression syntax
@@ -15,7 +15,7 @@
 - "What operators are available?"
 
 #### Conditional Logic
-**File:** `APPSHEET-DOCUMENTATION/formulas-reference/conditional/CONDITIONAL.md`
+**File:** `_APPSHEET-DOCUMENTATION/formulas-reference/conditional/CONDITIONAL.md`
 
 **Use cases:**
 - IF statements
@@ -29,7 +29,7 @@
 - "What's the syntax for SWITCH?"
 
 #### List and SELECT Operations
-**File:** `APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md`
+**File:** `_APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md`
 
 **Use cases:**
 - SELECT formulas for filtering
@@ -43,7 +43,7 @@
 - "What's the syntax for list operations?"
 
 #### Logical Functions
-**File:** `APPSHEET-DOCUMENTATION/formulas-reference/logical/LOGICAL.md`
+**File:** `_APPSHEET-DOCUMENTATION/formulas-reference/logical/LOGICAL.md`
 
 **Use cases:**
 - AND, OR, NOT operations
@@ -57,7 +57,7 @@
 - "What logical functions are available?"
 
 #### Text Functions
-**File:** `APPSHEET-DOCUMENTATION/formulas-reference/text/TEXT_FUNCTIONS.md`
+**File:** `_APPSHEET-DOCUMENTATION/formulas-reference/text/TEXT_FUNCTIONS.md`
 
 **Use cases:**
 - String manipulation
@@ -71,7 +71,7 @@
 - "What text functions are available?"
 
 #### Date and Time Functions
-**File:** `APPSHEET-DOCUMENTATION/formulas-reference/date-time/DATE_AND_TIME.md`
+**File:** `_APPSHEET-DOCUMENTATION/formulas-reference/date-time/DATE_AND_TIME.md`
 
 **Use cases:**
 - TODAY, NOW functions
@@ -85,7 +85,7 @@
 - "What date functions are available?"
 
 #### Math Functions
-**File:** `APPSHEET-DOCUMENTATION/formulas-reference/math/MATH_FUNCTIONS.md`
+**File:** `_APPSHEET-DOCUMENTATION/formulas-reference/math/MATH_FUNCTIONS.md`
 
 **Use cases:**
 - SUM, AVG, MAX, MIN
@@ -99,7 +99,7 @@
 - "What math functions are available?"
 
 #### References and Dereference
-**File:** `APPSHEET-DOCUMENTATION/formulas-reference/references/REFERENCES_AND_DEREFERENCE.md`
+**File:** `_APPSHEET-DOCUMENTATION/formulas-reference/references/REFERENCES_AND_DEREFERENCE.md`
 
 **Use cases:**
 - REF columns
@@ -115,7 +115,7 @@
 ### 2. Views Interface (`views-interface/`)
 
 #### Table View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/table/TABLE_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/table/TABLE_VIEW.md`
 
 **Use cases:**
 - Displaying data in tabular format
@@ -129,7 +129,7 @@
 - "What settings are available for tables?"
 
 #### Deck View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/deck/DECK_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/deck/DECK_VIEW.md`
 
 **Use cases:**
 - Card-based layouts
@@ -143,7 +143,7 @@
 - "What's available in deck views?"
 
 #### Form View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/form/FORM_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/form/FORM_VIEW.md`
 
 **Use cases:**
 - Data entry forms
@@ -157,7 +157,7 @@
 - "What form settings are available?"
 
 #### Detail View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/detail/DETAIL_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/detail/DETAIL_VIEW.md`
 
 **Use cases:**
 - Single record display
@@ -171,7 +171,7 @@
 - "What's available in detail views?"
 
 #### Calendar View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/calendar/CALENDAR_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/calendar/CALENDAR_VIEW.md`
 
 **Use cases:**
 - Date-based visualization
@@ -185,7 +185,7 @@
 - "What calendar settings are available?"
 
 #### Chart View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/chart/CHART_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/chart/CHART_VIEW.md`
 
 **Use cases:**
 - Data visualization
@@ -199,7 +199,7 @@
 - "How to configure chart data?"
 
 #### Dashboard View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/dashboard/DASHBOARD_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/dashboard/DASHBOARD_VIEW.md`
 
 **Use cases:**
 - Multiple view composition
@@ -213,7 +213,7 @@
 - "What dashboard settings are available?"
 
 #### Gallery View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/gallery/GALLERY_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/gallery/GALLERY_VIEW.md`
 
 **Use cases:**
 - Image galleries
@@ -227,7 +227,7 @@
 - "What gallery settings are available?"
 
 #### Map View
-**File:** `APPSHEET-DOCUMENTATION/views-interface/map/MAP_VIEW.md`
+**File:** `_APPSHEET-DOCUMENTATION/views-interface/map/MAP_VIEW.md`
 
 **Use cases:**
 - Location-based visualization
@@ -243,7 +243,7 @@
 ### 3. Rules and Logic (`rules-and-logic/`)
 
 #### Actions
-**File:** `APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md`
+**File:** `_APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md`
 
 **Use cases:**
 - Data operations (add, set, delete)
@@ -259,7 +259,7 @@
 - "How to make actions conditional?"
 
 #### Automation
-**File:** `APPSHEET-DOCUMENTATION/rules-and-logic/automation/AUTOMATION.md`
+**File:** `_APPSHEET-DOCUMENTATION/rules-and-logic/automation/AUTOMATION.md`
 
 **Use cases:**
 - Bots and workflows
@@ -273,7 +273,7 @@
 - "How to configure bots?"
 
 #### Data Validity and Constraints
-**File:** `APPSHEET-DOCUMENTATION/rules-and-logic/data-validity-constraints/DATA_VALIDITY_AND_CONSTRAINTS.md`
+**File:** `_APPSHEET-DOCUMENTATION/rules-and-logic/data-validity-constraints/DATA_VALIDITY_AND_CONSTRAINTS.md`
 
 **Use cases:**
 - VALID_IF formulas
@@ -287,7 +287,7 @@
 - "What's the syntax for VALID_IF?"
 
 #### Security Filters
-**File:** `APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md`
+**File:** `_APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md`
 
 **Use cases:**
 - Row-level security
@@ -301,7 +301,7 @@
 - "What's the USEREMAIL() syntax?"
 
 #### Slices
-**File:** `APPSHEET-DOCUMENTATION/rules-and-logic/slices/SLICES.md`
+**File:** `_APPSHEET-DOCUMENTATION/rules-and-logic/slices/SLICES.md`
 
 **Use cases:**
 - Data subsets

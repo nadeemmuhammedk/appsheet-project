@@ -244,29 +244,40 @@ Description: "[User-facing description]"
 
 ### View Documentation Template
 
-
 **View: [Name]**
 
 ```appsheet
 View Name: [Name]
-View Type: deck/table/form/detail/dashboard
 For this data: [Table Name]
-Position: [menu position]
+View Type: deck/table/form/detail/dashboard/calendar/gallery/chart/map/card
+Position: first/next/middle/later/last/menu/ref
 
-Display settings:
-  Image: [Column name for image]
-  Primary header: [Column]
-  Secondary header: [Column]
-  Summary column: [Column]
+View Options:
+  Sort by: [Column + Ascending/Descending, or N/A]
+  Group by: [Column + Ascending/Descending, or N/A]
+  Group aggregate: [COUNT/SUM/AVG/etc., or N/A]
+  Main image: [Column name, or auto]
+  Image shape: [Square Image/Round Image/Full Image, or N/A]
+  Primary header: [Column or None]
+  Secondary header: [Column or None]
+  Summary column: [Column or None]
+  Nested table column: [Column, or N/A]
+  Show action bar: Yes/No
+  Actions: Automatic/Manual — [if Manual, list which actions: Edit, Delete, custom actions, etc.]
 
-Group by: [Column or N/A]
-Sort by: [Column and order]
+Display:
+  Icon: [icon name, or N/A — no icon set]
+  Display name: [text or formula, or N/A — falls back to View Name]
+  Show if: [Formula or TRUE]
 
-Actions:
-  - [Action 1]
-  - [Action 2]
+Behavior:
+  Event Actions:
+    Row Selected: [action name, or auto]
+    Row Swiped Left (beta): [action name, or auto]
+    Row Swiped Right (beta): [action name, or auto]
 
-SHOW IF: [Formula or TRUE]
+Documentation:
+  Descriptive comment: [optional note for collaborators, or N/A]
 
 Security:
   [Role]: [Can see/cannot see]

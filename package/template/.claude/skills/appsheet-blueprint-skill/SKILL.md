@@ -1,6 +1,6 @@
 ---
 name: appsheet-blueprint-skill
-description: Generate complete AppSheet documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for tables (columns, VALID_IF, EDITABLE, SHOW IF, security), views (deck, table, form, display settings), actions (behavior, Referenced Rows, SHOW IF), and security rules. Use when documenting tables, views, actions, writing to docs/formulas files, marking system as stable/promoting to stable, building/implementing features, or when user mentions document, create documentation, or describes AppSheet components.
+description: Generate complete AppSheet documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for tables (columns, VALID_IF, EDITABLE, SHOW IF, security), views (deck, table, form, display settings), actions (behavior, Referenced Rows, SHOW IF), and security rules. Use when documenting tables, views, actions, writing to docs/formulas files, marking system as stable/promoting to stable, building/implementing features, or when user mentions document, create documentation, or describes AppSheet components.
 allowed-tools:
   - Read
 ---
@@ -199,7 +199,7 @@ Documentation files follow a 2-version discipline:
 ✅ **DO:** Keep version info ONLY at document top in structured format block
 
 **For detailed anti-patterns with examples, see:**
-- APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5 - "Documentation Anti-Patterns"
+- _APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5 - "Documentation Anti-Patterns"
 - version-management-skill - "Critical Documentation Rules" section
 
 ### Coordination With Other Skills
@@ -241,7 +241,7 @@ When promoting to stable:
 **STABLE documentation must be SELF-CONTAINED** - A reader should understand the entire current system without opening archived files.
 
 **For detailed anti-patterns with examples, see:**
-- APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5 - "Documentation Anti-Patterns - What NOT to Do"
+- _APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5 - "Documentation Anti-Patterns - What NOT to Do"
 
 **Common fields that get missed**:
 - EDITABLE IF (when conditional)

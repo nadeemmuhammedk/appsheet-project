@@ -1,6 +1,6 @@
 ---
 name: googlesheet-blueprint-skill
-description: Generate complete Google Sheets formula documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for ARRAYFORMULA, VLOOKUP, QUERY, and calculated formulas. Use when documenting Google Sheets formulas, writing to docs/formulas/googlesheet_formulas.md, or when user mentions document formulas, ARRAYFORMULA, VLOOKUP, QUERY, or spreadsheet formulas.
+description: Generate complete Google Sheets formula documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for ARRAYFORMULA, VLOOKUP, QUERY, and calculated formulas. Use when documenting Google Sheets formulas, writing to docs/formulas/googlesheet_formulas.md, or when user mentions document formulas, ARRAYFORMULA, VLOOKUP, QUERY, or spreadsheet formulas.
 allowed-tools:
   - Read
 ---

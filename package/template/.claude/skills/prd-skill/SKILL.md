@@ -130,7 +130,7 @@ After creating PRD, inform user:
 - `docs/formulas/appsheet_formulas.md` - AppSheet configurations
 - `docs/formulas/googlesheet_formulas.md` - Sheet formulas
 - `docs/formulas/appscript_code.md` - Apps Script code
-- `APPSHEET_SYSTEM_BLUEPRINT.md` - Technical architecture
+- `_APPSHEET_SYSTEM_BLUEPRINT.md` - Technical architecture
 
 **Use MoSCoW prioritization** for features:
 - **Must-Have** - Critical for MVP, without these the product doesn't work
@@ -183,7 +183,7 @@ See [EXAMPLES.md](EXAMPLES.md) for:
 - Complete PRD example (student management system)
 - Before/after examples of good vs bad PRDs
 - How to handle common scenarios (feature requests, scope changes, etc.)
-- Integration with other documentation (APPSHEET_SYSTEM_BLUEPRINT.md, formulas files)
+- Integration with other documentation (_APPSHEET_SYSTEM_BLUEPRINT.md, formulas files)
 
 ---
 

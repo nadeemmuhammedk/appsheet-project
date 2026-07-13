@@ -226,4 +226,4 @@ Before finalizing any documentation, verify:
 
 **Version:** 1.0
 **Last Updated:** 2026-01-14
-**Changes:** Initial version with complete AppSheet documentation templates from APPSHEET_SYSTEM_BLUEPRINT.md
+**Changes:** Initial version with complete AppSheet documentation templates from _APPSHEET_SYSTEM_BLUEPRINT.md

@@ -5,8 +5,8 @@
 **User:** "How do I filter a list by current user?"
 
 **Response:**
-1. Read `APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md`
-2. Read `APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md`
+1. Read `_APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md`
+2. Read `_APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md`
 3. Extract: SELECT syntax, USEREMAIL() function
 4. Provide guidance:
    ```
@@ -34,9 +34,9 @@
 **Claude thinks:** This requires deck view configuration + SELECT filtering + security pattern
 
 **Claude automatically:**
-1. Reads `APPSHEET-DOCUMENTATION/views-interface/deck/DECK_VIEW.md`
-2. Reads `APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md`
-3. Reads `APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md`
+1. Reads `_APPSHEET-DOCUMENTATION/views-interface/deck/DECK_VIEW.md`
+2. Reads `_APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md`
+3. Reads `_APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md`
 4. Generates complete view configuration with proper formulas
 
 **User sees:** Complete deck view documentation with accurate SELECT formula and view settings
@@ -48,7 +48,7 @@
 **Claude thinks:** This requires action configuration + data operation pattern
 
 **Claude automatically:**
-1. Reads `APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md`
+1. Reads `_APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md`
 2. Extracts action structure, behavior types, column value syntax
 3. Generates complete action documentation
 
@@ -61,7 +61,7 @@
 **Claude thinks:** This requires SHOW_IF syntax + conditional logic
 
 **Claude automatically:**
-1. Reads `APPSHEET-DOCUMENTATION/formulas-reference/conditional/CONDITIONAL.md`
+1. Reads `_APPSHEET-DOCUMENTATION/formulas-reference/conditional/CONDITIONAL.md`
 2. Extracts SHOW_IF pattern and IF syntax
 3. Provides formula
 

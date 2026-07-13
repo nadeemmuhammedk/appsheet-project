@@ -1,6 +1,6 @@
 ---
 name: lookerstudio-blueprint-skill
-description: Generate complete Looker Studio documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for data sources, calculated fields, metrics, dimensions, and blended data. Use when documenting Looker Studio reports, writing to docs/formulas/lookerstudio_formulas.md, or when user mentions Looker Studio, calculated fields, data sources, or report configurations.
+description: Generate complete Looker Studio documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for data sources, calculated fields, metrics, dimensions, and blended data. Use when documenting Looker Studio reports, writing to docs/formulas/lookerstudio_formulas.md, or when user mentions Looker Studio, calculated fields, data sources, or report configurations.
 allowed-tools:
   - Read
 ---

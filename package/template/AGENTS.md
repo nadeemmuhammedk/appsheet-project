@@ -8,7 +8,7 @@ This file provides guidance to AI Agents when working with this repository.
 
 This project uses the AppSheet Documentation System Blueprint.
 
-**Structure:** See APPSHEET_SYSTEM_BLUEPRINT.md for complete system definition.
+**Structure:** See _APPSHEET_SYSTEM_BLUEPRINT.md for complete system definition.
 
 **Formula Files:**
 
@@ -51,7 +51,7 @@ STABLE SYSTEM V[X-1] (current production) ← Middle of file
 
 ### Formula Documentation Format
 
-Follow templates in APPSHEET_SYSTEM_BLUEPRINT.md Section 4.
+Follow templates in _APPSHEET_SYSTEM_BLUEPRINT.md Section 4.
 
 **Table Documentation Must Include:**
 
@@ -76,11 +76,11 @@ When documenting STABLE SYSTEM versions:
 
 **For detailed examples of what NOT to do, see:**
 
-- [APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5](APPSHEET_SYSTEM_BLUEPRINT.md#425-documentation-anti-patterns---what-not-to-do) - Documentation Anti-Patterns
+- [_APPSHEET_SYSTEM_BLUEPRINT.md Section 4.2.5](_APPSHEET_SYSTEM_BLUEPRINT.md#425-documentation-anti-patterns---what-not-to-do) - Documentation Anti-Patterns
 
 ### Version Promotion Workflow
 
-See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
+See _APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 
 **When promoting Experimental → Stable:**
 
@@ -109,33 +109,33 @@ See APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 
 ### System Documentation
 
-- **[APPSHEET_SYSTEM_BLUEPRINT.md](APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
+- **[_APPSHEET_SYSTEM_BLUEPRINT.md](_APPSHEET_SYSTEM_BLUEPRINT.md)** - Complete system template
 - **[docs/project/PRD.md](docs/project/PRD.md)** - Product requirements document
 - **[CHANGELOG.md](CHANGELOG.md)** - Deployment history (date-based, not version-based)
 - **[backups/README.md](backups/README.md)** - Archived versions index
 
 ### AppSheet Reference Materials
 
-The **[APPSHEET-DOCUMENTATION/](APPSHEET-DOCUMENTATION/)** directory contains comprehensive AppSheet reference documentation organized by category:
+The **[_APPSHEET-DOCUMENTATION/](_APPSHEET-DOCUMENTATION/)** directory contains comprehensive AppSheet reference documentation organized by category:
 
-- **[formulas-reference/](APPSHEET-DOCUMENTATION/formulas-reference/)** - Complete formula syntax and examples
+- **[formulas-reference/](_APPSHEET-DOCUMENTATION/formulas-reference/)** - Complete formula syntax and examples
     - Conditional, Date-Time, List-and-Select, Logical, Math, Text functions
     - References, Syntax basics
-    - See [FORMULAS_REFERENCE.md](APPSHEET-DOCUMENTATION/formulas-reference/FORMULAS_REFERENCE.md) for index
+    - See [FORMULAS_REFERENCE.md](_APPSHEET-DOCUMENTATION/formulas-reference/FORMULAS_REFERENCE.md) for index
 
-- **[rules-and-logic/](APPSHEET-DOCUMENTATION/rules-and-logic/)** - AppSheet business logic patterns
+- **[rules-and-logic/](_APPSHEET-DOCUMENTATION/rules-and-logic/)** - AppSheet business logic patterns
     - Actions, Automation, Data Validity Constraints
     - Security Filters, Slices
-    - See [RULES_AND_LOGIC.md](APPSHEET-DOCUMENTATION/rules-and-logic/RULES_AND_LOGIC.md) for index
+    - See [RULES_AND_LOGIC.md](_APPSHEET-DOCUMENTATION/rules-and-logic/RULES_AND_LOGIC.md) for index
 
-- **[views-interface/](APPSHEET-DOCUMENTATION/views-interface/)** - View configuration reference
+- **[views-interface/](_APPSHEET-DOCUMENTATION/views-interface/)** - View configuration reference
     - Calendar, Chart, Dashboard, Deck, Detail, Form, Gallery, Map, Table views
     - Configuration patterns and best practices
 
-- **[tables-data-schema/](APPSHEET-DOCUMENTATION/tables-data-schema/)** - Tables and data schema reference
+- **[tables-data-schema/](_APPSHEET-DOCUMENTATION/tables-data-schema/)** - Tables and data schema reference
     - Column types, Column properties, Table settings
     - Virtual columns, Primary keys, Data relationships
-    - See [TABLES_DATA_SCHEMA.md](APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md) for index
+    - See [TABLES_DATA_SCHEMA.md](_APPSHEET-DOCUMENTATION/tables-data-schema/TABLES_DATA_SCHEMA.md) for index
 
 ## Formula Formatting
 
@@ -189,11 +189,11 @@ These apply when:
 
 This project includes specialized AGENT skills in **[.codex/skills/](.codex/skills/)**:
 
-- **appsheet-blueprint-skill** - Generate complete AppSheet documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for tables, views, actions, and security rules
+- **appsheet-blueprint-skill** - Generate complete AppSheet documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for tables, views, actions, and security rules
 - **appsheet-reference-skill** - Look up AppSheet formulas, view types, actions, security filters, slices, and automation patterns
-- **googlesheet-blueprint-skill** - Generate complete Google Sheets formula documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for ARRAYFORMULA, VLOOKUP, QUERY, and calculated formulas
-- **lookerstudio-blueprint-skill** - Generate complete Looker Studio documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for data sources, calculated fields, metrics, dimensions, and blended data
-- **appscript-blueprint-skill** - Generate complete Google Apps Script documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for functions, triggers, installation steps, testing checklists, and troubleshooting
+- **googlesheet-blueprint-skill** - Generate complete Google Sheets formula documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for ARRAYFORMULA, VLOOKUP, QUERY, and calculated formulas
+- **lookerstudio-blueprint-skill** - Generate complete Looker Studio documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for data sources, calculated fields, metrics, dimensions, and blended data
+- **appscript-blueprint-skill** - Generate complete Google Apps Script documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for functions, triggers, installation steps, testing checklists, and troubleshooting
 - **version-management-skill** - Manage Experimental→Stable promotion workflow for ALL documentation types. Handles 2-version discipline, archive creation, integration process, and completeness verification. Use when marking system as stable, promoting experimental to stable, or starting new feature work.
 - **prd-skill** - Create or update Product Requirements Documents (PRD) following the standardized PRD template. Use at project start, when planning new features, or when user explicitly requests PRD updates. Helps define product scope, user personas, success metrics, and technical requirements.
 

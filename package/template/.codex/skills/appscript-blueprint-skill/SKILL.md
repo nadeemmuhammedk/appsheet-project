@@ -1,6 +1,6 @@
 ---
 name: appscript-blueprint-skill
-description: Generate complete Google Apps Script documentation following APPSHEET_SYSTEM_BLUEPRINT.md templates for functions, triggers, installation steps, testing checklists, and troubleshooting. Use when documenting Apps Script code, writing to docs/formulas/appscript_code.md, or when user mentions Apps Script, functions, triggers, or automation.
+description: Generate complete Google Apps Script documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for functions, triggers, installation steps, testing checklists, and troubleshooting. Use when documenting Apps Script code, writing to docs/formulas/appscript_code.md, or when user mentions Apps Script, functions, triggers, or automation.
 allowed-tools:
   - Read
 ---
