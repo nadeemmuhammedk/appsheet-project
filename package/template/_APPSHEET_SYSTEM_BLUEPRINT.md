@@ -52,8 +52,8 @@ This blueprint defines a **standardized documentation system** for AppSheet proj
 │   └── proposals/                    # Experimental feature designs
 │       └── [feature_name_idea.md]    # Proposals not yet in Experimental phase
 │
-├── sample_data/                       # CSV exports from Google Sheets
-│   └── [Sheet Name - Tab Name.csv]
+├── sample-data/                       # CSV exports from Google Sheets
+│   └── [Sheet Name_Tab Name.csv]
 │
 ├── utils/                             # Helper scripts for data analysis
 │   └── [analysis_scripts.py/.js]
@@ -74,7 +74,7 @@ This blueprint defines a **standardized documentation system** for AppSheet proj
 | **docs/project/** | System overview docs | When architecture or roles change |
 | **docs/formulas/** | Active formulas (2 versions) | Continuously (Experimental work) |
 | **docs/proposals/** | Pre-experimental designs | Before adding to Experimental |
-| **sample_data/** | Data exports for analysis | As needed for testing/analysis |
+| **sample-data/** | Data exports for analysis | As needed for testing/analysis |
 | **utils/** | Helper scripts | As needed for automation |
 | **backups/** | Archived versions | When promoting new Stable version |
 

@@ -55,7 +55,7 @@ The `update` command synchronizes your project's system files with the latest ve
 - You'll see a preview of what will be updated before confirming
 
 **What is preserved:**
-- Your custom files: `README.md`, `CHANGELOG.md`, `docs/`, `backups/`, `sample_data/`, `utils/`
+- Your custom files: `README.md`, `CHANGELOG.md`, `docs/`, `backups/`, `sample-data/`, `utils/`
 - Any modifications you've made to non-system files
 
 **When to use update:**
@@ -118,7 +118,7 @@ your-project/
 ├── docs/
 │   └── project/
 │       └── PRD.md
-├── sample_data/
+├── sample-data/
 ├── backups/
 ├── utils/
 ├── AGENTS.md
