@@ -213,6 +213,25 @@ AppSheet Configuration:
   Description: "[Purpose]"
 ```
 
+---
+
+**Column "[CAPTION TEXT]" (Virtual — Section Header)**
+
+Use to visually group related fields into labeled sections within a Detail or Form view. Holds no data — it's a display-only divider. Column Name is written as the literal caption text (matching how it renders in the app), not PascalCase.
+
+```appsheet
+Google Sheets: N/A (Virtual column — Show type, no data)
+AppSheet Configuration:
+  Column Name: [CAPTION TEXT]
+  Type: Show
+  Type Details:
+    Category: Section_Header
+    Content: ="[CAPTION TEXT]"
+  SHOW: TRUE
+  SHOW IF: [formula if conditional, or N/A]
+  Description: "Visual section header grouping [columns] in [view]_Detail and/or [view]_Form. Display-only — holds no data, not editable."
+```
+
 ### Action Documentation Template
 
 
@@ -282,6 +301,98 @@ Documentation:
 Security:
   [Role]: [Can see/cannot see]
 ```
+
+### Detail / Form / Inline Sub-View Documentation Templates
+
+`Detail`, `Form`, and `Inline` are not independent top-level views — they're sub-views tied to a table's main list-style view, sharing its `For this data` table. Document them as nested sub-blocks under the main view's `#### View N: [Name]` heading, not as their own `#### View N:` entries. Each sub-block skips the `View Name / For this data / View Type / Position` header and starts directly at `View Options:`.
+
+**Detail sub-view** (shown when a row is selected from the main view; conventionally named `<table>_Detail`):
+
+```appsheet
+**[table]_Detail**
+
+View Options:
+  Use Card Layout: Yes/No
+  Main image: [Column name, or auto]
+  Header columns: [Columns highlighted at top of slide, or N/A]
+  Quick edit columns: [Columns editable directly in the slide, or N/A]
+  Sort by: [Column + Ascending/Descending, or N/A]
+  Column order: Automatic/Manual — [if Manual, list columns and "Related [table]" entries in display order]
+  Display mode: Automatic/Normal/Centered/No Headings/Side-by-side
+  Image style: Fill/Fit/Background
+  Nested row display: [max rows shown before "more", e.g. 5]
+  Slideshow mode: Yes/No
+  Desktop layout: Split view/Full screen
+  Desktop multicolumn layout: Yes/No
+
+Display:
+  Display name: [text or formula, or N/A — falls back to View Name]
+
+Behavior:
+  Event Actions: [action name, or auto]
+
+App link: LINKTOVIEW("[table]_Detail")
+
+Documentation:
+  Descriptive comment: [optional note for collaborators, or N/A]
+```
+
+**Form sub-view** (shown when creating/editing a row; conventionally named `<table>_Form`):
+
+```appsheet
+**[table]_Form**
+
+View Options:
+  Page style: Automatic/Simple/Page Count/Tabs
+  Form style: Automatic/Default/Side-by-side
+  Column order: Automatic/Manual — [if Manual, list columns in display order]
+  Save/cancel position: Bottom/Top
+  Max nested rows: [max rows shown for related reference lists, e.g. 5]
+  Auto save: Yes/No
+  Auto re-open: Yes/No
+  Finish view: [view name, or Automatic]
+
+Display:
+  Display name: [text or formula, or N/A — falls back to View Name]
+
+Behavior:
+  Event Actions:
+    Form Saved: [action name, or auto]
+
+App link: LINKTOVIEW("[table]_Form")
+
+Documentation:
+  Descriptive comment: [optional note for collaborators, or N/A]
+```
+
+**Inline sub-view** (embedded within a Detail view wherever a `REF_ROWS(...)` virtual column produces a "Related [table]" list; conventionally named `<ReferencedTable>_Inline`):
+
+```appsheet
+**[ReferencedTable]_Inline** (embedded in [table]_Detail via "Related [ReferencedTable]")
+
+View Options:
+  View type: deck/table/gallery/map/chart/card
+  Sort by: [Column + Ascending/Descending, or N/A]
+  Group by: [Column + Ascending/Descending, or N/A]
+  Group aggregate: [COUNT/SUM/AVG/etc., or NONE]
+  Column order: Automatic/Manual — [if Manual, list columns in display order]
+  Column width: Default/Narrow/Wide
+  Enable QuickEdit (beta): Yes/No
+
+Display:
+  Display name: [text or formula, or N/A — falls back to View Name]
+
+Behavior:
+  Event Actions:
+    Row Selected: [action name, or auto]
+
+App link: LINKTOVIEW("[ReferencedTable]_Inline")
+
+Documentation:
+  Descriptive comment: [optional note for collaborators, or N/A]
+```
+
+Security for all three sub-views is inherited from the parent view / table — do not repeat a separate `Security:` block per sub-view unless it genuinely differs.
 
 ### Security Documentation Template
 
