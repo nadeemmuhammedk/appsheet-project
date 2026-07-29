@@ -185,6 +185,16 @@ These apply when:
 - Writing formula documentation that references tab or column names
 - Writing Apps Script code that references sheet names or column headers
 
+## AppSheet Object Naming Conventions
+
+Apply these in all work on this project:
+
+- **Slices:** `[source_table]_[Condition]` — snake_case source table name, then an underscore, then a Title_Case label for the row filter condition (e.g., `attendance_overview_Active_Batches` — sourced from `attendance_overview`, filtered to active batches). The name should make the slice's origin and purpose readable on sight.
+
+These apply when:
+- Creating or documenting new AppSheet slices
+- Writing formula documentation that references slice names
+
 ## AGENT Skills
 
 This project includes specialized AGENT skills in **[.codex/skills/](.codex/skills/)**:

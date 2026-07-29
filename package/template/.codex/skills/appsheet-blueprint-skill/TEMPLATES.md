@@ -223,6 +223,7 @@ Use to visually group related fields into labeled sections within a Detail or Fo
 Google Sheets: N/A (Virtual column — Show type, no data)
 AppSheet Configuration:
   Column Name: [CAPTION TEXT]
+  App Formula: ="[CAPTION TEXT]"
   Type: Show
   Type Details:
     Category: Section_Header
@@ -440,6 +441,29 @@ Used in:
   - [Table].[Column]
 
 Description: "[Purpose and usage]"
+```
+
+### Slice Documentation Template
+
+**Slice: [Name]**
+
+```appsheet
+Slice Name: [Name]
+Source Table: [Table Name]
+
+Row filter condition: [Formula, or TRUE if unfiltered]
+
+Slice Columns: All columns/Manual — [if Manual, list which columns are included]
+
+Slice Actions: Automatic/Manual — [if Manual, list which actions]
+
+Update mode:
+  Updates: Yes/No
+  Adds: Yes/No
+  Deletes: Yes/No
+
+Documentation:
+  Descriptive comment: [optional note for collaborators, or N/A]
 ```
 
 ## How to Use This Skill
