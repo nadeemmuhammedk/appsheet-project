@@ -1,6 +1,6 @@
 ---
 name: appsheet-blueprint-skill
-description: Generate complete AppSheet documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for tables (columns, VALID_IF, EDITABLE, SHOW IF, security), views (deck, table, form, display settings), actions (behavior, Referenced Rows, SHOW IF), and security rules. Use when documenting tables, views, actions, writing to docs/formulas files, marking system as stable/promoting to stable, building/implementing features, or when user mentions document, create documentation, or describes AppSheet components.
+description: Generate complete AppSheet documentation following _APPSHEET_SYSTEM_BLUEPRINT.md templates for tables (columns, VALID_IF, EDITABLE, SHOW IF, security), views (deck, table, form, display settings), actions (behavior variants, Position, Display, Behavior), automations/bots (event + process chains), and security rules. Use when documenting tables, views, actions, automations/bots, writing to docs/formulas files, marking system as stable/promoting to stable, building/implementing features, or when user mentions document, create documentation, or describes AppSheet components.
 allowed-tools:
   - Read
 ---
@@ -35,12 +35,12 @@ Generate complete documentation templates and ensure completeness when documenti
 2. **appsheet-reference-skill** - To look up formulas, patterns, and AppSheet capabilities
 
 **Example triggers**:
-- "Create a Students table" → Auto-use table template
-- "Document the attendance view" → Auto-use view template
-- "Add an action to mark present" → Auto-use action template
+- "Create an Orders table" → Auto-use table template
+- "Document the Orders view" → Auto-use view template
+- "Add an action to mark an order shipped" → Auto-use action template
 - User writes to docs/formulas/ → Auto-apply blueprint format
 - "Mark the system as stable" → Auto-use promotion workflow
-- "Let's build a new attendance feature" → Invoke BOTH blueprint-skill AND reference-skill
+- "Let's build a new order-tracking feature" → Invoke BOTH blueprint-skill AND reference-skill
 
 ## Template Overview
 
@@ -48,7 +48,8 @@ This skill provides complete documentation templates (see [TEMPLATES.md](TEMPLAT
 
 **Available Templates:**
 - **Table Schema** - All AppSheet configuration fields (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE)
-- **Action Documentation** - Behavior, Referenced Rows, Column values, SHOW IF, icons
+- **Action Documentation** - 5 behavior-type variants (add row / set columns / delete / navigate / execute on row set) sharing a common Position + Display + Behavior + Documentation footer
+- **Automation (Bot) Documentation** - Event trigger + numbered Process steps, each cross-referencing an already-documented Action
 - **View Configuration** - Display settings, grouping, sorting, security, SHOW IF
 - **Security Rules** - Table-Level Operations (Are updates allowed?) + Row-Level Security Filter
 - **Enum Documentation** - Values and usage
@@ -62,7 +63,8 @@ For complete templates with all fields, see [TEMPLATES.md](TEMPLATES.md).
 Determine what needs documentation:
 - **Table?** → Use table schema template
 - **View?** → Use view configuration template
-- **Action?** → Use action documentation template
+- **Action?** → Use action documentation template (pick the variant matching its behavior type)
+- **Automation/Bot?** → Use automation documentation template (event + Process steps, cross-referencing its Actions)
 - **Security?** → Use security rules template
 
 ### Step 2: Read Template
@@ -75,7 +77,8 @@ Access the appropriate template from:
 Include ALL required fields:
 - **Tables:** Column name, Type, Key, Initial Value, App Formula, VALID_IF, EDITABLE, EDITABLE IF, SHOW, SHOW IF, REQUIRE, Description
 - **Views:** Name, Type, For this data, Display settings, Group by, Sort by, Actions, SHOW IF, Security
-- **Actions:** Name, For a record, Do this, Referenced Rows, Column values, SHOW IF, Icon, Description
+- **Actions:** Name, For a record, Do this (behavior-type variant + its fields), Position, Display (Display name, Icon), Behavior (Only if this condition is true, Needs confirmation?), Documentation
+- **Automations/Bots:** Name, Event (name, source, table, Adds/Updates/Deletes, condition, bypass security filters), numbered Process steps (each with its Referenced Table/Rows/Action), Documentation
 - **Security:** Table-level rules + row-level filtering formula
 
 ### Step 4: Verify Completeness
@@ -86,56 +89,7 @@ Check against requirements:
 - Descriptions provided
 - Security rules defined
 
-## Quick Template Preview
-
-### Table Documentation (Minimal Example)
-#### 1. Students Table
-
-**Google Sheets:** "Students" tab
-**AppSheet Table Name:** Students
-**Primary Key:** StudentID
-
-**Table-Level Settings:**
-```appsheet
-Table: Students
-  # Table-Level Operations
-  Updates Enabled: Yes
-  Adds Enabled: Yes
-  Deletes Enabled: No
-
-  # Row-Level Security Filter
-  Security Filter (row-level): [Owner] = USEREMAIL()
-
-**Columns:**
-**Column A: StudentID**
-```appsheet
-Column Name: StudentID
-Type: Text
-Key: Yes
-Initial Value: UNIQUEID()
-EDITABLE: FALSE
-SHOW: TRUE
-REQUIRE: YES
-Description: "Unique identifier for student"
-```
-```
-
-See [TEMPLATES.md](TEMPLATES.md) for complete templates with all fields.
-
-### Action Documentation (Minimal Example)
-**Action: Mark Present**
-```appsheet
-Action Name: Mark Present
-For a record of this table: Students
-Do this: Data: set the values of some columns in this row
-Column values to set:
-  Status: "Present"
-  LastUpdated: NOW()
-SHOW IF: [Status] = "Absent"
-Icon: check_circle
-```
-
-See [TEMPLATES.md](TEMPLATES.md) for complete action template.
+All templates — tables, actions (all 5 behavior variants), automations/bots, views, security, enums — live in [TEMPLATES.md](TEMPLATES.md).
 
 ## Completeness Requirements
 
@@ -144,6 +98,7 @@ See [TEMPLATES.md](TEMPLATES.md) for complete action template.
 - ✅ ALL columns with ALL configuration fields
 - ✅ ALL views with complete settings
 - ✅ ALL actions with complete documentation
+- ✅ ALL automations/bots with complete event + process configuration
 - ✅ ALL security rules documented within table schemas (table-level + row-level)
 - ✅ ALL enums and reference data
 
@@ -223,8 +178,8 @@ When promoting to stable:
 **⚠️ These mistakes were made during V1→V2 promotion and must be avoided:**
 
 1. **NEVER use "(UNCHANGED IN VX)" markers** in section headers
-   - ❌ `#### 3. Student Attendance Table (UNCHANGED IN V2)`
-   - ✅ `#### 3. Student Attendance Table`
+   - ❌ `#### 3. Orders Table (UNCHANGED IN V2)`
+   - ✅ `#### 3. Orders Table`
 
 2. **NEVER use "unchanged from V1" shortcuts**
    - ❌ `**Column A: Date**` - Unchanged from V1, see V1 documentation
@@ -248,7 +203,8 @@ When promoting to stable:
 - SHOW IF (when conditional)
 - Table-level security rules
 - Row-level filtering formulas
-- Action SHOW IF conditions
+- Action Behavior condition ("Only if this condition is true")
+- Automation Referenced Action must match a documented Action name
 
 ## Detailed Templates and Examples
 

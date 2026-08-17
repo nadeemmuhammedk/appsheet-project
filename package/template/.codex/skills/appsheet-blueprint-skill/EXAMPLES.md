@@ -9,6 +9,7 @@ Documentation rules:
 - ✅ ALL columns with ALL configuration fields
 - ✅ ALL views with complete settings
 - ✅ ALL actions with complete documentation
+- ✅ ALL automations/bots with complete event + process configuration
 - ✅ ALL security rules (table-level + row-level)
 - ✅ ALL enums and reference data
 
@@ -56,85 +57,124 @@ Every column MUST have:
 
 **Table of Contents anchor link examples:**
 - "### 📋 SYSTEM OVERVIEW" → `#-system-overview`
-- "#### 1. Student Data Table" → `#1-student-data-table`
-- "#### Action 1: Create_Attendance" → `#action-1-create_attendance`
-- "#### View 2: Batch Deck" → `#view-2-batch-deck`
+- "#### 1. Orders Table" → `#1-orders-table`
+- "#### Action: Mark_Shipped" → `#action-mark_shipped`
+- "#### Automation: Auto_Notify_Rep" → `#automation-auto_notify_rep`
+- "#### View 2: Orders Deck" → `#view-2-orders-deck`
 
 ## Common Documentation Patterns
 
 ### Pattern 1: Basic Table with Security
 
-#### 1. Students Table
+#### 1. Orders Table
 
-**Google Sheets:** "Students" tab
-**AppSheet Table Name:** Students
-**Primary Key:** StudentID
+**Google Sheets:** "Orders" tab
+**AppSheet Table Name:** Orders
+**Primary Key:** OrderID
 
 **Table-Level Settings:**
 
 ```appsheet
-Table: Students
+Table: Orders
   # Table-Level Operations
   Updates Enabled: Yes
   Adds Enabled: Yes
   Deletes Enabled: No
 
   # Row-Level Security Filter
-  Security Filter (row-level): [BatchID] = LOOKUP(USEREMAIL(), "Users", "Email", "BatchID")
+  Security Filter (row-level): [RepID] = LOOKUP(USEREMAIL(), "Reps", "Email", "RepID")
 ```
 
 **Columns:**
 [Complete column documentation...]
 
-### Pattern 2: Action with Referenced Rows
+### Pattern 2: Action — Set Column Values (Variant B)
 
-**Action: Mark Present**
+**Action: Mark Shipped**
 
 ```appsheet
-Action Name: Mark Present
-For a record of this table: Students
-Do this:
-  - Data: set the values of some columns in this row
+Action Name: Mark Shipped
+For a record of this table: Orders
+
+Do this: Data: set the values of some columns in this row
 
 Column values to set:
-  Status: "Present"
+  Status: "Shipped"
   Last Updated: NOW()
 
-SHOW IF: [Status] = "Absent"
-Display prominently: Yes
-Icon: check_circle
-Description: "Mark this student as present"
+Position: Inline
+
+Display:
+  Display name: Mark Shipped
+  Icon: check_circle
+
+Behavior:
+  Only if this condition is true: [Status] = "Pending"
+  Needs confirmation?: No
+
+Documentation:
+  Descriptive comment: "Mark this order as shipped"
 ```
+
+### Pattern 2b: Automation Calling an Action
+
+**Automation: Auto_Notify_Rep**
+
+```appsheet
+Automation Name: Auto_Notify_Rep
+
+Event:
+  Event Name: Order_Cancelled
+  Event Source: App
+  Table: Orders
+  Data change types:
+    Adds: No
+    Updates: Yes
+  Condition: [Status] = "Cancelled"
+  Bypass Security Filters?: No
+
+Process 1: Send_Cancellation_Alert
+  Run a data action (Custom action)
+  Run action on rows: Yes
+  Referenced Table: Orders
+  Referenced rows: LIST([_THISROW])
+  Referenced Action: Notify_Rep
+
+Documentation:
+  Descriptive comment: N/A
+```
+
+`Notify_Rep` is a separate Action, documented once under its own `#### Action:` heading (Variant D — navigate, or Variant B — set columns, depending what it does) — the Process above only references it by name, never redefines it.
 
 ### Pattern 3: View with Security
 
-**View: Students Deck**
+**View: Orders Deck**
 
 ```appsheet
-View Name: Students Deck
+View Name: Orders Deck
 View Type: deck
-For this data: Students
+For this data: Orders
 Position: ref
 
 Display settings:
   Image: Photo
-  Primary header: Name
+  Primary header: CustomerName
   Secondary header: Email
-  Summary column: BatchID
+  Summary column: RepID
 
-Group by: BatchID
-Sort by: Name (ascending)
+Group by: RepID
+Sort by: CustomerName (ascending)
 
 Actions:
-  - Mark Present
-  - Mark Absent
+  - Mark Shipped
+  - Mark Cancelled
   - Edit
 
 SHOW IF: TRUE
 
 Security:
-  Instructors: Can see all students
-  Students: Can see only their own record
+  Managers: Can see all orders
+  Reps: Can see only their own orders
 ```
 
 ## Best Practices When Using This Skill
@@ -167,6 +207,11 @@ Claude MUST automatically invoke this skill when:
 - User is configuring action behavior
 - User describes action functionality
 
+**Documenting Automations/Bots:**
+- User creates/mentions a new automation or bot
+- User describes an event that should trigger a process (e.g. "when a row is added, split it into...")
+- User describes a multi-step or multi-record data process
+
 **Documenting Security:**
 - User mentions access control
 - User is setting up row-level security
@@ -179,10 +224,11 @@ Claude MUST automatically invoke this skill when:
 - User is promoting experimental to stable
 
 **Example Automatic Triggers:**
-- "Create a Students table" → Auto-read blueprint table template
-- "Document the attendance view" → Auto-read blueprint view template
-- "Add an action to mark present" → Auto-read blueprint action template
-- "Set up security for teachers" → Auto-read blueprint security template
+- "Create an Orders table" → Auto-read blueprint table template
+- "Document the Orders view" → Auto-read blueprint view template
+- "Add an action to mark an order shipped" → Auto-read blueprint action template
+- "When a row is added with multiple products selected, split it into one per product" → Auto-read blueprint automation template
+- "Set up security for reps" → Auto-read blueprint security template
 - User writes to docs/formulas/ → Auto-use blueprint format
 
 **CRITICAL:** User should NEVER get incomplete documentation. Claude automatically uses blueprint templates to ensure ALL required fields are included.
@@ -210,12 +256,18 @@ Before finalizing any documentation, verify:
 
 **For Actions:**
 - [ ] Action name, table documented
-- [ ] Behavior type (data/app) documented
-- [ ] Referenced Rows (if applicable) documented
-- [ ] Column values to set documented
-- [ ] SHOW IF formula documented
-- [ ] Display prominently, icon documented
-- [ ] Description documented
+- [ ] Behavior-type variant identified (add row / set columns / delete / navigate / execute on row set) and its variant-specific fields documented (Table to add to, Column values to set, Target, or Referenced Table/Rows, as applicable)
+- [ ] Position documented
+- [ ] Display (Display name, Icon) documented
+- [ ] Behavior (Only if this condition is true, Needs confirmation?, Confirmation message) documented
+- [ ] Documentation (Descriptive comment) documented
+
+**For Automations/Bots:**
+- [ ] Automation name documented
+- [ ] Event (name, source, table, Adds/Updates/Deletes, condition, bypass security filters) documented
+- [ ] Each Process numbered in execution order
+- [ ] Each Process's Referenced Table/Rows/Action documented, and the Referenced Action matches a documented Action
+- [ ] Descriptive comment documented
 
 **For Security:**
 - [ ] Table-Level Operations (Are updates allowed?) documented

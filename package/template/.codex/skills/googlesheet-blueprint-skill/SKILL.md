@@ -75,20 +75,20 @@ Check against requirements:
 ## Quick Template Preview
 
 ### ARRAYFORMULA Documentation (Minimal Example)
-### Column E: Second Installment Date
+### Column E: Follow-up Date
 
-**Purpose:** Auto-calculate second installment due date (1 month after start date)
+**Purpose:** Auto-calculate follow-up date (1 month after signup date)
 
-**Formula Location:** Batch Data!E:E
+**Formula Location:** Customers!E:E
 **Type:** ARRAYFORMULA
-**Trigger:** Populates when Batch Starting Date (Column C) is filled
+**Trigger:** Populates when Signup Date (Column C) is filled
 
 **Formula:**
 ```excel
 =ARRAYFORMULA(
     IF(
         ROW(C:C)=1,
-        "Second Installment Date",
+        "Follow-up Date",
         IF(
             ISBLANK(C:C),
             "",
@@ -98,46 +98,46 @@ Check against requirements:
 )
 
 **How It Works:**
-1. Header Row: If row number is 1, displays "Second Installment Date"
-2. Blank Check: If Batch Starting Date (Column C) is blank, returns empty string
-3. Date Calculation: Uses EDATE to add 1 month to Batch Starting Date
+1. Header Row: If row number is 1, displays "Follow-up Date"
+2. Blank Check: If Signup Date (Column C) is blank, returns empty string
+3. Date Calculation: Uses EDATE to add 1 month to Signup Date
 
 **Example Output:**
-- Batch Starting Date: 2024-06-15
-- Second Installment Date: 2024-07-15
+- Signup Date: 2024-06-15
+- Follow-up Date: 2024-07-15
 
 **Dependencies:**
-- Requires: Column C (Batch Starting Date)
-- Updates: Automatically when Batch Starting Date changes
+- Requires: Column C (Signup Date)
+- Updates: Automatically when Signup Date changes
 ```
 
 ### VLOOKUP Documentation (Minimal Example)
-### Column F: Batch Starting Date
+### Column F: Customer Signup Date
 
-**Purpose:** Inherit Batch Starting Date from Batch Data table
+**Purpose:** Inherit Signup Date from Customers table
 
-**Formula Location:** Student Data!F:F
+**Formula Location:** Orders!F:F
 **Type:** ARRAYFORMULA with VLOOKUP
-**Trigger:** Populates when Batch (Column B) is selected
+**Trigger:** Populates when Customer (Column B) is selected
 
 **Formula:**
 ```excel
 =ARRAYFORMULA(
     IF(
         ROW(B:B)=1,
-        "Batch Starting Date",
+        "Customer Signup Date",
         IF(
             ISBLANK(B:B),
             "",
-            VLOOKUP(B:B, 'Batch Data'!B:C, 2, FALSE)
+            VLOOKUP(B:B, 'Customers'!B:C, 2, FALSE)
         )
     )
 )
 
 **Dependencies:**
-- Requires: Column B (Batch) to be filled
-- Requires: Batch Data table with matching batch names
-- Updates: Automatically when Batch Data is updated
+- Requires: Column B (CustomerID) to be filled
+- Requires: Customers table with matching customer IDs
+- Updates: Automatically when Customers table is updated
 ```
 
 See [TEMPLATES.md](TEMPLATES.md) for complete templates with all fields.

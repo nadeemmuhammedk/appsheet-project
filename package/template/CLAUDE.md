@@ -100,7 +100,7 @@ See _APPSHEET_SYSTEM_BLUEPRINT.md Section 5 (Version Management System).
 
 **CHANGELOG Format:**
 - Use date + feature name (NOT "V3 - STABLE")
-- Example: `## 2026-01-29 - Attendance Overview Reporting`
+- Example: `## 2026-01-29 - This Is How You Name It`
 
 ## Reference Documentation
 
@@ -174,8 +174,8 @@ Apps Script follows standard JavaScript formatting conventions. Use tab characte
 
 Apply these in all work on this project:
 
-- **Tab names:** `snake_case` (e.g., `lead_interactions`, `dropdown_refs`)
-- **Column headers:** `PascalCase` (e.g., `LeadStatus`, `PhoneNumber`, `CreatedAt`)
+- **Tab names:** `snake_case` (e.g., `this_is_how_you_name`)
+- **Column headers:** `PascalCase` (e.g., `ThisIsHowYouName`)
 
 These apply when:
 - Creating or documenting new sheet tabs or columns
@@ -186,11 +186,12 @@ These apply when:
 
 Apply these in all work on this project:
 
-- **Slices:** `[source_table]_[Condition]` — snake_case source table name, then an underscore, then a Title_Case label for the row filter condition (e.g., `attendance_overview_Active_Batches` — sourced from `attendance_overview`, filtered to active batches). The name should make the slice's origin and purpose readable on sight.
+- **Slices:** `[source_table]_[Condition]` — snake_case source table name, then an underscore, then a Title_Case label for the row filter condition. The name should make the slice's origin and purpose readable on sight.
+- **Actions, Automations/Bots, and Bot Process steps:** `Title_Case_With_Underscores` (e.g., `This_Is_How_You_Name_It`) — each word capitalized, joined by underscores, no spaces. Use this for the Action Name / Automation Name / Process Name even when the action is user-visible; set the human-readable spaced label separately in the action's `Display name:` field rather than leaving spaces in the Action Name itself.
 
 These apply when:
-- Creating or documenting new AppSheet slices
-- Writing formula documentation that references slice names
+- Creating or documenting new AppSheet slices, actions, or automations/bots
+- Writing formula documentation that references slice, action, or automation names
 
 ## Claude Skills
 

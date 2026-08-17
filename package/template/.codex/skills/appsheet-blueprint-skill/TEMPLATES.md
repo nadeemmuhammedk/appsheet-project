@@ -100,10 +100,11 @@
 3. [All Views](#-all-views)
    - [View 1](#view-1-view-name)
    - [View 2](#view-2-view-name)
-4. [All Actions](#-all-actions)
-   - [Action 1](#action-1-action-name)
-   - [Action 2](#action-2-action-name)
-5. [Bot Automation](#-bot-automation) (if applicable)
+4. [Actions](#-actions)
+   - [Action Name](#action-action-name)
+   - [Another Action Name](#action-another-action-name)
+5. [Bot Automation](#-bot-automation) (if any automations exist)
+   - [Automation Name](#automation-automation-name)
 
 ---
 
@@ -120,7 +121,7 @@
 - Replace spaces with hyphens
 - Remove special characters except hyphens
 - Keep emoji codes as-is (e.g., `#-system-overview` for "### 📋 SYSTEM OVERVIEW")
-- Numbers preserved (e.g., `#1-student-data-table` for "#### 1. Student Data Table")
+- Numbers preserved (e.g., `#1-orders-table` for "#### 1. Orders Table")
 
 ---
 
@@ -235,32 +236,141 @@ AppSheet Configuration:
 
 ### Action Documentation Template
 
+Every action shares the same footer — `Position`, `Display`, `Behavior`, `Documentation` — mirroring the AppSheet action editor's own sections. What differs is the body between `Do this:` and that footer, which depends on the action's behavior type. Pick the variant below that matches; don't include fields from other variants.
 
-**Action: [Name]**
+**Common footer (append to every variant):**
+
+```appsheet
+Position: Hide/Inline/Display overlay icon/Display prominently
+
+Display:
+  Display name: [text, or N/A — falls back to Action Name]
+  Icon: [icon name, or N/A]
+
+Behavior:
+  Only if this condition is true: [Formula determining when the action appears/is allowed to run, or TRUE]
+  Needs confirmation?: Yes/No
+  Confirmation message: [text, or N/A]
+
+Documentation:
+  Descriptive comment: [optional note for collaborators, or N/A]
+```
+
+**Variant A — Add a new row to another table:**
 
 ```appsheet
 Action Name: [Name]
 For a record of this table: [Table Name]
-Do this:
-  - Data: add a new row to another table using values from this row
-  OR
-  - Data: set the values of some columns in this row
-  OR
-  - App: go to another view within this app
 
-Referenced Rows:
-  Table: [Target Table]
-  Referenced Action: [Action to trigger or "Add"]
+Do this: Data: add a new row to another table using values from this row
+
+Table to add to: [Target Table]
 
 Column values to set:
   [Column 1]: [Value or formula]
   [Column 2]: [Value or formula]
 
-SHOW IF: [Formula determining when action appears]
-Display prominently: Yes/No
-Icon: [Icon name]
-Description: "[User-facing description]"
+[+ common footer]
 ```
+
+**Variant B — Set column values on this row:**
+
+```appsheet
+Action Name: [Name]
+For a record of this table: [Table Name]
+
+Do this: Data: set the values of some columns in this row
+
+Column values to set:
+  [Column 1]: [Value or formula]
+  [Column 2]: [Value or formula]
+
+[+ common footer]
+```
+
+**Variant C — Delete this row:**
+
+```appsheet
+Action Name: [Name]
+For a record of this table: [Table Name]
+
+Do this: Data: delete this row
+
+[+ common footer]
+```
+
+**Variant D — Navigate to another view:**
+
+```appsheet
+Action Name: [Name]
+For a record of this table: [Table Name]
+
+Do this: App: go to another view within this app
+
+Target: [LINKTOVIEW(...) or LINKTOFORM(...) formula]
+
+[+ common footer]
+```
+
+**Variant E — Execute an action on a set of rows (grouped/referenced-rows):**
+
+```appsheet
+Action Name: [Name]
+For a record of this table: [Table Name]
+
+Do this: Data: execute an action on a set of rows
+
+Referenced Table: [Target Table]
+Referenced Rows: [Formula returning a list of keys, e.g. SELECT(...)]
+Referenced Action: [Action name to run against each referenced row]
+
+[+ common footer]
+```
+
+Use Variant E only for a standalone action (outside a bot) that needs to run another action across a set of rows. Inside a bot Process step, the equivalent fields belong to the Automation template below instead — don't document the same referenced-rows logic in both places.
+
+### Automation (Bot) Documentation Template
+
+An automation reacts to a data-change event on one table and then runs one or more Process steps, in order. A Process references an existing Action by name rather than repeating that action's definition — the same cross-reference principle used for Slices referencing their source table. Document the action once under the Action Documentation Template above, then point to it here by name.
+
+**Automation: [Name]**
+
+```appsheet
+Automation Name: [Name]
+
+Event:
+  Event Name: [Name]
+  Event Source: App/Schedule
+  Table: [Table Name]
+  Data change types:
+    Adds: Yes/No
+    Updates: Yes/No
+    Deletes: Yes/No
+  Condition: [Formula, or N/A — runs on every matching change type]
+  Bypass Security Filters?: Yes/No
+
+Process 1: [Process Name]
+  Run a data action (Custom action)
+  Add new rows: Yes/No
+  Delete rows: Yes/No
+  Set row values: Yes/No
+  Run action on rows: Yes/No
+  Grouped actions: Yes/No
+  Referenced Table: [Table Name]
+  Referenced rows: [Formula returning a list of keys, e.g. SELECT(...) or LIST([_THISROW])]
+  Referenced Action: [Action name — must already be documented under Actions]
+
+Process 2: [Process Name]
+  [... same shape as Process 1, numbered in execution order]
+
+Documentation:
+  Descriptive comment: [optional note for collaborators, or N/A]
+```
+
+**Notes:**
+- Number Processes in execution order — they run sequentially, and a later Process may depend on an earlier one having completed first (e.g. deleting an original row only after replacement rows exist).
+- `Condition` is evaluated once against the triggering row before any Process runs; if false, no Process executes.
+- The Process body above covers the "Run a data action (Custom action)" step type — the only one used in this project so far. Other AppSheet step types (Run a task, Call a webhook, Send an email, Execute a Google Script) follow the same `Process N: [Process Name]` wrapper but with their own fields; add a variant here if/when one is actually used rather than guessing its shape in advance.
 
 ### View Documentation Template
 
@@ -535,7 +645,7 @@ When responding to a documentation request:
 
 #### Example 2: Automatic Invocation (NO USER REQUEST)
 
-**User:** "Create a Students table with Name, Email, and BatchID columns"
+**User:** "Create an Orders table with CustomerName, Email, and RepID columns"
 
 **Claude thinks:** Need to document this table with complete schema
 
@@ -543,16 +653,16 @@ When responding to a documentation request:
 1. Uses templates from TEMPLATES.md in this skill
 2. Generates complete table documentation with ALL fields:
    - Table-level settings (Updates, Adds, Deletes, Security)
-   - Column A: Name (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE, Description)
+   - Column A: CustomerName (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE, Description)
    - Column B: Email (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE, Description)
-   - Column C: BatchID (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE, Description)
+   - Column C: RepID (Type, Key, Initial Value, VALID_IF, EDITABLE, SHOW, REQUIRE, Description)
 3. Writes to `docs/formulas/appsheet_formulas.md` following blueprint format
 
 **User sees:** Complete, properly formatted table documentation with ALL required fields
 
 #### Example 3: Automatic Invocation for Views
 
-**User:** "Add documentation for the Students Deck view"
+**User:** "Add documentation for the Orders Deck view"
 
 **Claude thinks:** Need complete view documentation template
 
@@ -570,7 +680,7 @@ When responding to a documentation request:
 
 #### Example 4: Automatic Invocation for Actions
 
-**User:** "Document the Mark Present action"
+**User:** "Document the Mark Shipped action"
 
 **Claude thinks:** Need complete action documentation template
 
@@ -578,11 +688,9 @@ When responding to a documentation request:
 1. Uses templates from TEMPLATES.md in this skill action template
 2. Generates complete action documentation:
    - Action Name, For a record of this table
-   - Do this (behavior type)
-   - Referenced Rows (if applicable)
-   - Column values to set
-   - SHOW IF formula
-   - Display prominently, Icon, Description
+   - Do this (behavior type) — picks the matching variant (add row / set columns / delete / navigate / execute on row set)
+   - Variant-specific fields (e.g. Column values to set, Target, or Referenced Table/Rows)
+   - Position, Display (Display name, Icon), Behavior (Only if this condition is true, Needs confirmation?), Documentation
 
 **User sees:** Complete action documentation with all fields
 
@@ -592,6 +700,7 @@ When responding to a documentation request:
 ✅ Table schema documentation templates (all AppSheet config fields)
 ✅ View documentation templates (all settings and security)
 ✅ Action documentation templates (behavior, conditions, icons)
+✅ Automation/Bot documentation templates (event + process configuration)
 ✅ Security documentation templates (table-level + row-level)
 ✅ Enum documentation templates
 ✅ Documentation completeness verification

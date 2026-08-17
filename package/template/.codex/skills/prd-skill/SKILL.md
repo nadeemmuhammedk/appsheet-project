@@ -24,7 +24,7 @@ Create and maintain Product Requirements Documents (PRD) following a standardize
 - User asks to document product scope, features, or success metrics
 
 **Example triggers**:
-- "Let's start a new project for student attendance tracking" → Create initial PRD
+- "Let's start a new project for order tracking" → Create initial PRD
 - "Update the PRD with new features" → Update existing PRD
 - "What should be in our requirements document?" → Guide user through PRD creation
 - User starts describing product goals and features → Suggest creating PRD
@@ -180,7 +180,7 @@ Update the PRD when:
 ## Examples
 
 See [EXAMPLES.md](EXAMPLES.md) for:
-- Complete PRD example (student management system)
+- Complete PRD example (order management system)
 - Before/after examples of good vs bad PRDs
 - How to handle common scenarios (feature requests, scope changes, etc.)
 - Integration with other documentation (_APPSHEET_SYSTEM_BLUEPRINT.md, formulas files)

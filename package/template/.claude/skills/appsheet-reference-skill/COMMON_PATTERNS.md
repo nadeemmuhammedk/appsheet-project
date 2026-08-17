@@ -12,9 +12,9 @@
    ```
    To filter by current user:
 
-   SELECT(Students[StudentID], [Email] = USEREMAIL())
+   SELECT(Reps[RepID], [Email] = USEREMAIL())
 
-   This filters the Students table to show only rows where the Email column
+   This filters the Reps table to show only rows where the Email column
    matches the current user's email.
 
    Pattern:
@@ -29,7 +29,7 @@
 
 #### Example 2: Automatic Invocation (NO USER REQUEST)
 
-**User:** "Add a deck view that shows students from the current user's batch"
+**User:** "Add a deck view that shows orders assigned to the current user's rep account"
 
 **Claude thinks:** This requires deck view configuration + SELECT filtering + security pattern
 
@@ -43,7 +43,7 @@
 
 #### Example 3: Automatic Invocation for Actions
 
-**User:** "Create an action to mark students as present"
+**User:** "Create an action to mark orders as shipped"
 
 **Claude thinks:** This requires action configuration + data operation pattern
 

@@ -4,16 +4,16 @@ This file contains examples of how to use the PRD skill effectively, including c
 
 ---
 
-## Example 1: Complete PRD for Student Management System
+## Example 1: Complete PRD for Order Management System
 
-This is a complete example of a well-written PRD for a student management application.
+This is a complete example of a well-written PRD for an order management application.
 
 # Product Requirements Document (PRD)
 
-**Project Name:** [Institution Name] Student Management System
+**Project Name:** [Company Name] Order Management System
 **Version:** 1.0.0
 **Date:** 2026-01-20
-**Owner:** Institute Administrator
+**Owner:** Operations Manager
 **Status:** Approved
 
 ---
@@ -21,71 +21,71 @@ This is a complete example of a well-written PRD for a student management applic
 ## 1. Purpose & Problem Statement
 
 **What problem are we solving?**
-The institution currently manages student data, attendance, and fee payments using manual spreadsheets and paper records across their main campus. This leads to:
+The business currently manages customer orders, order status updates, and payment tracking using manual spreadsheets and paper order forms across a single sales office. This leads to:
 - Data inconsistencies and errors
 - Time-consuming manual data entry
-- Difficulty tracking student attendance patterns
-- Delayed fee payment processing
-- No real-time visibility for administrators
+- Difficulty tracking order status in real time
+- Delayed payment and invoice reconciliation
+- No real-time visibility for managers
 
 **Why is this important?**
-Streamlining student data management will:
+Streamlining order data management will:
 - Reduce administrative overhead by 60%
 - Improve data accuracy and consistency
 - Enable real-time reporting for decision-making
-- Enhance parent/student communication
-- Support regulatory compliance for attendance tracking
+- Enhance customer communication
+- Support accurate revenue reporting
 
 **Who is this for?**
-Primary users: Institute administrators, instructors, and front desk staff at the educational institution.
+Primary users: Sales reps, order fulfillment staff, and the sales manager at the business.
 
 ---
 
 ## 2. Target Audience & User Personas
 
 **Primary Users:**
-- **Admin Staff** - Front desk and administrative personnel
-  - Pain Points: Manual data entry, difficulty finding student records, tracking fee payments
-  - Goals: Quick student enrollment, easy attendance marking, streamlined fee collection
+- **Sales Reps** - Front-line staff who take and manage customer orders
+  - Pain Points: Manual data entry, difficulty finding customer records, tracking payment status
+  - Goals: Quick order entry, easy status updates, streamlined payment tracking
 
-- **Instructors** - Teaching staff
-  - Pain Points: Paper-based attendance, no visibility into student progress
-  - Goals: Quick attendance marking, view class rosters, track student participation
+- **Fulfillment Staff** - Warehouse/shipping staff
+  - Pain Points: Paper-based status tracking, no visibility into order backlog
+  - Goals: Quick status updates, view order queues, track shipment progress
 
-- **Branch Manager** - Institute management
+- **Sales Manager** - Business management
   - Pain Points: Lack of real-time reporting, manual report generation
-  - Goals: Monitor attendance trends, track revenue, make data-driven decisions
+  - Goals: Monitor order pipeline, track revenue, make data-driven decisions
 
 **Secondary Users:**
-- Students (view-only access to their records)
-- Parents (future: receive attendance notifications)
+- Customers (view-only access to their own order status)
+- Business Owner (future: receive revenue and cancellation notifications)
 
 ---
 
 ## 3. Features & Functionality
 
 ### Must-Have Features (MVP)
-1. **Student Enrollment** - Register new students with personal details, course enrollment, and batch assignment
-2. **Attendance Tracking** - Mark daily attendance for each batch with Present/Absent/Leave status
-3. **Fee Payment Management** - Record fee payments, track outstanding balances, generate receipts
-4. **Batch Management** - Create and manage batches (course, schedule, instructor assignment)
-5. **Basic Reporting** - View attendance summaries, fee collection reports, student lists
+1. **Order Intake** - Register new orders with customer details, ordered items, and initial status
+2. **Order Status Tracking** - Update each order's status through the pipeline (Pending, Processing, Shipped, Delivered, Cancelled)
+3. **Payment & Invoice Management** - Record payments, track outstanding balances, generate invoices
+4. **Rep Assignment** - Assign orders to sales reps and manage rep workload
+5. **Basic Reporting** - View order status summaries, revenue reports, customer order history
 
 ### Should-Have Features
-1. **SMS/Email Notifications** - Auto-notify parents for absences or fee reminders
-2. **Certificate Generation** - Generate course completion certificates
-3. **Student Progress Tracking** - Record test scores and assignment completion
+1. **SMS/Email Notifications** - Auto-notify customers on status changes or payment reminders
+2. **Automated Rep Notification** - Automatically notify the assigned rep when one of their orders is cancelled
+3. **Order History Tracking** - Record order revisions and fulfillment timeline per order
 
 ### Could-Have Features (Future)
-1. **Parent Portal** - Web access for parents to view student records
-2. **Mobile App** - Native mobile app for instructors to mark attendance
-3. **Advanced Analytics** - Predictive analytics for dropout risk, performance trends
+1. **Customer Portal** - Web access for customers to view their own order status
+2. **Mobile App** - Native mobile app for reps to manage orders on the go
+3. **Advanced Analytics** - Predictive analytics for reorder likelihood, customer churn risk
 
 ### Won't-Have (Out of Scope)
 - Online payment gateway integration (manual payment entry only)
-- Learning management system (LMS) features
-- Video conferencing integration
-- Multi-branch support (single location deployment only)
+- Full CRM feature set (lead scoring, marketing automation)
+- Inventory/warehouse management integration
+- Multi-warehouse support (single location deployment only)
 
 ---
 
@@ -96,15 +96,15 @@ Primary users: Institute administrators, instructors, and front desk staff at th
 | Metric | Target | Measurement Method |
 |--------|--------|-------------------|
 | Data Entry Time Reduction | 60% reduction vs. manual | Time study (before/after) |
-| Daily Attendance Completion | 100% by 10 AM | AppSheet timestamp logs |
-| Fee Collection Accuracy | 99.5% accuracy | Monthly audit comparison |
+| Daily Order Status Updates Completion | 100% by end of business day | AppSheet timestamp logs |
+| Payment/Invoice Accuracy | 99.5% accuracy | Monthly audit comparison |
 | User Adoption Rate | 95% of staff using daily | AppSheet usage analytics |
 | Report Generation Time | < 2 minutes per report | User surveys |
 
 **Release Criteria:**
 - [ ] All Must-Have features implemented and tested
-- [ ] Performance supports 500+ student records with < 2 sec load time
-- [ ] 3 admin staff trained and able to use independently
+- [ ] Performance supports 500+ order records with < 2 sec load time
+- [ ] 3 sales reps trained and able to use independently
 - [ ] Data migration from existing spreadsheets complete with 100% accuracy
 - [ ] Backup and recovery procedures documented
 
@@ -112,20 +112,20 @@ Primary users: Institute administrators, instructors, and front desk staff at th
 
 ## 5. User Flow (High-Level)
 
-**Primary User Journey (Admin enrolling a new student):**
-1. Admin opens "Students" view in AppSheet
-2. Admin clicks "Add New Student" button
-3. Admin enters student details (name, contact, course, batch)
-4. System auto-generates unique Student ID
-5. Admin saves record
-6. Result: Student is enrolled and appears in batch roster
+**Primary User Journey (Rep creating a new order):**
+1. Rep opens "Orders" view in AppSheet
+2. Rep clicks "Add New Order" button
+3. Rep enters order details (customer, items, quantity, initial status)
+4. System auto-generates unique Order ID
+5. Rep saves record
+6. Result: Order is created and appears in the rep's order queue
 
-**Instructor marking attendance:**
-1. Instructor opens "Attendance" view
-2. Selects batch and date
-3. Marks each student as Present/Absent/Leave
-4. Saves attendance record
-5. Result: Attendance is recorded and visible in reports
+**Fulfillment staff updating order status:**
+1. Fulfillment staff opens "Orders Deck" view
+2. Selects an order
+3. Updates status (e.g., runs "Mark Shipped" action to move status to Shipped)
+4. Saves the updated record
+5. Result: Status change is recorded and visible in reports; customer notification is triggered if configured
 
 ---
 
@@ -146,12 +146,12 @@ Google Sheets (cloud-based spreadsheet)
 - Response time: < 2 seconds for data entry forms
 - Concurrent users: Support 10 simultaneous users
 - Uptime: 99% availability (dependent on Google infrastructure)
-- Data capacity: Support 500+ students, 50+ batches, 10,000+ attendance records
+- Data capacity: Support 500+ orders, 200+ customers, 10 reps
 
 **Access Requirements:**
 - Mobile access (Android/iOS via AppSheet mobile app)
-- Offline mode for attendance marking (sync when online)
-- Role-based access control (Admin, Instructor, View-Only)
+- Offline mode for order status updates (sync when online)
+- Role-based access control (Manager, Rep, View-Only)
 
 ---
 
@@ -159,15 +159,15 @@ Google Sheets (cloud-based spreadsheet)
 
 **Assumptions:**
 - All users have smartphones with internet access
-- Google Workspace account is available for the institute
+- Google Workspace account is available for the business
 - Staff are familiar with basic mobile app usage
-- Existing student data can be cleaned and migrated
+- Existing order data can be cleaned and migrated
 
 **Constraints:**
 - No budget for custom development (must use AppSheet no-code platform)
-- Must work offline (limited internet connectivity in classrooms)
+- Must work offline (limited internet connectivity in the warehouse)
 - Must integrate with existing Google Sheets workflows
-- No dedicated IT support (system must be maintainable by admin staff)
+- No dedicated IT support (system must be maintainable by office staff)
 
 ---
 
@@ -177,14 +177,14 @@ Google Sheets (cloud-based spreadsheet)
 | Risk | Impact | Probability | Mitigation |
 |------|--------|------------|------------|
 | Low user adoption due to technology resistance | High | Medium | Comprehensive training, phased rollout, ongoing support |
-| Data migration errors from legacy spreadsheets | High | Medium | Pilot with 50 students first, thorough validation checks |
+| Data migration errors from legacy spreadsheets | High | Medium | Pilot with 50 orders first, thorough validation checks |
 | AppSheet platform limitations or cost increases | Medium | Low | Document workarounds, maintain Google Sheets backup |
 | Internet connectivity issues affecting usage | Medium | Medium | Enable offline mode, train users on sync procedures |
 
 **Dependencies:**
 - Google Workspace account approval and setup
-- Existing student data cleanup (estimated 2 weeks)
-- Admin staff availability for training (3 days minimum)
+- Existing order data cleanup (estimated 2 weeks)
+- Sales rep availability for training (3 days minimum)
 - Management approval for process changes
 
 ---
@@ -197,8 +197,8 @@ Google Sheets (cloud-based spreadsheet)
 | AppSheet App Prototype | 2026-02-01 | In Progress |
 | Data Migration Complete | 2026-02-15 | Planned |
 | User Training Complete | 2026-02-20 | Planned |
-| Pilot Launch (50 students) | 2026-02-25 | Planned |
-| Full Launch (All students) | 2026-03-10 | Planned |
+| Pilot Launch (50 orders) | 2026-02-25 | Planned |
+| Full Launch (All orders) | 2026-03-10 | Planned |
 
 ---
 
@@ -206,8 +206,8 @@ Google Sheets (cloud-based spreadsheet)
 
 | Stakeholder | Role | Approval Date | Signature/Status |
 |-------------|------|---------------|------------------|
-| Sarah Martinez | Branch Manager | 2026-01-20 | ✓ Approved |
-| Alex Johnson | Admin Lead | 2026-01-20 | ✓ Approved |
+| Sarah Martinez | Sales Manager | 2026-01-20 | ✓ Approved |
+| Alex Johnson | Ops Lead | 2026-01-20 | ✓ Approved |
 | Michael Chen | Technical Consultant | 2026-01-20 | ✓ Approved |
 
 ---
@@ -215,8 +215,8 @@ Google Sheets (cloud-based spreadsheet)
 ## 11. Open Questions & Decisions Needed
 
 - [x] Which SMS gateway to use for notifications? (Decision: Deferred to Phase 2)
-- [ ] Should parents have app access or web-only? (Decision needed by 2026-02-05)
-- [ ] How to handle student transfers between batches? (Needs input from Admin Lead)
+- [ ] Should customers have app access or web-only? (Decision needed by 2026-02-05)
+- [ ] How to handle order reassignment between reps? (Needs input from Ops Lead)
 
 ---
 
@@ -244,10 +244,10 @@ Google Sheets (cloud-based spreadsheet)
 ## 1. Purpose & Problem Statement
 
 **What problem are we solving?**
-We need to improve student management and make things more efficient.
+We need to improve order management and make things more efficient.
 
 **Why is this important?**
-Because it will help the institute.
+Because it will help the business.
 
 **Problems:**
 - No specific pain points identified
@@ -259,16 +259,16 @@ Because it will help the institute.
 ## 1. Purpose & Problem Statement
 
 **What problem are we solving?**
-The institution currently manages 300+ students using manual spreadsheets, causing:
-- 5+ hours/week spent on manual attendance compilation
-- 15% error rate in fee payment tracking
-- 2-3 day delay in generating attendance reports
+The business currently manages 300+ orders/month using manual spreadsheets, causing:
+- 5+ hours/week spent on manual status compilation
+- 15% error rate in payment/invoice tracking
+- 2-3 day delay in generating order status reports
 
 **Why is this important?**
-Automating student data management will:
+Automating order data management will:
 - Reduce administrative overhead by 60% (save 20 hours/week)
-- Eliminate fee tracking errors, preventing ₹50,000+ annual revenue leakage
-- Enable real-time reporting for regulatory compliance
+- Eliminate payment tracking errors, preventing $50,000+ annual revenue leakage
+- Enable real-time reporting for accurate revenue forecasting
 
 **Why it's good:**
 - Specific, measurable problems
@@ -279,13 +279,13 @@ Automating student data management will:
 
 ## Example 3: Handling Feature Requests
 
-**Scenario:** During implementation, a stakeholder requests a new feature: "Can we add a parent mobile app?"
+**Scenario:** During implementation, a stakeholder requests a new feature: "Can we add a customer-facing order tracking portal?"
 
 **Decision Process:**
 
 1. **Evaluate against PRD scope**
    - Is it Must-Have for MVP? NO
-   - Does it align with user personas? PARTIALLY (parents are secondary users)
+   - Does it align with user personas? PARTIALLY (customers are secondary users)
    - Does it impact timeline/budget? YES (significant)
 
 2. **Document in PRD**
@@ -298,7 +298,7 @@ Automating student data management will:
    | Version | Date | Author | Changes |
    |---------|------|--------|---------|
    | 1.0.0 | 2026-01-20 | [Author Name] | Initial PRD |
-   | 1.1.0 | 2026-02-10 | [Author Name] | Added parent mobile app to Could-Have (deferred to Phase 2) |
+   | 1.1.0 | 2026-02-10 | [Author Name] | Added customer portal to Could-Have (deferred to Phase 2) |
 
 ---
 
@@ -307,23 +307,23 @@ Automating student data management will:
 **PRD says WHAT:**
 
 ### Must-Have Features (MVP)
-1. **Attendance Tracking** - Mark daily attendance for each batch with Present/Absent/Leave status
+1. **Order Status Tracking** - Update each order's status through the pipeline (Pending, Processing, Shipped, Delivered, Cancelled)
 
 **Technical docs say HOW:**
 
 In `docs/formulas/appsheet_formulas.md`:
 
-#### Attendance Table
+#### Orders Table
 
 **Column: Status**
 ```appsheet
 Column Name: Status
 Type: Enum
-VALID_IF: LIST("Present", "Absent", "Leave")
+VALID_IF: LIST("Pending", "Processing", "Shipped", "Delivered", "Cancelled")
 EDITABLE: TRUE
 SHOW IF: TRUE
 REQUIRE: YES
-Description: "Student attendance status for the day"
+Description: "Current fulfillment status of the order"
 ```
 
 **Key Principle:** PRD defines business requirements, technical docs define implementation.
@@ -335,36 +335,36 @@ Description: "Student attendance status for the day"
 ### ❌ BAD: Everything is Must-Have
 
 ### Must-Have Features (MVP)
-1. Student enrollment
-2. Attendance tracking
-3. Fee payments
+1. Order intake
+2. Order status tracking
+3. Payment management
 4. SMS notifications
 5. Email notifications
-6. Certificate generation
-7. Parent portal
-8. Mobile app for instructors
+6. Automated rep notifications
+7. Customer portal
+8. Mobile app for reps
 9. Advanced analytics
-10. Performance tracking
+10. Revenue tracking
 
 **Problem:** No real prioritization, scope creep, unrealistic MVP
 
 ### ✅ GOOD: Clear Prioritization
 
 ### Must-Have Features (MVP)
-1. **Student Enrollment** - Core functionality, can't track students without it
-2. **Attendance Tracking** - Primary use case, regulatory requirement
-3. **Fee Payment Management** - Critical for revenue tracking
+1. **Order Intake** - Core functionality, can't track orders without it
+2. **Order Status Tracking** - Primary use case, needed for fulfillment
+3. **Payment & Invoice Management** - Critical for revenue tracking
 
 ### Should-Have Features
 1. **SMS Notifications** - High value but can be manual initially
-2. **Certificate Generation** - Important but lower frequency
+2. **Automated Rep Notification** - Important but lower frequency (only on cancellations)
 
 ### Could-Have Features (Future)
-1. **Parent Portal** - Nice to have, not critical for staff workflows
+1. **Customer Portal** - Nice to have, not critical for staff workflows
 2. **Advanced Analytics** - Valuable for insights, not core operations
 
 ### Won't-Have (Out of Scope)
-- Multi-branch support (single location only for MVP)
+- Multi-warehouse support (single location only for MVP)
 - Online payment gateway (manual entry sufficient)
 
 **Why it's good:**
@@ -378,7 +378,7 @@ Description: "Student attendance status for the day"
 
 ### Scenario 1: Starting a New Project
 
-**User says:** "I want to build a student attendance app"
+**User says:** "I want to build an order tracking app"
 
 **Claude should:**
 1. Invoke `/prd-skill` automatically
@@ -405,7 +405,7 @@ Description: "Student attendance status for the day"
 
 ### Scenario 3: Scope Creep Management
 
-**User says:** "Can we also add learning management system features?"
+**User says:** "Can we also add full CRM features?"
 
 **Claude should:**
 1. Read PRD to check current scope
@@ -459,15 +459,15 @@ Use this checklist before finalizing a PRD:
 ## 3. Features & Functionality
 
 ### V1 Features (MVP)
-1. Student enrollment
-2. Attendance tracking
+1. Order intake
+2. Order status tracking
 
 ### V2 Features (Phase 2)
 1. SMS notifications
-2. Certificate generation
+2. Automated rep notifications
 
 ### V3 Features (Future)
-1. Parent portal
+1. Customer portal
 
 **Why it's wrong:** PRD version ≠ Application version. Use MoSCoW prioritization instead.
 
@@ -476,33 +476,33 @@ Use this checklist before finalizing a PRD:
 ## 3. Features & Functionality
 
 ### Must-Have Features (MVP)
-1. Student enrollment
-2. Attendance tracking
+1. Order intake
+2. Order status tracking
 
 ### Should-Have Features
 1. SMS notifications
-2. Certificate generation
+2. Automated rep notifications
 
 ### Could-Have Features (Future)
-1. Parent portal
+1. Customer portal
 
 ### ❌ Too Much Technical Detail
 
 **WRONG:**
 
 ### Must-Have Features (MVP)
-1. **Student Enrollment** - Create a "Students" table in Google Sheets with columns:
-   - StudentID (UNIQUEID() formula)
-   - Name (Type: Text, REQUIRE: TRUE)
-   - Enrollment Date (Type: Date, Initial Value: TODAY())
-   - Batch (Type: Ref to Batches, VALID_IF: SELECT(Batches[BatchID], [Active]=TRUE))
+1. **Order Intake** - Create an "Orders" table in Google Sheets with columns:
+   - OrderID (UNIQUEID() formula)
+   - CustomerID (Type: Ref to Customers, REQUIRE: TRUE)
+   - Status (Type: Enum, VALID_IF: LIST("Pending", "Processing", "Shipped", "Delivered", "Cancelled"))
+   - RepID (Type: Ref to Reps, VALID_IF: SELECT(Reps[RepID], [Active]=TRUE))
 
 **Why it's wrong:** This is implementation detail, belongs in technical docs.
 
 **CORRECT:**
 
 ### Must-Have Features (MVP)
-1. **Student Enrollment** - Register new students with personal details, course enrollment, and batch assignment. System should auto-generate unique student IDs and validate batch capacity.
+1. **Order Intake** - Register new orders with customer details, ordered items, and rep assignment. System should auto-generate unique order IDs and validate rep availability.
 
 ---
 

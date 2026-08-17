@@ -22,7 +22,7 @@ Quick access to AppSheet formula syntax, view configurations, action patterns, a
 - User asks "how to" questions about AppSheet functionality
 
 **Example triggers**:
-- "Add a view for students" → Auto-read view documentation
+- "Add a view for orders" → Auto-read view documentation
 - "Filter by current user" → Auto-read SELECT and security patterns
 - "Create an action to update status" → Auto-read action patterns
 - "Show field only if status is Pending" → Auto-read conditional logic
@@ -106,7 +106,7 @@ Give the user:
 
 ### Filter by Current User
 ```appsheet
-SELECT(Students[StudentID], [Email] = USEREMAIL())
+SELECT(Reps[RepID], [Email] = USEREMAIL())
 ```
 Source: [list-and-select](../../_APPSHEET-DOCUMENTATION/formulas-reference/list-and-select/LIST_AND_SELECT.md), [security-filters](../../_APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md)
 
@@ -124,13 +124,13 @@ Source: [data-validity-constraints](../../_APPSHEET-DOCUMENTATION/rules-and-logi
 
 ### Action with Referenced Rows
 ```appsheet
-Referenced Rows: SELECT(Attendance[AttendanceID], [StudentID] = [_THISROW].[StudentID])
+Referenced Rows: SELECT(Orders[OrderID], [CustomerID] = [_THISROW].[CustomerID])
 ```
 Source: [actions](../../_APPSHEET-DOCUMENTATION/rules-and-logic/actions/ACTIONS.md)
 
 ### Row-Level Security
 ```appsheet
-Security Filter: [BatchID] = LOOKUP(USEREMAIL(), "Users", "Email", "BatchID")
+Security Filter: [RepID] = LOOKUP(USEREMAIL(), "Reps", "Email", "RepID")
 ```
 Source: [security-filters](../../_APPSHEET-DOCUMENTATION/rules-and-logic/security-filters/SECURITY_FILTERS.md)
 

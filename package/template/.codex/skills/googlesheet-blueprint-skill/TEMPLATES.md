@@ -437,7 +437,7 @@
 
 ### Update Order
 
-When modifying batch data:
+When modifying order data:
 1. Update [Source Column] first
 2. [Dependent Formula 1] recalculates automatically
 3. [Dependent Formula 2] uses result from Formula 1

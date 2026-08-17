@@ -269,24 +269,6 @@ The active file maintains a **complete, cumulative view of the current applicati
 
 ---
 
-## 📋 Metadata
-
-**Blueprint Version:** 1.0
-**Created:** October 28, 2025
-**Last Updated:** October 28, 2025
-**Compatible With:**
-- AppSheet (all versions)
-- Google Sheets (all versions)
-- Google Apps Script (V8 runtime)
-- Looker Studio (all versions)
-
-**Maintained By:** Loonyheads AppSheet Team
-
-**Changelog:**
-- **v1.0** (2025-10-28): Initial blueprint creation based on SM Total Overdose project
-
----
-
 ## 🔗 Related Resources
 
 ### Official Documentation
