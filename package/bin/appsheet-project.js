@@ -102,16 +102,50 @@ function writeInstalledVersion() {
 
 /**
  * Get list of system paths that should be updated
+ * (AGENTS.md is not listed here — it is generated from CLAUDE.md, not copied)
  */
 function getSystemPaths() {
   return [
     '.claude',
     '.codex',
     '_APPSHEET-DOCUMENTATION',
-    'AGENTS.md',
     '_APPSHEET_SYSTEM_BLUEPRINT.md',
     'CLAUDE.md'
   ];
+}
+
+/**
+ * Transform CLAUDE.md content into AGENTS.md content.
+ * CLAUDE.md is the single source of truth; AGENTS.md is derived from it
+ * so the two never drift out of sync.
+ */
+function generateAgentsMdContent(claudeContent) {
+	return claudeContent
+		.replace(/^# CLAUDE\.md/, '# AGENTS.md')
+		.replace(
+			'This file provides guidance to Claude Code when working with this repository.',
+			'This file provides guidance to AI Agents when working with this repository.'
+		)
+		.replace(/\.claude\/skills\//g, '.codex/skills/')
+		.replace('## Claude Skills', '## AGENT Skills')
+		.replace('specialized Claude skills', 'specialized AGENT skills');
+}
+
+/**
+ * Write AGENTS.md into targetDir, derived from the CLAUDE.md already there.
+ * Returns false (no-op) if CLAUDE.md hasn't been written yet.
+ */
+function generateAgentsFile(targetDir) {
+	const claudePath = path.join(targetDir, 'CLAUDE.md');
+	const agentsPath = path.join(targetDir, 'AGENTS.md');
+
+	if (!fs.existsSync(claudePath)) {
+		return false;
+	}
+
+	const claudeContent = fs.readFileSync(claudePath, 'utf8');
+	fs.writeFileSync(agentsPath, generateAgentsMdContent(claudeContent), 'utf8');
+	return true;
 }
 
 /**
@@ -164,7 +198,7 @@ function showInstallPreview() {
   console.log(`  ${colors.cyan}•${colors.reset} README.md                      - Main project documentation`);
   console.log(`  ${colors.cyan}•${colors.reset} CHANGELOG.md                   - Version history tracker`);
   console.log(`  ${colors.cyan}•${colors.reset} CLAUDE.md                      - Claude Code guidance`);
-  console.log(`  ${colors.cyan}•${colors.reset} AGENTS.md                      - Agent documentation`);
+  console.log(`  ${colors.cyan}•${colors.reset} AGENTS.md                      - Agent documentation (generated from CLAUDE.md)`);
   console.log(`  ${colors.cyan}•${colors.reset} _APPSHEET_SYSTEM_BLUEPRINT.md  - System template & blueprint`);
   console.log('');
 
@@ -230,6 +264,10 @@ async function initProject() {
         fileCount++;
       }
     }
+
+    console.log(`${colors.green}✓${colors.reset} ${colors.bright}AGENTS.md${colors.reset} ${colors.dim}(generated from CLAUDE.md)${colors.reset}`);
+    generateAgentsFile(targetDir);
+    fileCount++;
 
     writeInstalledVersion();
 
@@ -305,6 +343,7 @@ function showUpdatePreview(systemPaths) {
       console.log(`  ${colors.yellow}•${colors.reset} ${colors.bright}${itemPath}${colors.reset}`);
     }
   }
+  console.log(`  ${colors.yellow}•${colors.reset} ${colors.bright}AGENTS.md${colors.reset} ${colors.dim}(regenerated from CLAUDE.md)${colors.reset}`);
 
   console.log('');
   console.log(`${colors.bright}${colors.yellow}⚠ Warning:${colors.reset} ${colors.yellow}System files will be overwritten.${colors.reset}`);
@@ -441,6 +480,11 @@ async function updateProject() {
   // Step 5: Perform update
   try {
     copySystemFiles(systemPaths);
+
+    console.log(`${colors.green}✓${colors.reset} ${colors.bright}AGENTS.md${colors.reset} ${colors.dim}(regenerated from CLAUDE.md)${colors.reset}`);
+    generateAgentsFile(process.cwd());
+    console.log('');
+
     writeInstalledVersion();
 
     // Step 6: Show success message
@@ -517,7 +561,7 @@ function showHelp() {
   console.log(`  ${colors.cyan}README.md${colors.reset}                     - Main documentation`);
   console.log(`  ${colors.cyan}CHANGELOG.md${colors.reset}                  - Version history`);
   console.log(`  ${colors.cyan}CLAUDE.md${colors.reset}                     - Claude Code guidance`);
-  console.log(`  ${colors.cyan}AGENTS.md${colors.reset}                     - Agent documentation`);
+  console.log(`  ${colors.cyan}AGENTS.md${colors.reset}                     - Agent documentation (generated from CLAUDE.md)`);
   console.log(`  ${colors.cyan}_APPSHEET_SYSTEM_BLUEPRINT.md${colors.reset} - System template`);
   console.log('');
   console.log(`${colors.bright}${colors.yellow}Important Notes:${colors.reset}`);
